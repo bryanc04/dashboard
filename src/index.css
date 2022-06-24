@@ -1,0 +1,141 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.active {
+  /*border-right: 5px solid rgb(147, 76, 147);*/
+   background-color: #7f353580 !important;
+   border-radius: 20px;
+   
+}
+
+.navbar_item {
+  color: maroon;
+  font-size: 20px;
+}
+
+.navbar_item_container {
+  padding: 20px;
+  margin: 5px;
+  cursor: pointer;
+  display: block;
+}
+
+.home_title {
+  /* font-weight: 300;
+  font-family: "Arial Black";
+  font-size: 30px; */
+  transform: scale(1, 1.1);
+  display: inline;
+  position: relative;
+  top: 140px;
+  left:160px;
+}
+
+.name_title {
+  font-weight: 0;
+  font-family: "Arial Rounded MT Bold";
+  font-size: 30px; 
+}
+
+.welcome_title {
+  font-weight: 0;
+  font-family: "Arial Rounded MT Bold";
+  font-size: 25px; 
+}
+
+.home_container{
+  padding: 170px 130px;
+  height: 100vh;
+  overflow: hidden;
+  position:fixed;
+  width: 83%;
+  top: 15px;
+  
+}
+
+.home_inner_fluid{
+  height: 100%;
+}
+
+.home_inner_container{
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.home_left{
+  width: 60%;
+}
+
+.home_left_top{
+  width:100%;
+  height: 60%;
+  padding: 10px;
+}
+
+.home_left_bottom{
+  height:45%;
+  display: flex;
+  flex-direction: row;
+}
+ .home_left_bottom_right{
+  width: 50%;
+  height: 100%;
+  padding: 10px;
+ }
+
+ .home_left_bottom_left{
+  width: 50%;
+  height: 100%;
+  padding: 10px;
+ }
+
+ .home_right{
+  width: 40%;
+  height: 105%;
+  padding: 10px;
+ }
+
+ .home_content{
+  background-color: white;
+  opacity: 0.75 ;
+  height:100%;
+  width: 100%;
+  border-radius: 50px;
+  /* box-shadow: 10px 5px 5px grey; */
+ }
+
+.content_title{
+  font-family: "Varela Round", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  color: black;
+  position: relative;
+  bottom: 325px;
+  left: 25px;
+}
+
+.container-fluid{
+  /* background-color: #8EC5FC;
+  background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%); */
+  background-color: rgb(239, 239, 239);
+}
+
+.hr {
+  border: 3px solid maroon !important;
+  position: absolute;
+  width: 90%;
+  top: 18px;
+}
