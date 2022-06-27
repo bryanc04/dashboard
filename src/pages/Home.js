@@ -1,4 +1,4 @@
-import React, {useState, useContext } from "react";
+import React, {useState, useContext, useEffect } from "react";
 import Navbar from "../components/navbar/navbar";
 import disableScroll from 'disable-scroll';
 import Pop from "../components/popup";
@@ -7,41 +7,25 @@ import{background} from "../components/popup";
 import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup'
 
-
-
-
-
-// export const changebg1 = event => {
-//         let background = "#8EC5FC";
-//         let bgimage = "linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)";
-//         alert("button was clicked");
-//       };
-
-// var name = window. prompt("Enter your name: ")
 disableScroll.on();
 
 export default function Home() {
-    const background_option = useSelector( (state=> state));
-    const fdsa = useContext(UserContext).userName;
-    // let [background,changebg] = useState('rgb(239, 239, 239)')
-    // let [bgimage,changebgimage] = useState('none')
-    // const accessedbg = useSelector( (state) => state);background-color: #8EC5FC;
-    let [ finalbg, changefinalbg ] = useState([background_option]);
 
-    // if (background_option == 'none'){
-    //     changefinalbg(fdsa)
-    //     reut
-    // }else{
-    //     changefinalbg(background_option)
-    // }
+    const [backgroundOption, setBackgroundOption] = useState("change_bg_option_2");
 
     return(
 
         
-        <div className="container-fluid" style={{ backgroundColor: "rgb(239, 239, 239)" , backgroundImage: background_option }}>
+        <div className="container-fluid" style={{ 
+            backgroundColor: "rgb(239, 239, 239)", 
+            backgroundImage: backgroundOption === "change_bg_option_1" ?  "none" : 
+                            backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)" :
+                            backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
+                            backgroundOption === "change_bg_option_4" && "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)"
+        }}>
 
             <div className="row">
-                <Pop />
+                <Pop changeBackground={setBackgroundOption} />
                 <Navbar />
                 <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto'}}>
                     <div>
