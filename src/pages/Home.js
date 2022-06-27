@@ -11,8 +11,9 @@ disableScroll.on();
 
 export default function Home() {
 
-    const [backgroundOption, setBackgroundOption] = useState("change_bg_option_2");
-
+    const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
+    const [color1, setColor1] = useState("efefef");
+    const [color2, setColor2] = useState("efefef");
     return(
 
         
@@ -21,11 +22,12 @@ export default function Home() {
             backgroundImage: backgroundOption === "change_bg_option_1" ?  "none" : 
                             backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)" :
                             backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
-                            backgroundOption === "change_bg_option_4" && "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)"
+                            backgroundOption === "changme_bg_option_4" ? "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)":
+                            backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`)
         }}>
 
             <div className="row">
-                <Pop changeBackground={setBackgroundOption} />
+                <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2}/>
                 <Navbar />
                 <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto'}}>
                     <div>
@@ -48,12 +50,14 @@ export default function Home() {
                                                 <div className="assignments_assignments">Finish Final Project</div>
                                                 <div className="assignments_detail">B6 World History</div>
                                             </div>
-                                            <div className="assignments_container bottom"/>
-                                            <div className="assignments_container_time_2">
+                                            <div className="gap"></div>
+                                            <div className="assignments_container bottom">
+                                                <div className="assignments_container_time_2">
                                                     1:45
                                                 </div>
                                                 <div className="assignments_assignments_2">Complete Problem Set 1</div>
                                                 <div className="assignments_detail_2">B4 CL Calculus BC</div>
+                                            </div>
                                                 <div className="arrow_container"><i class="bi bi-arrow-down-short down_arrow"></i></div>
                                         </div>
                                     </div>
@@ -62,10 +66,12 @@ export default function Home() {
                                     <div className="home_left_bottom_left">
                                         <div className="home_content current_block">
                                             Current Block
+                                            <div className="big_container">
                                             <div className="big_block_container">
                                                 B5
                                             </div>
                                             <div className="current_block_name">Chemistry</div>
+                                            </div>
                                             <div class="block_wrapper">
                                             <div class="content_box a">Today is: D6</div>
                                             <div class="content_box b">Next up: B7</div>

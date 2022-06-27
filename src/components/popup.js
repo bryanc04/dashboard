@@ -7,7 +7,10 @@ import { BlockPicker, ChromePicker, SketchPicker } from 'react-color';
 
 export default function Pop(props) {
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    props.changeBackground("change_bg_option_5");
+  }
   const handleShow = () => setShow(true);
 
 
@@ -45,17 +48,17 @@ export default function Pop(props) {
                 <div class="wrapper">
                   <div class="box a"> Choose Color 1
                     <div className = "colorpickergap"></div>
-                    {/* <BlockPicker
-                      color = {userName}
-                      onChangeComplete={ (color) => {setUserName(color.hex)} }
-                    /> */}
+                    <BlockPicker
+                      color = {props.color1}
+                      onChangeComplete={ (color) => {props.setColor1(color.hex)} }
+                    />
                   </div>
                   <div class="box b"> Choose Color 2
                     <div className = "colorpickergap"></div>
-                      {/* <BlockPicker
-                      color = {background_option.slice(35, 42)}
-                        // onChangeComplete={ (color) => {setbgcolor2(color.hex)} }
-                      /> */}
+                      <BlockPicker
+                      color = {props.color2}
+                        onChangeComplete={ (color) => {props.setColor2(color.hex)} }
+                      />
                   </div>
                   
                 </div>

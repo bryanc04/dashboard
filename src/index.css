@@ -149,7 +149,6 @@ code {
 
  .home_content{
   background-color: white;
-  opacity: 0.75 ;
   height:100%;
   width: 100%;
   border-radius: 50px;
@@ -198,6 +197,9 @@ code {
   transform: translateY(-10px);
 }
 
+.gap{
+  margin: 100px;
+}
 .top{
   margin-bottom: 10px;
   border-left: 3px solid red;
@@ -234,8 +236,8 @@ code {
 
 .assignments_assignments{
   font-size: 15px !important;
-  transform: translateX(17%);
   margin-top: -56px;
+  transform: translateX(17%);
   z-index: 3;
   margin-left: 10px;
 }
@@ -406,6 +408,7 @@ code {
   justify-content: center;
   text-align: center;
   margin-top: -10px;
+  font-size: 15px;
 }
 
 .block_wrapper {
@@ -515,3 +518,21 @@ code {
   font-size: 15px;
   padding: 0px 10px 20px 10px;
 }
+
+.big_container{
+  justify-content: center;
+  text-align: center;
+  font-size: 50px;
+  font-weight: 900;
+  font-family: 'Varela Round';
+  margin-top: 10px;
+  margin-bottom: 0px;
+  background-color: white;
+  width: 60%;
+  height: 65%;
+  margin-right: 60px;
+  margin-left: 60px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 30px;
+}
+
