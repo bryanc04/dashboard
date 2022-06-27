@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, createContext, useContext, useMemo } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -11,11 +11,16 @@ import Grades from './pages/Grades';
 import Schedule from './pages/Schedule';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { UserContext} from './components/popup'
+
+// console.log(useContext(UserContext))
 
 let background = "none";
 let custombg1 = "none";
 
+
 function reducer(state = background, action){
+
   if (action.type === "change_bg_option_1"){
     state =  "none";
     return state

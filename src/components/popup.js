@@ -1,18 +1,33 @@
 
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useState } from "react";
+import React, { useState, createContext, useContext, useMemo } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { BlockPicker, ChromePicker, SketchPicker } from 'react-color';
 
+const hello = createContext({
+  bgcolor1: '',
+  setbgcolor1: () => {}
+});
+
+const UserContext = createContext({
+  userName: "efefef",
+  setUserName: () => {}
+});
 
 export default function Pop() {
+  const background_option = useSelector( (state=> state));
+  const [userName, setUserName] = useState(useContext(UserContext).userName);
+  const value = useMemo(() => ({ userName, setUserName }), [userName]);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const background_option = useSelector( (state=> state));
   const dispatch = useDispatch()
-  const [bgcolor1, setbgcolor1] = useState("efefef");
-  const [bgcolor2, setbgcolor2] = useState("efefef");
+  // const [bgcolor1, setbgcolor1] = useState("ffffff");
+  // const [bgcolor2, setbgcolor2] = useState("efefef");
+  // const value = useMemo(
+  //   () => ({ bgcolor1, setbgcolor1 }), 
+  //   [bgcolor1]
+  // );
 
 
   const [isShown, setIsShown] = useState(false);
@@ -22,12 +37,13 @@ export default function Pop() {
     // or simply set it to true
     // setIsShown(true);
   };
-
-
+  console.log(userName)
+  console.log(useContext(UserContext).userName)
+  
   return (
     
     <div className="popup">
-      <button className="color_button" onClick={handleClick}></button>
+      <button className="color_button hvr-grow" onClick={handleClick}></button>
      
       {isShown && (
         <div>
@@ -52,15 +68,17 @@ export default function Pop() {
                 <div class="wrapper">
                   <div class="box a"> Choose Color 1
                     <div className = "colorpickergap"></div>
+                    <hello.Provider value = {value}>
                     <BlockPicker
-                      color = {bgcolor1}
-                      onChangeComplete={ (color) => {setbgcolor1(color.hex)} }
+                      color = {userName}
+                      onChangeComplete={ (color) => {setUserName(color.hex)} }
                     />
+                    </hello.Provider>
                   </div>
                   <div class="box b"> Choose Color 2
                     <div className = "colorpickergap"></div>
                       <BlockPicker
-                      color = {bgcolor2}
+                      color = {background_option.slice(35, 42)}
                         onChangeComplete={ (color) => {setbgcolor2(color.hex)} }
                       />
                   </div>
@@ -90,5 +108,5 @@ export default function Pop() {
   );
 }
 
-
+export { UserContext }
 
