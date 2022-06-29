@@ -1,13 +1,22 @@
 import React from 'react';
 import Loomis from "../../assets/loomis.png"
 import { NavLink } from "react-router-dom"
+import { useState, createContext, useContext, useMemo } from "react";
+
 export default function navbar(){
+      const [isShown, setIsShown] = useState(false);
+      const handleClick = event => {
+          setIsShown(current => !current)
+      };
     return(
-        <div className="col-1 d-flex flex-column flex-shrink-4 px-0" style={{height: '100vh', backgroundColor: '#ffffff', width: 80}}>
-       <div>
+      <div className="no_opacity">
+
+        <div className="hidden_until_hover col-1 d-flex flex-column flex-shrink-4 px-0 navbar_style" id="navbar_bg">
+        <div>
             <div style={{padding: 10}}>
-                <img src={Loomis} style={{width: '100%', height: '100%'}}/>
+                <img className="lc_logo" src={Loomis} style={{width: '70%', height: '50%'}}/>
             </div>
+         
        </div>
     <ul className="nav nav-pills nav-flush flex-column mb-auto text-center" style ={{flex: 1, justifyContent: 'center'}}>
       <li className="nav-item">
@@ -37,5 +46,9 @@ export default function navbar(){
       </li>
     </ul>
   </div>
+  </div>
+  
+
+
     )
 }
