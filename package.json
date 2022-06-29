@@ -10,6 +10,7 @@
     "disable-scroll": "^0.6.0",
     "eslint-config-react-app": "^6.0.0",
     "firebase": "^9.8.4",
+    "moment": "^2.29.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.4.0",
     "react-color": "^2.19.3",

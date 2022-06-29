@@ -6,6 +6,7 @@ import{bgimage} from "../components/popup";
 import{background} from "../components/popup";
 import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup';
+import moment from 'moment';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore"
@@ -39,6 +40,11 @@ export default function Home() {
 
     const [dailyBulletin, setDailyBulletin] = useState({});
 
+    const [block, setBlock] = useState();
+    const [blockSubject, setBlockSubject] = useState();
+    const [nextBlock, setNextBlock] = useState("");
+    const [rotation, setRotation] = useState("");
+
     useEffect(()=> {
         const getDailyBulletin = async () => {
             // const querySnapshot = await getDocs(collection(db, "daily_bulletin"));
@@ -54,11 +60,91 @@ export default function Home() {
                 delete data['uupdate_date'];
                 setDailyBulletin(data);
             })
+        };
+
+        const getBlocks = async() => {
+            const querySnapshot = await getDocs(collection(db, "Block"));
+            querySnapshot.forEach((doc)=>{
+                var data = doc.data();
+                setRotation(data['rotationDay']);
+                delete data['rotationDay'];
+
+                console.log(data[0]['time'])
+                
+                for(var i = 0; i < Object.keys(data).length; i++)
+                {
+                    if(i < Object.keys(data).length - 1)
+                    {
+                        var nowClassTime = moment(data[i]['time'], 'hh:mmA');
+                        var nextClassTime = moment(data[i+1]['time'], 'hh:mmA');
+                        var nowTime = moment();
+                    
+                        if(nowTime.isBetween(nowClassTime, nextClassTime))
+                        {
+                            if(data[i]['subtitle'].includes("•"))
+                            {
+                                let gIndex = data[i]['subtitle'].indexOf("•");
+                                let blockString = data[i]['subtitle'].substring(gIndex+1, gIndex+3)
+                                setBlock(blockString);
+                            }
+                            else
+                            {
+                                setBlock(data[i]['subtitle'])
+                            }
+            
+                            if(data[i+1]['subtitle'].includes("•"))
+                            {
+                                let gIndex = data[i+1]['subtitle'].indexOf("•");
+                                let blockString = data[i+1]['subtitle'].substring(gIndex+1, gIndex+3)
+                                setNextBlock(blockString);
+                            }
+                            else
+                            {
+                                setNextBlock(data[i+1]['subtitle'])
+                            }
+                            setBlockSubject(data[i]['description'].slice(0, -3));
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if(data[i]['subtitle'].includes("•"))
+                            {
+                                let gIndex = data[i]['subtitle'].indexOf("•");
+                                let blockString = data[i]['subtitle'].substring(gIndex+1, gIndex+3)
+                                setBlock(blockString);
+                            }
+                            else
+                            {
+                                setBlock(data[i]['subtitle'])
+                            }
+            
+                            setNextBlock("")
+                            setBlockSubject(data[i]['description'].slice(0, -3));
+                    }
+                }
+            
+
+            })
         }
 
         getDailyBulletin();
+        getBlocks();
         
-    }, [])
+    }, []);
+
+    const shortenText = (text, length) => {
+        if(text == null) {
+            return "";
+        }
+        if(text.length < length) {
+            return text;
+        }
+        text = text.substring(0, length);
+        let last = text.lastIndexOf(" ");
+        text = text.substring(0, last);
+        return text + "...";
+    }
 
 
 
@@ -66,7 +152,7 @@ export default function Home() {
 
 
         <div className="all">
-            <div className="a blur" style={{ 
+            <div className="container-fluid blur" style={{ 
             backgroundColor: "rgb(239, 239, 239)", 
             backgroundImage: backgroundOption === "change_bg_option_1" ?  "none" : 
                             backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
@@ -123,13 +209,13 @@ export default function Home() {
                                             Current Block
                                             <div className="big_container">
                                             <div className="big_block_container">
-                                                B5
+                                                {block}
                                             </div>
-                                            <div className="current_block_name">Chemistry</div>
+                                            <div className="current_block_name">{blockSubject}</div>
                                             </div>
                                             <div class="block_wrapper">
-                                            <div class="content_box a">Today is: D6</div>
-                                            <div class="content_box b">Next up: B7</div>
+                                            <div class="content_box a">Today is: {rotation}</div>
+                                            <div class="content_box b">Next up: {nextBlock}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -162,27 +248,10 @@ export default function Home() {
                                             Object.values(dailyBulletin).map( (el, index) => 
                                                 <div key={index} className="news  1">
                                                     <p className="news_heading">{el.Title}</p>
-                                                    <p className="news_content">{el.Content}</p>
+                                                    <p className="news_content">{shortenText(el.Content, 100)}</p>
                                                 </div>
                                             )
                                         }
-                                        {/* <div className="news  1">
-                                            <p className="news_heading">The NEO is Officially Open!</p>
-                                            <p className="news_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        </div>
-                                        <div className="news  1">
-                                            <p className="news_heading">Return Library Books by This Friday</p>
-                                            <p className="news_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        </div>
-                                        <div className="news  1">
-                                            <p className="news_heading">School is Closed on Sunday</p>
-                                            <p className="news_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        </div>
-                                        <div className="news  1">
-                                            <p className="news_heading">No Study Hall Tongiht</p>
-                                            <p className="news_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                        </div> */}
-                                        
                                     </div>
                                 </div>
                             </div>

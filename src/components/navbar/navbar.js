@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState, createContext, useContext, useMemo }  from 'react';
 import Loomis from "../../assets/loomis.png"
 import { NavLink } from "react-router-dom"
-import { useState, createContext, useContext, useMemo } from "react";
 
-export default function navbar(){
+export default function Navbar(){
       const [isShown, setIsShown] = useState(false);
       const handleClick = event => {
           setIsShown(current => !current)

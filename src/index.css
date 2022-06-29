@@ -37,7 +37,7 @@ code {
 	}
 }
 
-.a{
+.container-fluid {
   -webkit-animation: gradient 30s ease infinite !important;
    animation: gradient 5s ease infinite !important;
    background-size: 150% !important;
@@ -507,7 +507,7 @@ code {
 }
 
 .news{
-  height: 90px;
+  height: 100px;
   margin-bottom: 10px;
   background-color: white;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
