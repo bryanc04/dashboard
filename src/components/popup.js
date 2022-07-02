@@ -36,14 +36,14 @@ export default function Pop(props) {
         <span><button className="color_option option_4"  onClick={()=> {props.changeBackground("change_bg_option_4")}}></button></span>
         
         <div><button className="color_option_custom" onClick={() => {handleShow()}}>Create My Own!</button></div>
-        <div className="modal">
+        <div>
               <Modal
               show={show}
               onHide={handleClose}
               backdrop="static"
               keyboard={false}
             >
-              <Modal.Header className="modal" closeButton>
+              <Modal.Header closeButton>
                 <Modal.Title></Modal.Title>
               </Modal.Header>
               <Modal.Body className = "bgselect1container">

@@ -688,9 +688,7 @@ code {
 }
 
 
-.no_opacity{
-  opacity: 100% !important;
-}
+
 
 .row{
   margin-right: -1000px !important;
@@ -712,3 +710,41 @@ code {
   padding-left: 5px;
 }
 
+.menu_title{
+  font-size: 50px;
+  position: absolute;
+  float: top;
+}
+
+.menu_inner_container{
+  display: flex;
+  height: 500px;
+  width: 800px;
+  font-family: "Varela Round";
+}
+
+.menu_content{
+  height: auto;
+  width: 300px;
+  background-color: white;
+  margin-right: 20px;
+  border-radius: 30px;
+  margin-top: 10px;
+  display: inline;
+  justify-content: center;
+  text-align: center;
+}
+
+.meal_title{
+  top: 50%;
+  margin-top: 15px;
+  font-size: 20px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid black;
+}
+
+.meal_content{
+  float: left;
+  margin-left: 10px;
+  margin-top: 10px;
+}
