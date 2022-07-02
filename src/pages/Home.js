@@ -37,8 +37,8 @@ disableScroll.on();
 export default function Home() {
 
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
-    const [color1, setColor1] = useState("efefef");
-    const [color2, setColor2] = useState("efefef");
+    const [color1, setColor1] = useState("#efefef");
+    const [color2, setColor2] = useState("#efefef");
 
     const [dailyBulletin, setDailyBulletin] = useState([{},{},{},{},{},{},{},{}]);
 
@@ -63,7 +63,6 @@ export default function Home() {
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
                 delete data['uupdate_date'];
-                console.log(data)
                 setDailyBulletin(data);
             })
         };
@@ -75,7 +74,6 @@ export default function Home() {
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
                 setgrade(data);
-                console.log(data)
                 })
             
                 
@@ -88,7 +86,6 @@ export default function Home() {
                 setRotation(data['rotationDay']);
                 delete data['rotationDay'];
 
-                console.log(data)
                 
                 for(var i = 0; i < Object.keys(data).length; i++)
                 {
@@ -153,7 +150,6 @@ export default function Home() {
         
     }, []);
 
-    console.log(dailyBulletin)
 
     const shortenText = (text, length) => {
         if(text == null) {
@@ -223,7 +219,7 @@ export default function Home() {
                                                 <div className="assignments_assignments_2">Complete Problem Set 1</div>
                                                 <div className="assignments_detail_2">B4 CL Calculus BC</div>
                                             </div>
-                                                <div className="arrow_container"><i class="bi bi-arrow-down-short down_arrow"></i></div>
+                                                <div className="arrow_container"><i className="bi bi-arrow-down-short down_arrow"></i></div>
                                         </div>
                                     </div>
                                 </div>
@@ -237,9 +233,9 @@ export default function Home() {
                                             </div>
                                             <div className="current_block_name">{blockSubject}</div>
                                             </div>
-                                            <div class="block_wrapper">
-                                            <div class="content_box a">Today is: {rotation}</div>
-                                            <div class="content_box b">Next up: {nextBlock}</div>
+                                            <div className="block_wrapper">
+                                            <div className="content_box a">Today is: {rotation}</div>
+                                            <div className="content_box b">Next up: {nextBlock}</div>
                                             </div>
                                         </div>
                                     </div>

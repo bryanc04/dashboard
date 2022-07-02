@@ -20,71 +20,71 @@ export default function Pop(props) {
     setIsShown(current => !current)
 
   };
-  
+
   return (
-    
+
     <div className="popup">
       <button className="color_button hvr-grow" onClick={handleClick}></button>
-     
+
       {isShown && (
         <div>
-       
-        <div className="color_picker">
-        <span><button className="color_option option_1"  onClick={()=> {props.changeBackground("change_bg_option_1")}}></button></span> 
-        <span><button className="color_option option_2" onClick={()=> {props.changeBackground("change_bg_option_2")}}></button></span>
-        <span><button className="color_option option_3" onClick={()=> {props.changeBackground("change_bg_option_3")}}></button></span>
-        <span><button className="color_option option_4"  onClick={()=> {props.changeBackground("change_bg_option_4")}}></button></span>
-        
-        <div><button className="color_option_custom" onClick={() => {handleShow()}}>Create My Own!</button></div>
-        <div className="modal">
+
+          <div className="color_picker">
+            <span><button className="color_option option_1" onClick={() => { props.changeBackground("change_bg_option_1") }}></button></span>
+            <span><button className="color_option option_2" onClick={() => { props.changeBackground("change_bg_option_2") }}></button></span>
+            <span><button className="color_option option_3" onClick={() => { props.changeBackground("change_bg_option_3") }}></button></span>
+            <span><button className="color_option option_4" onClick={() => { props.changeBackground("change_bg_option_4") }}></button></span>
+
+            <div><button className="color_option_custom" onClick={() => { handleShow() }}>Create My Own!</button></div>
+            <div className="modal">
               <Modal
-              show={show}
-              onHide={handleClose}
-              backdrop="static"
-              keyboard={false}
-            >
-              <Modal.Header className="modal" closeButton>
-                <Modal.Title></Modal.Title>
-              </Modal.Header>
-              <Modal.Body className = "bgselect1container">
-                <div class="wrapper">
-                  <div class="box a"> Choose Color 1
-                    <div className = "colorpickergap"></div>
-                    <HexColorPicker
-                      color = {props.color1}
-                      onChange={ (color) => {props.setColor1(color.hex)} }
-                    />
-                  </div>
-                  <div class="box b"> Choose Color 2
-                    <div className = "colorpickergap"></div>
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title></Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="bgselect1container">
+                  <div className="wrapper">
+                    <div className="box a"> Choose Color 1
+                      <div className="colorpickergap"></div>
                       <HexColorPicker
-                      color = {props.color2}
-                        onChange={ (color) => {props.setColor2(color.hex)} }
+                        color={props.color1}
+                        onChange={(color) => { props.setColor1(color); }}
                       />
+                    </div>
+                    <div className="box b"> Choose Color 2
+                      <div className="colorpickergap"></div>
+                      <HexColorPicker
+                        color={props.color2}
+                        onChange={(color) => { props.setColor2(color); }}
+                      />
+                    </div>
+
                   </div>
-                  
-                </div>
-               
-              </Modal.Body>
 
-              <Modal.Footer>
-                <Button variant="primary" onClick={handleClose}>
-                  Apply
-                </Button>
-              
-              </Modal.Footer>
-            </Modal>
-        
+                </Modal.Body>
 
-        </div>
-        
-        
-        
-        </div>
+                <Modal.Footer>
+                  <Button variant="primary" onClick={handleClose}>
+                    Apply
+                  </Button>
+
+                </Modal.Footer>
+              </Modal>
+
+
+            </div>
+
+
+
+          </div>
         </div>
       )}
       {isShown}
-      
+
     </div>
   );
 }
