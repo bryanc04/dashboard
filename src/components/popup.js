@@ -1,4 +1,5 @@
 
+import { HexColorPicker } from "react-colorful";
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, createContext, useContext, useMemo } from "react";
 import { Modal, Button } from "react-bootstrap";
@@ -35,29 +36,30 @@ export default function Pop(props) {
         <span><button className="color_option option_4"  onClick={()=> {props.changeBackground("change_bg_option_4")}}></button></span>
         
         <div><button className="color_option_custom" onClick={() => {handleShow()}}>Create My Own!</button></div>
+        <div className="modal">
               <Modal
               show={show}
               onHide={handleClose}
               backdrop="static"
               keyboard={false}
             >
-              <Modal.Header closeButton>
-                <Modal.Title>Create Gradient</Modal.Title>
+              <Modal.Header className="modal" closeButton>
+                <Modal.Title></Modal.Title>
               </Modal.Header>
               <Modal.Body className = "bgselect1container">
                 <div class="wrapper">
                   <div class="box a"> Choose Color 1
                     <div className = "colorpickergap"></div>
-                    <BlockPicker
+                    <HexColorPicker
                       color = {props.color1}
-                      onChangeComplete={ (color) => {props.setColor1(color.hex)} }
+                      onChange={ (color) => {props.setColor1(color.hex)} }
                     />
                   </div>
                   <div class="box b"> Choose Color 2
                     <div className = "colorpickergap"></div>
-                      <BlockPicker
+                      <HexColorPicker
                       color = {props.color2}
-                        onChangeComplete={ (color) => {props.setColor2(color.hex)} }
+                        onChange={ (color) => {props.setColor2(color.hex)} }
                       />
                   </div>
                   
@@ -78,6 +80,7 @@ export default function Pop(props) {
         
         
         
+        </div>
         </div>
       )}
       {isShown}

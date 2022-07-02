@@ -7,6 +7,8 @@ import{background} from "../components/popup";
 import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup';
 import moment from 'moment';
+
+import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore"
@@ -38,12 +40,15 @@ export default function Home() {
     const [color1, setColor1] = useState("efefef");
     const [color2, setColor2] = useState("efefef");
 
-    const [dailyBulletin, setDailyBulletin] = useState({});
+    const [dailyBulletin, setDailyBulletin] = useState([{},{},{},{},{},{},{},{}]);
+
+    const [grade, setgrade] = useState({});
 
     const [block, setBlock] = useState();
     const [blockSubject, setBlockSubject] = useState();
     const [nextBlock, setNextBlock] = useState("");
     const [rotation, setRotation] = useState("");
+    const classindex = ['class_1', 'class_2', 'class_3', 'class_4', 'class_5', 'class_6', 'class_7']
 
     useEffect(()=> {
         const getDailyBulletin = async () => {
@@ -53,14 +58,28 @@ export default function Home() {
             // })
             
             const collectionRef = collection(db, "daily_bulletin");
-            const q = query(collectionRef, orderBy("uupdate_date"), limit(1));
+            const q = query(collectionRef, orderBy("uupdate_date", "desc"), limit(1));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
                 delete data['uupdate_date'];
+                console.log(data)
                 setDailyBulletin(data);
             })
         };
+
+        const getGrades = async () => {
+            const collectionRef = collection(db, "grades");
+            const q = query(collectionRef);
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                var data = doc.data();
+                setgrade(data);
+                console.log(data)
+                })
+            
+                
+            };
 
         const getBlocks = async() => {
             const querySnapshot = await getDocs(collection(db, "Block"));
@@ -69,7 +88,7 @@ export default function Home() {
                 setRotation(data['rotationDay']);
                 delete data['rotationDay'];
 
-                console.log(data[0]['time'])
+                console.log(data)
                 
                 for(var i = 0; i < Object.keys(data).length; i++)
                 {
@@ -129,9 +148,12 @@ export default function Home() {
         }
 
         getDailyBulletin();
+        getGrades();
         getBlocks();
         
     }, []);
+
+    console.log(dailyBulletin)
 
     const shortenText = (text, length) => {
         if(text == null) {
@@ -174,6 +196,8 @@ export default function Home() {
                     <div className="home_container" style={{overflow: 'hidden', height: '100%'}}>
                     <div>
                         <p className="home_title welcome_title ">Welcome</p>
+                        <p className="home_title welcome_title ">Welcome</p>
+                        <p className="home_title name_title"> Bryan </p>
                         <p className="home_title name_title"> Bryan </p>
                     </div>
                         <div className="home_inner_container">
@@ -223,26 +247,37 @@ export default function Home() {
                                         <div className="home_content">
                                             <div className="grade_title">My Grades:</div>
                                             <div className="grade_container">
-                                                <div className="class_1">Advanced Chemistry:</div>
+                                                {/* <div className="class_1">Advanced Chemistry:</div>
                                                 <div>A</div>
                                                 <div className="class_2">CL Calculus BC:</div>
                                                 <div>A</div>
                                                 <div className="class_3">English I:</div>
                                                 <div>A</div>
                                                 <div className="class_4">Advanced Latin III:</div>
-                                                <div>F</div>
+                                                  <div>F</div>
                                                 <div className="class_5">World History:</div>
                                                 <div>A</div>
                                                 <div className="class_6">Graphic Design</div>
-                                                <div>A</div>
+                                                <div>A</div> */}
+
+{
+                                            Object.values(grade).map( (el, index) => 
+                                                <div key={index}>
+                                                    <div className='class_1'>{el.class_name}
+                                                    <div className="class_grade">{el.ptd_letter_grade}</div></div>
+                                                </div>
+                                            )
+                                        }
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="home_right">
-                                <div className="home_content">
+                                <div className="home_content" id="news_content" style={{overflowY: "scroll"}}>
+                                    <div className="news_content_title">
                                     News:
+                                    </div>
                                     <div className="news-container">
                                         {
                                             Object.values(dailyBulletin).map( (el, index) => 
