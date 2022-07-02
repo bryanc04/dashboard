@@ -32,13 +32,16 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-disableScroll.on();
 
 export default function Menu() {
 
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("efefef");
     const [color2, setColor2] = useState("efefef");
+
+    const [breakfastMenu, setBreakfastMenu] = useState([{},{}]);
+    const [lunchMenu, setLunchMenu] = useState([{},{},{}]);
+    const [dinnerMenu, setDinnerMenu] = useState([{},{},{}]);
 
     const [dailyBulletin, setDailyBulletin] = useState([{},{},{},{},{},{},{},{}]);
 
@@ -67,6 +70,22 @@ export default function Menu() {
                 setDailyBulletin(data);
             })
         };
+
+        const getMenu = async () => {
+            const collectionRef = collection(db, "menu");
+            const q = query(collectionRef);
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                var data = doc.data();
+                setBreakfastMenu(data.breakfast);
+                setLunchMenu(data.Lunch);
+                setDinnerMenu(data.dinner);
+                console.log(data.breakfast)
+                })
+                
+                    
+
+        }
 
         const getGrades = async () => {
             const collectionRef = collection(db, "grades");
@@ -148,11 +167,13 @@ export default function Menu() {
         }
 
         getDailyBulletin();
+        getMenu();
         getGrades();
         getBlocks();
         
     }, []);
 
+    console.log(lunchMenu)
     console.log(dailyBulletin)
 
     const shortenText = (text, length) => {
@@ -206,8 +227,16 @@ export default function Menu() {
                             </div>
                             <div className="meal_content">
                                 Main:
+                                <div className="meal_content_details">
+                                Sample Menu
+                                </div>
                             </div>
-                            
+
+                            <div className="meal_content">
+                                Gluten-aware:
+                            </div>
+
+
                             </div>
                             <div className="menu_center menu_content">
 
@@ -215,11 +244,42 @@ export default function Menu() {
                                 Lunch
                             </div>
 
+                            <div className="meal_content">
+                                Main:
+                                <div className="meal_content_details">
+                                Sample Menu
+                                </div>
+                            </div>
+
+                            <div className="meal_content">
+                                Gluten-aware:
+                            </div>
+
+                            <div className="meal_content">
+                                Vegan:
+                            </div>
+
+
                             </div>
                             <div className="menu_bottom menu_content">
 
                             <div className="meal_title">
                                 Dinner
+                            </div>
+
+                            <div className="meal_content">
+                                Main:
+                                <div className="meal_content_details">
+                                Sample Menu
+                                </div>
+                            </div>
+
+                            <div className="meal_content">
+                                Gluten-aware:
+                            </div>
+
+                            <div className="meal_content">
+                               Vegan/Vegetarian:
                             </div>
 
 

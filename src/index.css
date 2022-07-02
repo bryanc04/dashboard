@@ -483,9 +483,7 @@ code {
   height: 3000%;
 }
 
-.btn-close{
-  font-size: 50px !important;
-}
+
 
 .colorpickergap{
   margin-top: 10px;
@@ -719,20 +717,19 @@ code {
 .menu_inner_container{
   display: flex;
   height: 500px;
-  width: 800px;
+  width: 900px;
   font-family: "Varela Round";
+  text-align: center;
 }
 
 .menu_content{
   height: auto;
-  width: 300px;
+  width: 4000px;
   background-color: white;
   margin-right: 20px;
   border-radius: 30px;
   margin-top: 10px;
-  display: inline;
-  justify-content: center;
-  text-align: center;
+  display: inline-grid;
 }
 
 .meal_title{
@@ -741,10 +738,17 @@ code {
   font-size: 20px;
   padding-bottom: 10px;
   border-bottom: 3px solid black;
+  height: 40px;
+  width: auto;
 }
 
 .meal_content{
-  float: left;
+  float: left !important;
   margin-left: 10px;
-  margin-top: 10px;
+  margin-top: -110px;
+  text-align: left;
+}
+
+.meal_content_details{
+  margin-left: 20px;
 }
