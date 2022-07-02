@@ -1,6 +1,5 @@
 import React, {useState, useContext, useEffect } from "react";
 import Navbar from "../components/navbar/navbar";
-import disableScroll from 'disable-scroll';
 import Pop from "../components/popup";
 import{bgimage} from "../components/popup";
 import{background} from "../components/popup";
@@ -30,8 +29,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-
 
 export default function Menu() {
 
