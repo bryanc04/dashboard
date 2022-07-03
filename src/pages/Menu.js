@@ -36,9 +36,9 @@ export default function Menu() {
     const [color1, setColor1] = useState("efefef");
     const [color2, setColor2] = useState("efefef");
 
-    const [breakfastMenu, setBreakfastMenu] = useState([{},{}]);
-    const [lunchMenu, setLunchMenu] = useState([{},{},{}]);
-    const [dinnerMenu, setDinnerMenu] = useState([{},{},{}]);
+    const [breakfastMenu, setBreakfastMenu] = useState();
+    const [lunchMenu, setLunchMenu] = useState();
+    const [dinnerMenu, setDinnerMenu] = useState();
 
     const [dailyBulletin, setDailyBulletin] = useState([{},{},{},{},{},{},{},{}]);
 
@@ -96,83 +96,18 @@ export default function Menu() {
             
                 
             };
-
-        const getBlocks = async() => {
-            const querySnapshot = await getDocs(collection(db, "Block"));
-            querySnapshot.forEach((doc)=>{
-                var data = doc.data();
-                setRotation(data['rotationDay']);
-                delete data['rotationDay'];
-
-                console.log(data)
-                
-                for(var i = 0; i < Object.keys(data).length; i++)
-                {
-                    if(i < Object.keys(data).length - 1)
-                    {
-                        var nowClassTime = moment(data[i]['time'], 'hh:mmA');
-                        var nextClassTime = moment(data[i+1]['time'], 'hh:mmA');
-                        var nowTime = moment();
-                    
-                        if(nowTime.isBetween(nowClassTime, nextClassTime))
-                        {
-                            if(data[i]['subtitle'].includes("•"))
-                            {
-                                let gIndex = data[i]['subtitle'].indexOf("•");
-                                let blockString = data[i]['subtitle'].substring(gIndex+1, gIndex+3)
-                                setBlock(blockString);
-                            }
-                            else
-                            {
-                                setBlock(data[i]['subtitle'])
-                            }
-            
-                            if(data[i+1]['subtitle'].includes("•"))
-                            {
-                                let gIndex = data[i+1]['subtitle'].indexOf("•");
-                                let blockString = data[i+1]['subtitle'].substring(gIndex+1, gIndex+3)
-                                setNextBlock(blockString);
-                            }
-                            else
-                            {
-                                setNextBlock(data[i+1]['subtitle'])
-                            }
-                            setBlockSubject(data[i]['description'].slice(0, -3));
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        if(data[i]['subtitle'].includes("•"))
-                            {
-                                let gIndex = data[i]['subtitle'].indexOf("•");
-                                let blockString = data[i]['subtitle'].substring(gIndex+1, gIndex+3)
-                                setBlock(blockString);
-                            }
-                            else
-                            {
-                                setBlock(data[i]['subtitle'])
-                            }
-            
-                            setNextBlock("")
-                            setBlockSubject(data[i]['description'].slice(0, -3));
-                    }
-                }
             
 
-            })
-        }
+            
 
-        getDailyBulletin();
         getMenu();
-        getGrades();
-        getBlocks();
+
         
     }, []);
 
-    console.log(lunchMenu)
+    console.log(breakfastMenu)
     console.log(dailyBulletin)
-
+    
     const shortenText = (text, length) => {
         if(text == null) {
             return "";
@@ -225,7 +160,15 @@ export default function Menu() {
                             <div className="meal_content">
                                 Main:
                                 <div className="meal_content_details">
-                                Sample Menu
+
+                                {breakfastMenu && Object.values(breakfastMenu).map( (el, index) => 
+                                                <div key={index}>
+                                                    <div>{el.map((el2, index2) => <div>{el2}</div>)}
+                                                   </div>
+                                                </div>
+                                            )
+                                        }
+                                            
                                 </div>
                             </div>
 
@@ -244,7 +187,7 @@ export default function Menu() {
                             <div className="meal_content">
                                 Main:
                                 <div className="meal_content_details">
-                                Sample Menu
+                                Sample
                                 </div>
                             </div>
 
@@ -267,7 +210,7 @@ export default function Menu() {
                             <div className="meal_content">
                                 Main:
                                 <div className="meal_content_details">
-                                Sample Menu
+                                    Sample
                                 </div>
                             </div>
 

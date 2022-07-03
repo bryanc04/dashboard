@@ -8,7 +8,6 @@ export default function Navbar(){
           setIsShown(current => !current)
       };
     return(
-      <div className="no_opacity">
 
         <div className="hidden_until_hover col-1 d-flex flex-column flex-shrink-4 px-0 navbar_style" id="navbar_bg">
         <div>
@@ -45,7 +44,7 @@ export default function Navbar(){
       </li>
     </ul>
   </div>
-  </div>
+
   
 
 
