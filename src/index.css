@@ -95,6 +95,15 @@ code {
   z-index: 3;
 }
 
+.menu_main_title {
+  font-family: 'Nunito', sans-serif;
+  display: inline;
+  position: absolute;
+  top: 53px;
+  left: 277px;
+  z-index: 3;
+}
+
 .home_title {
   /* font-weight: 300;
   font-family: "Arial Black";
@@ -198,6 +207,17 @@ code {
   font-size: 35px; 
   z-index: 3;
   margin-top: 5px;
+}
+
+.menu_container {
+  padding: 100px 130px;
+  height: 100vh;
+  position:fixed;
+  width: 83%;
+  top: 50px;
+  z-index: 3;
+  margin-top: -45px;
+  filter: blur(0px) !important;
 }
 
 .home_container{
@@ -734,24 +754,21 @@ code {
 
 .menu_inner_container{
   display: flex;
-  height: 500px;
-  width: 900px;
+  height: 750px;
   font-family: "Varela Round";
   text-align: center;
 }
 
 .menu_content{
   height: auto;
-  width: 4000px;
   background-color: white;
   margin-right: 20px;
   border-radius: 30px;
   margin-top: 10px;
-  display: inline-grid;
+  width: 33%;
 }
 
 .meal_title{
-  top: 50%;
   margin-top: 15px;
   font-size: 20px;
   padding-bottom: 10px;
@@ -761,10 +778,9 @@ code {
 }
 
 .meal_content{
-  float: left !important;
   margin-left: 10px;
-  margin-top: -110px;
   text-align: left;
+  font-weight: bold;
 }
 
 .meal_content_details{
