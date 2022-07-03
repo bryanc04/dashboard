@@ -6,6 +6,7 @@ import{background} from "../components/popup";
 import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup';
 import moment from 'moment';
+import { GridLoader } from "react-spinners";
 
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
@@ -51,22 +52,6 @@ export default function Menu() {
     const classindex = ['class_1', 'class_2', 'class_3', 'class_4', 'class_5', 'class_6', 'class_7']
 
     useEffect(()=> {
-        const getDailyBulletin = async () => {
-            // const querySnapshot = await getDocs(collection(db, "daily_bulletin"));
-            // querySnapshot.forEach((doc)=>{
-            //     console.log(doc.data());
-            // })
-            
-            const collectionRef = collection(db, "daily_bulletin");
-            const q = query(collectionRef, orderBy("uupdate_date", "desc"), limit(1));
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                var data = doc.data();
-                delete data['uupdate_date'];
-                console.log(data)
-                setDailyBulletin(data);
-            })
-        };
 
         const getMenu = async () => {
             const collectionRef = collection(db, "menu");
@@ -75,39 +60,15 @@ export default function Menu() {
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
                 setBreakfastMenu(data.breakfast);
-                setLunchMenu(data.Lunch);
+                setLunchMenu(data.lunch);
                 setDinnerMenu(data.dinner);
-                console.log(data.breakfast)
-                })
+            });
                 
-                    
-
         }
 
-        const getGrades = async () => {
-            const collectionRef = collection(db, "grades");
-            const q = query(collectionRef);
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                var data = doc.data();
-                setgrade(data);
-                console.log(data)
-                })
-            
-                
-            };
-            
-
-            
-
         getMenu();
-
-        
     }, []);
 
-    console.log(breakfastMenu)
-    console.log(dailyBulletin)
-    
     const shortenText = (text, length) => {
         if(text == null) {
             return "";
@@ -146,89 +107,114 @@ export default function Menu() {
                 
                 <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop:'-90px'}}>
 
-                    <div className="home_container" style={{overflow: 'hidden', height: '100%', width: '4000px'}}>
+                    <div className="menu_container" style={{overflow: 'hidden', height: '100%',}}>
                     <div>
-                        <p className="home_title welcome_title ">Menu</p>
-                        <p className="home_title welcome_title ">Menu</p>
+                        <p className="menu_main_title welcome_title ">Menu</p>
+                        <p className="menu_main_title welcome_title ">Menu</p>
                     </div>
                         <div className="menu_inner_container">
                             <div className="menu_top menu_content">
-
-                            <div className="meal_title">
-                                Breakfast
-                            </div>
-                            <div className="meal_content">
-                                Main:
-                                <div className="meal_content_details">
-
-                                {breakfastMenu && Object.values(breakfastMenu).map( (el, index) => 
-                                                <div key={index}>
-                                                    <div>{el.map((el2, index2) => <div>{el2}</div>)}
-                                                   </div>
-                                                </div>
-                                            )
-                                        }
-                                            
+                                <div className="meal_title">
+                                    Breakfast
                                 </div>
-                            </div>
-
-                            <div className="meal_content">
-                                Gluten-aware:
-                            </div>
-
-
+                                {
+                                    breakfastMenu ? Object.keys(breakfastMenu).sort().map((el, index) => 
+                                        <div key={index}>
+                                            <div className="meal_content">
+                                                {el}:
+                                            </div>
+                                            <div className="meal_content_details">
+                                                {
+                                                    breakfastMenu[el].map((el2, index2) => 
+                                                        <div key={index2}>
+                                                            {el2}
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
+                                    )
+                                    :
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            height: '100%'
+                                        }}
+                                    >
+                                        <GridLoader />
+                                    </div>
+                                }
                             </div>
                             <div className="menu_center menu_content">
-
-                            <div className="meal_title">
-                                Lunch
-                            </div>
-
-                            <div className="meal_content">
-                                Main:
-                                <div className="meal_content_details">
-                                Sample
+                                <div className="meal_title">
+                                    Lunch
                                 </div>
-                            </div>
-
-                            <div className="meal_content">
-                                Gluten-aware:
-                            </div>
-
-                            <div className="meal_content">
-                                Vegan:
-                            </div>
-
-
+                                {
+                                    lunchMenu ? Object.keys(lunchMenu).sort().map((el, index) => 
+                                        <div key={index}>
+                                            <div className="meal_content">
+                                                {el}:
+                                            </div>
+                                            <div className="meal_content_details">
+                                                {
+                                                    lunchMenu[el].map((el2, index2) => 
+                                                        <div key={index2}>
+                                                            {el2}
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
+                                    )
+                                    :
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            height: '100%'
+                                        }}
+                                    >
+                                        <GridLoader />
+                                    </div>
+                                }
                             </div>
                             <div className="menu_bottom menu_content">
-
-                            <div className="meal_title">
-                                Dinner
-                            </div>
-
-                            <div className="meal_content">
-                                Main:
-                                <div className="meal_content_details">
-                                    Sample
+                                <div className="meal_title">
+                                    Dinner
                                 </div>
+                                {
+                                    dinnerMenu ? Object.keys(dinnerMenu).sort().map((el, index) => 
+                                        <div key={index}>
+                                            <div className="meal_content">
+                                                {el}:
+                                            </div>
+                                            <div className="meal_content_details">
+                                                {
+                                                    dinnerMenu[el].map((el2, index2) => 
+                                                        <div key={index2}>
+                                                            {el2}
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
+                                    )
+                                    :
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            height: '100%'
+                                        }}
+                                    >
+                                        <GridLoader />
+                                    </div>
+                                }
                             </div>
-
-                            <div className="meal_content">
-                                Gluten-aware:
-                            </div>
-
-                            <div className="meal_content">
-                               Vegan/Vegetarian:
-                            </div>
-
-
-                            </div>
-
-
-
-
-
                         </div>
                             
     
