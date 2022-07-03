@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup';
 import moment from 'moment';
 
+import DataTable from 'react-data-table-component';
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -36,6 +37,39 @@ export default function Schedule() {
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
     const [color2, setColor2] = useState("#efefef");
+    const [columns] = [
+    {
+        name: 'Team',
+        selector:row => row.title,
+    },
+    {
+        name: 'Opponent',
+        selector:row => row.opponent,
+    },
+    {
+        name: 'Date',
+        selector:row => row.date,
+    },
+    {
+        name: 'Time',
+        selector:row => row.time,
+    },
+    {
+        name: 'Location',
+        selector:row => row.location,
+    },
+    {
+        name: 'Advantage',
+        selector:row => row.advantage,
+    },
+    {
+        name: 'Details',
+        selector:row => row.details,
+    }
+    ];
+
+
+
 
     const [schedule, setSchedule] = useState();
 
@@ -75,6 +109,11 @@ export default function Schedule() {
         
     }, []);
 
+    const tableData = [];
+    schedule && Object.values(schedule).map( (el, index) => 
+        console.log(el['Team'])
+
+    )
 
 
     return(
@@ -129,36 +168,37 @@ export default function Schedule() {
                     			
  			
             {
-                                          schedule &&      Object.values(schedule).map( (el, index) => 
-                                                    <div key={index} >
-                                                                                            <td class="fsTitle">{el.Team}</td>
-                                                            <td class="fsAthleticsOpponents">
-                                                                <div class="fsAthleticsOpponentNames">
-                                                                    <span class="fsAthleticsOpponentName">{el.Opponent}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="fsAthleticsDate">
-                                                                <div class="fsDateTime">
-                                                                    <time datetime="2022-09-11T12:30:00-04:00" class="fsDate"><span class="fsMonth">Sep</span> <span class="fsDay">11</span> <span class="fsYear">2022</span></time>
-                                                                </div>
-                                                            </td>
-                                                            <td class="fsAthleticsTime">
-                                                                <div class="fsDateTime">
-                                                                        <time datetime="2022-09-11T12:30:00-04:00" class="fsTime"><span class="fsHour">12</span>:<span class="fsMinute">30</span> <span class="fsMeridian">PM</span></time>
-                                                                </div>
-                                                            </td>
-                                                            <td class="fsAthleticsLocations">
-                                                                {el.Location}
-                                                            </td>
-                                                            <td class="fsAthleticsAdvantage">
-                                                                {el.Advantage}
-                                                            </td>
-                                                            <td class="fsAthleticsDetails">
-                                                                <a class="fsAthleticsEventDetailLink" data-occurid="389931" data-linktype="popup" data-link-url="#" href="#">Details</a>
-                                                            </td>
-                                                    </div>
-                                                )
-            }
+            //                               schedule &&      Object.values(schedule).map( (el, index) => 
+            //                                         <div key={index} >
+            //                                                 <td class="fsTitle">{el.Team}</td>
+            //                                                 <td class="fsAthleticsOpponents">
+            //                                                     <div class="fsAthleticsOpponentNames">
+            //                                                         <span class="fsAthleticsOpponentName">{el.Opponent}</span>
+            //                                                     </div>
+            //                                                 </td>
+            //                                                 <td class="fsAthleticsDate">
+            //                                                     <div class="fsDateTime">
+            //                                                         <time datetime="2022-09-11T12:30:00-04:00" class="fsDate"><span class="fsMonth">Sep</span> <span class="fsDay">11</span> <span class="fsYear">2022</span></time>
+            //                                                     </div>
+            //                                                 </td>
+            //                                                 <td class="fsAthleticsTime">
+            //                                                     <div class="fsDateTime">
+            //                                                             <time datetime="2022-09-11T12:30:00-04:00" class="fsTime"><span class="fsHour">12</span>:<span class="fsMinute">30</span> <span class="fsMeridian">PM</span></time>
+            //                                                     </div>
+            //                                                 </td>
+            //                                                 <td class="fsAthleticsLocations">
+            //                                                     {el.Location}
+            //                                                 </td>
+            //                                                 <td class="fsAthleticsAdvantage">
+            //                                                     {el.Advantage}
+            //                                                 </td>
+            //                                                 <td class="fsAthleticsDetails">
+            //                                                     <a class="fsAthleticsEventDetailLink" data-occurid="389931" data-linktype="popup" data-link-url="#" href="#">Details</a>
+            //                                                 </td>
+            //                                         </div>
+            //                                     )
+            // 
+        }
 			
 
 				
