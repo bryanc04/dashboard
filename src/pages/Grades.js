@@ -6,6 +6,7 @@ import{background} from "../components/popup";
 import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup';
 import moment from 'moment';
+import { GridLoader } from "react-spinners";
 
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
@@ -36,6 +37,7 @@ export default function Grades() {
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
     const [color2, setColor2] = useState("#efefef");
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const [grade, setgrade] = useState({});
@@ -43,6 +45,7 @@ export default function Grades() {
     useEffect(()=> {
      
         const getGrades = async () => {
+            setIsLoading(true);
             const collectionRef = collection(db, "grades");
             const q = query(collectionRef);
             const querySnapshot = await getDocs(q);
@@ -51,7 +54,7 @@ export default function Grades() {
                 setgrade(data);
                 })
             
-                
+            setIsLoading(false);
             };
 
       
@@ -97,28 +100,27 @@ export default function Grades() {
                                
                                     <div className="home_left_bottom_right">
                                         <div className="home_content">
-                                            <div className="grade_page_container">
-                                                {/* <div className="class_1">Advanced Chemistry:</div>
-                                                <div>A</div>
-                                                <div className="class_2">CL Calculus BC:</div>
-                                                <div>A</div>
-                                                <div className="class_3">English I:</div>
-                                                <div>A</div>
-                                                <div className="class_4">Advanced Latin III:</div>
-                                                  <div>F</div>
-                                                <div className="class_5">World History:</div>
-                                                <div>A</div>
-                                                <div className="class_6">Graphic Design</div>
-        <div>A</div> */}
-
-{
-                                           Object.values(grade).map( (el, index) => 
-                                                <div key={index}>
-                                                    <div className='class_1 grade_page_grade_class'>{el.class_name}
-                                                    <div className="class_grade grade_page_grade">{el.ptd_letter_grade}</div></div>
+                                            <div className="grade_page_container" style={{height: '100%'}}>
+                                            {
+                                                isLoading ?
+                                                <div
+                                                    style={{
+                                                        display: 'flex',
+                                                        height: '100%',
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center'
+                                                    }}
+                                                >
+                                                    <GridLoader />
                                                 </div>
-                                            )
-                                        }
+                                                :
+                                                Object.values(grade).map( (el, index) => 
+                                                    <div key={index}>
+                                                        <div className='class_1 grade_page_grade_class'>{el.class_name}
+                                                        <div className="class_grade grade_page_grade">{el.ptd_letter_grade}</div></div>
+                                                    </div>
+                                                )
+                                            }
                                             </div>
                                         </div>
                                     </div>

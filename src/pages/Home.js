@@ -199,6 +199,7 @@ export default function Home() {
                                     <div className="home_content">
                                         <div className="content_title">
                                             Assignments
+                                        </div>
                                             <hr className="hr"/>
                                             <div className="assignments_content">Due Tommorow</div>
                                             <div className="assignments_container top">
@@ -217,13 +218,15 @@ export default function Home() {
                                                 <div className="assignments_detail_2">B4 CL Calculus BC</div>
                                             </div>
                                                 <div className="arrow_container"><i className="bi bi-arrow-down-short down_arrow"></i></div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div className="home_left_bottom">
                                     <div className="home_left_bottom_left">
                                         <div className="home_content current_block">
-                                            Current Block
+                                            <div className="content_title">
+                                                Current Block
+                                            </div>
                                             <div className="big_container">
                                             <div className="big_block_container">
                                                 {block}
@@ -238,7 +241,7 @@ export default function Home() {
                                     </div>
                                     <div className="home_left_bottom_right">
                                         <div className="home_content">
-                                            <div className="grade_title">My Grades:</div>
+                                            <div className="content_title" style={{marginBottom: 10}}>My Grades</div>
                                             <div className="grade_container">
                                                 {/* <div className="class_1">Advanced Chemistry:</div>
                                                 <div>A</div>
@@ -267,19 +270,21 @@ export default function Home() {
                                 </div>
                             </div>
                             <div className="home_right">
-                                <div className="home_content" id="news_content" style={{overflowY: "scroll"}}>
-                                    <div className="news_content_title">
-                                    News:
-                                    </div>
-                                    <div className="news-container">
-                                        {
-                                            Object.values(dailyBulletin).map( (el, index) => 
-                                                <div key={index} className="news  1">
-                                                    <p className="news_heading">{el.Title}</p>
-                                                    <p className="news_content">{shortenText(el.Content, 100)}</p>
-                                                </div>
-                                            )
-                                        }
+                                <div className="home_content" id="news_content">
+                                    <div style={{overflowY: "scroll", height: '100%'}}>
+                                        <div className="content_title">
+                                        News
+                                        </div>
+                                        <div className="news-container">
+                                            {
+                                                Object.values(dailyBulletin).map( (el, index) => 
+                                                    <div key={index} className="news  1">
+                                                        <p className="news_heading">{el.Title}</p>
+                                                        <p className="news_content">{shortenText(el.Content, 100)}</p>
+                                                    </div>
+                                                )
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>

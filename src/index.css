@@ -683,28 +683,6 @@ code {
    margin-left: 10px;
 }
 
-.grade_page_container:before{
-  content: " ";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 80px;
-  height: 80px;
-  border: 2px solid red;
-  border-color: transparent red transparent red;
-  border-radius: 50%;
-  animation: loader 1s linear infinite;
-}
-
-@keyframes loader {
-  0% {
-    transform: translate(-50%,-50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%,-50%) rotate(360deg);
-  }
-}
-
 .grade_page_container > .class_1{
   animation: none;
 }
@@ -800,29 +778,6 @@ code {
   padding-right: 5px;;
 }
 
-@charset "UTF-8";
- /**
- *
- * Loomis Chaffee - default_19
- * @link https://www.loomischaffee.org
- * Site Template : newclientcustom
- * Built By: Wendy Dawley Beaulac
- * Project Manager: Lisa Hill
- * Designer: Kelly Wilson
- * ==== Git Info ====
- * Branch Name: clients/loomis-19
- * Build version: 3.2.7
- * Git Tag: Composer-Build-2.0-536-gb5f2a4fbd8
- * Last build by: James Brettschneider
- *
- **/
-
-@charset "UTF-8";
-/*! config-site v0.0.1 */
-/*! config-type v0.0.1 */
-/*! config-constants v0.0.1 */
-/*! helpers - functions v0.0.1 */
-/*! helpers - utility v0.0.1 */
 .compartment {
   position: relative;
   margin: 0 auto;
