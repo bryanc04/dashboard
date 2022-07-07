@@ -37,35 +37,32 @@ export default function Schedule() {
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
     const [color2, setColor2] = useState("#efefef");
-    const [columns] = [
+    const [data, setData] = useState([]);
+    const columns = [
     {
         name: 'Team',
-        selector:row => row.title,
+        selector:row => row.Team,
     },
     {
         name: 'Opponent',
-        selector:row => row.opponent,
+        selector:row => row.Opponent,
     },
     {
         name: 'Date',
-        selector:row => row.date,
+        selector:row => row.Date,
     },
     {
         name: 'Time',
-        selector:row => row.time,
+        selector:row => row.Time,
     },
     {
         name: 'Location',
-        selector:row => row.location,
+        selector:row => row.Location,
     },
     {
         name: 'Advantage',
-        selector:row => row.advantage,
+        selector:row => row.Advantage,
     },
-    {
-        name: 'Details',
-        selector:row => row.details,
-    }
     ];
 
 
@@ -96,8 +93,12 @@ export default function Schedule() {
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
+                var tempArray = []
+                Object.values(data).map((element, index) => {
+                    tempArray.push(element);
+                })
+                setData(tempArray);
                 setSchedule(data);
-                console.log(data)
             })
         }
 
@@ -109,11 +110,6 @@ export default function Schedule() {
         
     }, []);
 
-    const tableData = [];
-    schedule && Object.values(schedule).map( (el, index) => 
-        console.log(el['Team'])
-
-    )
 
 
     return(
@@ -146,65 +142,12 @@ export default function Schedule() {
                       
                         <div className="schedule_inner_container">
                             
-                        <table>
-	<thead>
-		<tr>
-			<th scope="col" class="fsTitle">Team</th>
-			<th scope="col" class="fsAthleticsOpponents">Opponent</th>
-			<th scope="col" class="fsAthleticsDate">Date</th>
-			<th scope="col" class="fsAthleticsTime">Time</th>
-			<th scope="col" class="fsAthleticsLocations">Location</th>
-			<th scope="col" class="fsAthleticsAdvantage">Advantage</th>
-			
-			<th scope="col" class="fsAthleticsDetails">Details</th>
+                            <DataTable
 
-			
-			
-		
-		</tr>
-	</thead>
-	<tbody>
-
-                    			
- 			
-            {
-            //                               schedule &&      Object.values(schedule).map( (el, index) => 
-            //                                         <div key={index} >
-            //                                                 <td class="fsTitle">{el.Team}</td>
-            //                                                 <td class="fsAthleticsOpponents">
-            //                                                     <div class="fsAthleticsOpponentNames">
-            //                                                         <span class="fsAthleticsOpponentName">{el.Opponent}</span>
-            //                                                     </div>
-            //                                                 </td>
-            //                                                 <td class="fsAthleticsDate">
-            //                                                     <div class="fsDateTime">
-            //                                                         <time datetime="2022-09-11T12:30:00-04:00" class="fsDate"><span class="fsMonth">Sep</span> <span class="fsDay">11</span> <span class="fsYear">2022</span></time>
-            //                                                     </div>
-            //                                                 </td>
-            //                                                 <td class="fsAthleticsTime">
-            //                                                     <div class="fsDateTime">
-            //                                                             <time datetime="2022-09-11T12:30:00-04:00" class="fsTime"><span class="fsHour">12</span>:<span class="fsMinute">30</span> <span class="fsMeridian">PM</span></time>
-            //                                                     </div>
-            //                                                 </td>
-            //                                                 <td class="fsAthleticsLocations">
-            //                                                     {el.Location}
-            //                                                 </td>
-            //                                                 <td class="fsAthleticsAdvantage">
-            //                                                     {el.Advantage}
-            //                                                 </td>
-            //                                                 <td class="fsAthleticsDetails">
-            //                                                     <a class="fsAthleticsEventDetailLink" data-occurid="389931" data-linktype="popup" data-link-url="#" href="#">Details</a>
-            //                                                 </td>
-            //                                         </div>
-            //                                     )
-            // 
-        }
-			
-
-				
-
-	</tbody>
-</table>
+                            columns={columns}
+                            data = {data}
+                            pagination
+                            />
                                
                                    
                                             </div>
