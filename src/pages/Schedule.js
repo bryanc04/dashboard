@@ -38,7 +38,6 @@ export default function Schedule() {
     const [color1, setColor1] = useState("#efefef");
     const [color2, setColor2] = useState("#efefef");
     const [data, setData] = useState([]);
-
     const columns = [
     {
         name: 'Team',
@@ -64,10 +63,6 @@ export default function Schedule() {
         name: 'Advantage',
         selector:row => row.Advantage,
     },
-    {
-        name: 'Details',
-        selector:row => row.Details,
-    }
     ];
 
 
@@ -102,10 +97,8 @@ export default function Schedule() {
                 Object.values(data).map((element, index) => {
                     tempArray.push(element);
                 })
-                console.log(tempArray);
                 setData(tempArray);
-                // setSchedule(data);
-                // console.log(data)
+                setSchedule(data);
             })
         }
 
@@ -117,11 +110,6 @@ export default function Schedule() {
         
     }, []);
 
-    const tableData = [];
-    schedule && Object.values(schedule).map( (el, index) => 
-        console.log(el['Team'])
-
-    )
 
 
     return(
@@ -153,19 +141,23 @@ export default function Schedule() {
                         <p className="grade_page_title welcome_title ">Athletics schedule</p>
                       
                         <div className="schedule_inner_container">
-                            <DataTable 
-                                columns={columns}
-                                data={data}
-                                pagination
+                            
+                            <DataTable
+
+                            columns={columns}
+                            data = {data}
+                            pagination
                             />
+                               
+                                   
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
         </div>
-        
-    </div>
-    
+
         
                     
         

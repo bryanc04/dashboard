@@ -87,7 +87,22 @@ export default function Assignments() {
                 <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2}/>
                 <Navbar />
                 
-                <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '175px'}}>
+                <div className="col-10 px-0 assignments_page_main" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '175px'}}>
+                    <div className="assignments_big_title">
+                        Assingments
+                        <div className="assignments_page_container">
+
+                        </div>
+                        <div className="assignments_page_container">
+
+                        </div>
+                        <div className="assignments_page_container">
+
+                        </div>
+                        <div className="assignments_page_container">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -831,5 +831,25 @@ td{
   position: relative;
   margin: 0 auto;
   max-width: 73.75em;
-  max-width: 73.75rem; }
+  max-width: 73.75rem; 
+}
+
+.assignments_page_container{
+  background-color: white;
+  width: 1000px;
+  height: 90px;
+  margin-top: 20px;
+  border-radius: 20px;
+}
+
+.assignments_big_title{
+  font-family: proxima-nova,sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 32px;
+}
+
+.assignments_page_main{
+
+}
 
