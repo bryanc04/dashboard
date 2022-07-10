@@ -105,9 +105,9 @@ export default function Menu() {
                 <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2}/>
                 <Navbar />
                 
-                <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop:'-90px'}}>
+                <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '175px'}}>
 
-                    <div className="menu_container" style={{overflow: 'hidden', height: '100%',}}>
+                    <div style={{width: '50%'}}>
                     <div>
                         <p className="menu_main_title welcome_title ">Menu</p>
                         <p className="menu_main_title welcome_title ">Menu</p>
