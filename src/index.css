@@ -73,7 +73,12 @@ code {
 
 }
 
-
+.welcome_title {
+  left: 155px;
+  font-size: 35px; 
+  z-index: 3;
+  margin-top: 5px;
+}
 
 .active {
   /*border-right: 5px solid rgb(147, 76, 147);*/
@@ -99,7 +104,7 @@ code {
   font-family: 'Nunito', sans-serif;
   display: inline;
   position: absolute;
-  top: 53px;
+  top: 123px;
   left: 277px;
   z-index: 3;
 }
@@ -200,13 +205,6 @@ code {
   z-index: 3;
   left: 316px;
 
-}
-
-.welcome_title {
-  left: 155px;
-  font-size: 35px; 
-  z-index: 3;
-  margin-top: 5px;
 }
 
 .menu_container {
@@ -786,10 +784,11 @@ td{
 
 
 .menu_inner_container{
-  display: flex;
   height: 750px;
-  font-family: "Varela Round";
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  z-index: 3;
 }
 
 .menu_content{
