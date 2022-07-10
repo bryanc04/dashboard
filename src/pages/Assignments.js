@@ -49,10 +49,13 @@ export default function Assignments() {
             const collectionRef = collection(db, "assignments");
             const q = query(collectionRef);
             const querySnapshot = await getDocs(q);
+            var newArray = [];
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
-                setAssignments(data)
+                newArray.push(data.data[0])
                 })
+
+            setAssignments(newArray)
             
             setIsLoading(false);
             };
@@ -63,7 +66,7 @@ export default function Assignments() {
         
     }, []);
 
-
+    console.log(assignments)
 
 
 
@@ -91,9 +94,28 @@ export default function Assignments() {
                 <div className="col-10 px-0 assignments_page_main" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '175px'}}>
                     <div className="assignments_big_title">
                         Assignments
-                        <div className="assignments_page_container">
-                        
-                        </div>
+                        {/* <div className="assignments_page_container"> */}
+                        {
+                                                isLoading ?
+                                                <div
+                                                    style={{
+                                                        display: 'flex',
+                                                        height: '100%',
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center'
+                                                    }}
+                                                >
+                                                    <GridLoader />
+                                                </div>
+                                                :
+                                                Object.keys(assignments).map( (el, index) => 
+                                                    <div key={index}>
+                                                        <div className='assignments_page_cotnainer'>{el.name}
+                                                       </div>
+                                                    </div>
+                                                )
+                                            }
+                        {/* </div> */}
                         <div className="assignments_page_container">
 
                         </div>
