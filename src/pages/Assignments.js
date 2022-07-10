@@ -11,7 +11,7 @@ import { GridLoader } from "react-spinners";
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query, orderBy, limit, where } from "firebase/firestore"
+import { getFirestore, collection, getDocs, query, orderBy, limit, where, documentId, doc } from "firebase/firestore"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -38,20 +38,20 @@ export default function Assignments() {
     const [color1, setColor1] = useState("#efefef");
     const [color2, setColor2] = useState("#efefef");
     const [isLoading, setIsLoading] = useState(false);
+    const [assignments, setAssignments] = useState();
 
 
-    const [grade, setgrade] = useState({});
 
     useEffect(()=> {
      
         const getAssignments = async () => {
             setIsLoading(true);
             const collectionRef = collection(db, "assignments");
-            const q = query(collectionRef, where("end_at", ">", "2021-10-01"));
+            const q = query(collectionRef);
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
-                console.log(data)
+                setAssignments(data)
                 })
             
             setIsLoading(false);
@@ -62,6 +62,7 @@ export default function Assignments() {
 
         
     }, []);
+
 
 
 
@@ -89,9 +90,9 @@ export default function Assignments() {
                 
                 <div className="col-10 px-0 assignments_page_main" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '175px'}}>
                     <div className="assignments_big_title">
-                        Assingments
+                        Assignments
                         <div className="assignments_page_container">
-
+                        
                         </div>
                         <div className="assignments_page_container">
 
