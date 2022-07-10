@@ -92,10 +92,12 @@ export default function Assignments() {
                 <Navbar />
                 
                 <div className="col-10 px-0 assignments_page_main" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '175px'}}>
-                    <div className="assignments_big_title">
+               
+                    <div className="assignments_big_title ">
+                    <div className="assignments_page_big_container">
                         Assignments
                         {/* <div className="assignments_page_container"> */}
-                        {
+                                            {
                                                 isLoading ?
                                                 <div
                                                     style={{
@@ -108,15 +110,27 @@ export default function Assignments() {
                                                     <GridLoader />
                                                 </div>
                                                 :
-                                                Object.keys(assignments).map( (el, index) => 
+                                                assignments && assignments.map( (el, index) => 
                                                     <div key={index}>
-                                                        <div className='assignments_page_cotnainer'>{el.name}
-                                                       </div>
-                                                    </div>
+                                                        
+                                
+                                            <div className="assignments_container top">
+                                                <div className="assignments_page_container_time">
+                                                    {el.end_at}
+                                                </div>
+                                                <div className="assignments_page_assignments">{el.title}</div>
+                                                <div className="assignments_page_detail">{el.class}</div>
+                                            </div>
+                                           
+                                           
+                                              
+                                        
+                                            </div>
+                                                       
                                                 )
                                             }
                         {/* </div> */}
-                        <div className="assignments_page_container">
+                        {/* <div className="assignments_page_container">
 
                         </div>
                         <div className="assignments_page_container">
@@ -124,8 +138,9 @@ export default function Assignments() {
                         </div>
                         <div className="assignments_page_container">
 
-                        </div>
+                        </div> */}
                     </div>
+                </div>
                 </div>
             </div>
         </div>

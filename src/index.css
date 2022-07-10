@@ -846,9 +846,55 @@ td{
   font-weight: 700;
   font-style: normal;
   font-size: 32px;
-}
-
-.assignments_page_main{
 
 }
 
+.assignments_page_big_container{
+  height: 500px;
+  overflow: scroll;
+}
+.assignments_title{
+  font-size: 15px;
+  padding-top: 10px;
+  margin-left: 10px;
+}
+
+.assignments_page_container{
+  background: white;
+  border-radius: 30px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+  height: 70px !important;
+  z-index: 3;
+  transform: translateY(70%);
+
+}
+
+.assignments_page_container_time{
+  border-right: 1px solid black;
+  margin-bottom: 40px;
+  margin-top: 30px;
+  padding-top: 20px;
+  margin-left: 10px;
+  top: 50px;
+  width: 14%;
+  font-size:20px;
+  z-index: 3;
+  margin-right: 20px;
+}
+
+
+.assignments_page_assignments{
+  font-size: 15px !important;
+  margin-top: -56px;
+  transform: translateX(17%);
+  z-index: 3;
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.assignments_page_detail{
+  font-size: 10px !important;
+  transform: translateY(50%);
+  margin-left: 290px;
+  z-index: 3;
+}
