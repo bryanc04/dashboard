@@ -196,7 +196,6 @@ export default function Home() {
     }
 
 
-
     return(
 
 
@@ -235,7 +234,9 @@ export default function Home() {
                                             Assignments
                                         </div>
                                             <hr className="hr"/>
-                                            <div className="assignments_content">Due Tommorow</div>
+                                            <div className="assignments_content">Due {
+                                                isLoading ? <div></div> : assignments && <div>{Object.values(assignments)[0]['end_at'].substring(0,10)}</div>
+                                            }</div>
                                             {
                                                 isLoading ?
                                                 <div
@@ -269,24 +270,6 @@ export default function Home() {
                                                        
                                                 )
                                             }
-                                            <div className="assignments_container top">
-                                                <div className="assignments_container_time">
-                                                    12:15
-                                                </div>
-                                                <div className="assignments_assignments">Finish Final Project</div>
-                                                <div className="assignments_detail">B6 World History</div>
-                                            </div>
-                                            <div className="gap"></div>
-                                            <div className="assignments_container bottom">
-                                                <div className="assignments_container_time_2">
-                                                    1:45
-                                                </div>
-                                                <div>
-                                                    
-                                                <div className="assignments_assignments_2">Complete Problem Set 1</div>
-                                                <div className="assignments_detail_2">B4 CL Calculus BC</div>
-                                                </div>
-                                            </div>
                                                 <div className="arrow_container"><i className="bi bi-arrow-down-short down_arrow"></i></div>
                                         
                                     </div>
