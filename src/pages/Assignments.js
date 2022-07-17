@@ -39,6 +39,9 @@ export default function Assignments() {
     const [color2, setColor2] = useState("#efefef");
     const [isLoading, setIsLoading] = useState(false);
     const [assignments, setAssignments] = useState();
+    const [checkflag, setCheckFlag] = useState(false);
+    const [checked, setChecked] = useState([]);
+
 
 
 
@@ -50,23 +53,73 @@ export default function Assignments() {
             const q = query(collectionRef);
             const querySnapshot = await getDocs(q);
             var newArray = [];
+            var checkArray = [];
+            var count;
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
+                count = count + 1;
                 newArray.push(data.data[0])
+                checkArray.push(false)
                 })
-
-            setAssignments(newArray)
-            
+            setChecked(checkArray);
+            setAssignments(newArray);
             setIsLoading(false);
+            
+            
             };
 
-      
+        
         getAssignments();
-
         
     }, []);
 
-    console.log(assignments)
+
+
+    
+
+    //     const [checked, setChecked] = React.useState(
+    //         new Array(count).fill(false)
+    //     );
+
+    //     const handleOnChange = (position) => {
+    //     const updatedCheckedState = checked.map((item, index) =>
+    //       index === position ? !item : item
+    //     );
+    // }
+      
+    //     setChecked(updatedCheckedState);
+
+        // while (!checkflag) {
+        //     const [checked, setChecked] = typeof assignments == 'undefined'     
+        //     ? 
+        //     (() => {
+        //         React.useState(false)
+        //     })()
+        //     : 
+        //     (() => {
+        //         React.useState(new Array(Object.keys(assignments).length).fill(false))
+        //         setCheckFlag = true
+        //     })();
+        // };
+
+        console.log(checked);
+        
+        const handleOnChange = (position) => {
+            const updatedCheckedState = checked.map((item, index) =>
+          index === position ? !item : item
+        );
+
+            setChecked(updatedCheckedState);
+        };
+      
+
+    
+    
+
+
+
+
+      
 
 
 
@@ -114,12 +167,14 @@ export default function Assignments() {
                                                     <div key={index}>
                                                         
                                 
-                                            <div className="assignments_container top">
+                                            <div className="assignments_container top" style={ checked[index] ? { display:'none'} : {display : 'block'}}>
+                                                {console.log(checked[0])}
                                                 <div className="assignments_page_container_time">
                                                     {el.end_at}
                                                 </div>
                                                 <div className="assignments_page_assignments">{el.title}</div>
                                                 <div className="assignments_page_detail">{el.class}</div>
+                                                <label className="assignments_checkbox"><input type="checkbox" checked={checked[index]} onChange={() => handleOnChange(index)}/></label>
                                             </div>
                                            
                                            
