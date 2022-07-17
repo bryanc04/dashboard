@@ -6,7 +6,7 @@ import{background} from "../components/popup";
 import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup';
 import moment from 'moment';
-
+import { GridLoader } from "react-spinners";
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -37,9 +37,15 @@ export default function Home() {
     const [color1, setColor1] = useState("#efefef");
     const [color2, setColor2] = useState("#efefef");
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const [dailyBulletin, setDailyBulletin] = useState([{},{},{},{},{},{},{},{}]);
 
     const [grade, setgrade] = useState({});
+
+    const [assignments, setAssignments] = useState();
+    const [checkflag, setCheckFlag] = useState(false);
+    const [checked, setChecked] = useState([]);
 
     const [block, setBlock] = useState();
     const [blockSubject, setBlockSubject] = useState();
@@ -74,7 +80,32 @@ export default function Home() {
                 })
             
                 
-            };
+        };
+
+        const getAssignments = async () => {
+                setIsLoading(true);
+                const collectionRef = collection(db, "assignments");
+                const q = query(collectionRef);
+                const querySnapshot = await getDocs(q);
+                var newArray = [];
+                var checkArray = [];
+                var count;
+                querySnapshot.forEach((doc) => {
+                    var data = doc.data();
+                    count = count + 1;
+                    newArray.push(data.data[0])
+                    checkArray.push(false)
+                    })
+                setChecked(checkArray);
+                setAssignments(newArray);
+                setIsLoading(false);
+                
+                
+        };
+    
+            
+            getAssignments();
+            
 
         const getBlocks = async() => {
             const querySnapshot = await getDocs(collection(db, "Block"));
@@ -143,9 +174,12 @@ export default function Home() {
 
         getDailyBulletin();
         getGrades();
+        getAssignments();
         getBlocks();
-        
+
     }, []);
+        
+
 
 
     const shortenText = (text, length) => {
@@ -158,7 +192,7 @@ export default function Home() {
         text = text.substring(0, length);
         let last = text.lastIndexOf(" ");
         text = text.substring(0, last);
-        return text + "...";
+        return text ;
     }
 
 
@@ -196,12 +230,45 @@ export default function Home() {
                         <div className="home_inner_container">
                             <div className="home_left">
                                 <div className="home_left_top">
-                                    <div className="home_content">
+                                    <div className="home_content assignments_home">
                                         <div className="content_title">
                                             Assignments
                                         </div>
                                             <hr className="hr"/>
                                             <div className="assignments_content">Due Tommorow</div>
+                                            {
+                                                isLoading ?
+                                                <div
+                                                    style={{
+                                                        display: 'flex',
+                                                        height: '100%',
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center'
+                                                    }}
+                                                >
+                                                    <GridLoader />
+                                                </div>
+                                                :
+                                                assignments && assignments.map( (el, index) => 
+                                                    <div key={index}>
+                                                        
+                                
+                                                        <div className="assignments_container top">
+                                                <div className="assignments_container_time">
+                                                    {el.end_at.substring(0, 10)}
+                                                </div>
+                                                <div className="assignments_assignments">{el.title}</div>
+                                                <div className="assignments_detail">{el.class}</div>
+                                            </div>
+                
+                                           
+                                           
+                                              
+                                        
+                                            </div>
+                                                       
+                                                )
+                                            }
                                             <div className="assignments_container top">
                                                 <div className="assignments_container_time">
                                                     12:15
@@ -214,8 +281,11 @@ export default function Home() {
                                                 <div className="assignments_container_time_2">
                                                     1:45
                                                 </div>
+                                                <div>
+                                                    
                                                 <div className="assignments_assignments_2">Complete Problem Set 1</div>
                                                 <div className="assignments_detail_2">B4 CL Calculus BC</div>
+                                                </div>
                                             </div>
                                                 <div className="arrow_container"><i className="bi bi-arrow-down-short down_arrow"></i></div>
                                         
