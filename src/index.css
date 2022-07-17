@@ -252,6 +252,7 @@ code {
   height: 60%;
   padding: 10px;
   z-index: 3;
+
 }
 
 .home_left_bottom{
@@ -290,8 +291,12 @@ code {
   z-index: 3;
   font-family: "Varela Round", sans-serif;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
-
   /* box-shadow: 10px 5px 5px grey; */
+ }
+
+ .assignments_home{
+  overflow-y: scroll;
+  overflow-x: hidden;
  }
 
 .content_title{
@@ -366,7 +371,7 @@ code {
   margin-left: 10px;
   top: 50px;
   width: 14%;
-  transform: translateY(70%);
+  transform: translateY(10px);
   z-index: 3;
   margin-right: 20px;
 }
@@ -374,7 +379,7 @@ code {
 
 .assignments_assignments{
   font-size: 15px !important;
-  margin-top: -56px;
+  margin-top: -70px;
   transform: translateX(17%);
   z-index: 3;
   margin-left: 10px;
@@ -859,7 +864,8 @@ td{
 
 .assignments_page_big_container{
   height: 500px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .assignments_title{
   font-size: 15px;
