@@ -98,7 +98,7 @@ export default function Grades() {
                             
                           
                                
-                                    <div className="home_left_bottom_right">
+                                    <div className="grade_inner_content">
                                         <div className="home_content">
                                             <div className="grade_page_container" style={{height: '100%'}}>
                                             {

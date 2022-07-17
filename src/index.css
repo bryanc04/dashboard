@@ -117,7 +117,7 @@ code {
   display: inline;
   position: absolute;
   top: 123px;
-  left: 277px;
+  left: 155px;
   z-index: 3;
    /* background-image: linear-gradient(
      -225deg,
@@ -587,6 +587,13 @@ code {
   color: black;
 }
 
+.grade_inner_content {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    z-index: 3;
+}
+
 .hvr-grow {
   display: inline-block;
   vertical-align: middle;
@@ -725,7 +732,7 @@ code {
 .schedule_inner_container{
     background-color: white;
     height:100%;
-    width: 50%;
+    width: 100%;
     border-radius: 50px;
     padding: 20px;
     z-index: 3;
@@ -757,7 +764,7 @@ td{
 
 
 .row{
-  margin-right: -1000px !important;
+  /* margin-right: -1000px !important; */
   filter: none !important;
 }
 

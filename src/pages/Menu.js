@@ -107,7 +107,7 @@ export default function Menu() {
                 
                 <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '175px'}}>
 
-                    <div style={{width: '50%'}}>
+                    <div>
                     <div>
                         <p className="menu_main_title welcome_title ">Menu</p>
                         <p className="menu_main_title welcome_title ">Menu</p>
