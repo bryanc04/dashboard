@@ -145,10 +145,12 @@ export default function Assignments() {
                 <Navbar />
                 
                 <div className="col-10 px-0 assignments_page_main" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '175px'}}>
-               
-                    <div className="assignments_big_title ">
+                    <div>
+                        <p className="grade_page_title welcome_title ">Assignments</p>
+                        <p className="grade_page_title welcome_title ">Assignments</p>
+                    
+                    </div>
                     <div className="assignments_page_big_container">
-                        Assignments
                         {/* <div className="assignments_page_container"> */}
                                             {
                                                 isLoading ?
@@ -195,7 +197,6 @@ export default function Assignments() {
 
                         </div> */}
                     </div>
-                </div>
                 </div>
             </div>
         </div>

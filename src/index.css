@@ -859,7 +859,8 @@ td{
 
 .assignments_page_big_container{
   height: 500px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .assignments_title{
   font-size: 15px;
