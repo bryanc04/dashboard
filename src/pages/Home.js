@@ -11,6 +11,7 @@ import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore"
+import '../index.scss';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -44,6 +45,7 @@ export default function Home() {
     const [grade, setgrade] = useState({});
 
     const [assignments, setAssignments] = useState();
+    const [displayAssignments, setDisplayAssignments] = useState();
     const [checkflag, setCheckFlag] = useState(false);
     const [checked, setChecked] = useState([]);
 
@@ -89,15 +91,26 @@ export default function Home() {
                 const querySnapshot = await getDocs(q);
                 var newArray = [];
                 var checkArray = [];
-                var count;
+                var aarray = [];
+                var count = 0;
+                var date;
                 querySnapshot.forEach((doc) => {
                     var data = doc.data();
+                    if (count == 0){
+                        date = data.data[0]['end_at']
+                        console.log('hi')
+                    }
                     count = count + 1;
                     newArray.push(data.data[0])
                     checkArray.push(false)
+                    if (data.data[0]['end_at'] == date){
+                        aarray.push(data.data[0])
+                        console.log("hi")
+                    }
                     })
                 setChecked(checkArray);
                 setAssignments(newArray);
+                setDisplayAssignments(aarray);
                 setIsLoading(false);
                 
                 
@@ -178,6 +191,8 @@ export default function Home() {
         getBlocks();
 
     }, []);
+
+
         
 
 
@@ -201,7 +216,7 @@ export default function Home() {
 
         <div className="all">
             <div className="container-fluid blur" style={{ 
-            backgroundColor: "rgb(239, 239, 239)", 
+            backgroundColor: "rgb(254, 254, 254)", 
             backgroundImage: backgroundOption === "change_bg_option_1" ?  "none" : 
                             backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
                             backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
@@ -235,41 +250,206 @@ export default function Home() {
                                         </div>
                                             <hr className="hr"/>
                                             <div className="assignments_content">Due {
-                                                isLoading ? <div></div> : assignments && <div>{Object.values(assignments)[0]['end_at'].substring(0,10)}</div>
+                                                isLoading ? <div></div> : assignments && <span>{Object.values(assignments)[0]['end_at'].substring(0,10)}</span>
                                             }</div>
+                                            <div className="assignments_all_container">
                                             {
                                                 isLoading ?
-                                                <div
-                                                    style={{
-                                                        display: 'flex',
-                                                        height: '100%',
-                                                        justifyContent: 'center',
-                                                        alignItems: 'center'
-                                                    }}
-                                                >
-                                                    <GridLoader />
-                                                </div>
+                                                <div class="container">
+
+                                                    <div class="h1Container">
+
+                                                        <div class="cube h1 w1 l1">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h1 w1 l2">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h1 w1 l3">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h1 w2 l1">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h1 w2 l2">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h1 w2 l3">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h1 w3 l1">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h1 w3 l2">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h1 w3 l3">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="h2Container">
+
+                                                        <div class="cube h2 w1 l1">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h2 w1 l2">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h2 w1 l3">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h2 w2 l1">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h2 w2 l2">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h2 w2 l3">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h2 w3 l1">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h2 w3 l2">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h2 w3 l3">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="h3Container">
+
+                                                        <div class="cube h3 w1 l1">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h3 w1 l2">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h3 w1 l3">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h3 w2 l1">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h3 w2 l2">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h3 w2 l3">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h3 w3 l1">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h3 w3 l2">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+
+                                                        <div class="cube h3 w3 l3">
+                                                        <div class="face top"></div>
+                                                        <div class="face left"></div>
+                                                        <div class="face right"></div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    </div>
                                                 :
-                                                assignments && assignments.map( (el, index) => 
-                                                    <div key={index}>
-                                                        
-                                
-                                                        <div className="assignments_container top">
-                                                <div className="assignments_container_time">
-                                                    {el.end_at.substring(0, 10)}
+                                                displayAssignments && displayAssignments.map( (el, index) => 
+                                                <div key={index}>
+                                                    <div className="assignments_container top_c">
+                                                    <div className="assignments_container_time">
+                                                        {el.end_at.substring(0, 10)}
+                                                    </div>
+                                                    <div className="assignments_assignments">{el.title}</div>
+                                                    <div className="assignments_detail">{el.class}</div>
                                                 </div>
-                                                <div className="assignments_assignments">{el.title}</div>
-                                                <div className="assignments_detail">{el.class}</div>
-                                            </div>
+                                                </div>
                 
                                            
                                            
                                               
                                         
-                                            </div>
+                                            
                                                        
                                                 )
                                             }
+                                        </div>
                                                 <div className="arrow_container"><i className="bi bi-arrow-down-short down_arrow"></i></div>
                                         
                                     </div>
@@ -296,18 +476,6 @@ export default function Home() {
                                         <div className="home_content">
                                             <div className="content_title" style={{marginBottom: 10}}>My Grades</div>
                                             <div className="grade_container">
-                                                {/* <div className="class_1">Advanced Chemistry:</div>
-                                                <div>A</div>
-                                                <div className="class_2">CL Calculus BC:</div>
-                                                <div>A</div>
-                                                <div className="class_3">English I:</div>
-                                                <div>A</div>
-                                                <div className="class_4">Advanced Latin III:</div>
-                                                  <div>F</div>
-                                                <div className="class_5">World History:</div>
-                                                <div>A</div>
-                                                <div className="class_6">Graphic Design</div>
-                                                <div>A</div> */}
 
 {
                                             Object.values(grade).map( (el, index) => 
