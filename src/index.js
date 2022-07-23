@@ -10,9 +10,11 @@ import Menu from './pages/Menu';
 import Grades from './pages/Grades';
 import Schedule from './pages/Schedule';
 import Assignments from './pages/Assignments';
+import Login from './pages/Login';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { UserContext} from './components/popup'
+import { UserContext} from './components/popup';
+import './index.less'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,6 +24,7 @@ root.render(
   <Router>
       <Routes>
         <Route path="/" element={<Home />}/>
+        <Route path="/Login" element={<Login />}/>
         <Route path="/Assignments" element={<Assignments />} />
         <Route path="/Calendar" element={<Calendar />}/>
         <Route path="/Menu" element={<Menu />}/>

@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup';
 import moment from 'moment';
 import { GridLoader } from "react-spinners";
-
+import '../index.less';
+import Pacman from 'react-pacman';
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -38,12 +39,15 @@ export default function Assignments() {
     const [color1, setColor1] = useState("#efefef");
     const [color2, setColor2] = useState("#efefef");
     const [isLoading, setIsLoading] = useState(false);
-    const [assignments, setAssignments] = useState();
+    
     const [checkflag, setCheckFlag] = useState(false);
     const [checked, setChecked] = useState([]);
 
+    const [ToDo, setTodo] = useState(true);
+    const [completed, setCompleted] = useState(false);
 
-
+    const [assignments, setAssignments] = useState();
+    const [completedAssignments, setCompletedAssignments] = useState([]);
 
     useEffect(()=> {
      
@@ -74,36 +78,6 @@ export default function Assignments() {
     }, []);
 
 
-
-    
-
-    //     const [checked, setChecked] = React.useState(
-    //         new Array(count).fill(false)
-    //     );
-
-    //     const handleOnChange = (position) => {
-    //     const updatedCheckedState = checked.map((item, index) =>
-    //       index === position ? !item : item
-    //     );
-    // }
-      
-    //     setChecked(updatedCheckedState);
-
-        // while (!checkflag) {
-        //     const [checked, setChecked] = typeof assignments == 'undefined'     
-        //     ? 
-        //     (() => {
-        //         React.useState(false)
-        //     })()
-        //     : 
-        //     (() => {
-        //         React.useState(new Array(Object.keys(assignments).length).fill(false))
-        //         setCheckFlag = true
-        //     })();
-        // };
-
-        console.log(checked);
-        
         const handleOnChange = (position) => {
             const updatedCheckedState = checked.map((item, index) =>
           index === position ? !item : item
@@ -111,24 +85,74 @@ export default function Assignments() {
 
             setChecked(updatedCheckedState);
         };
-      
 
-    
-    
+        const ButtonOnClick = event => {
+            if (ToDo == true){
+                return;
+            }else{
+                setTodo(current => !current)
+                setCompleted(false)
+            }
+          };
 
+          const completedOnClicked = event => {
+            console.log(ToDo)
+            if (completed == true){
+                return;
+            }
+            else{
+                setCompleted(true);
+                setTodo(false);
+            }
+          };
 
+          function moveToCompleted(index) {
+            if (!checked[index]){
+                var temparr = completedAssignments;
+                temparr.push(Object.values(assignments)[index])
+                setCompletedAssignments(temparr)
+                console.log(completedAssignments)
+                var temparr2 = assignments
+                temparr2.splice(index, 1)
+                setAssignments(temparr2)
+            }
+            else if (checked[index]){
+                var temparr = assignments
+                temparr.push(Object.values(completedAssignments)[index])
+                setAssignments(temparr)
+                var temparr2 = completedAssignments
+                temparr2.splice(index, 1)
+                setCompletedAssignments(temparr2)
+            }
+          }
 
+          function moveToToDo(index) {
+            if (checked[index]){
+                var temparr = assignments
+                temparr.push(Object.values(assignments)[index])
+                setAssignments(temparr)
+                var temparr2 = completedAssignments
+                temparr2.splice(index, 1)
+                setCompletedAssignments(temparr2)
+                console.log(completedAssignments)
+            }
+            else if (!checked[index]){
+                var temparr = completedAssignments
+                temparr.splice(index, 1)
+                setCompletedAssignments(temparr)
+                var temparr2 = assignments
+                temparr2.push(completedAssignments[index])
+                setAssignments(temparr2)
+                console.log(assignments)
+            }
+          }
 
-      
-
-
-
-    return(
+    return (
 
 
         <div className="all">
             <div className="container-fluid blur" style={{ 
-            backgroundColor: "rgb(239, 239, 239)", 
+            backgroundColor: "rgb(254, 254, 254)", 
             backgroundImage: backgroundOption === "change_bg_option_1" ?  "none" : 
                             backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
                             backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
@@ -145,48 +169,58 @@ export default function Assignments() {
                 <Navbar />
                 
                 <div className="col-10 px-0 assignments_page_main" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '175px'}}>
-                    <div>
-                        <p className="grade_page_title welcome_title ">Assignments</p>
-                        <p className="grade_page_title welcome_title ">Assignments</p>
-                    
-                    </div>
+
+                    <div className="assignments_big_title ">
                     <div className="assignments_page_big_container">
-                        {/* <div className="assignments_page_container"> */}
+                        Assignments
+                        <div className="assignments_button_grid">
+                            <button type="submit" className='btn btn-primary shadow-none' style={{width: '10%'}} onClick={ButtonOnClick}>
+                                To-Do
+                            </button>
+                            <button type="submit" className='btn btn-primary shadow-none' style={{width: '13%', marginLeft: 10}} onClick={completedOnClicked}>
+                                Completed
+                            </button>
+                        </div>
+                        <div className="assignments_page_container">
                                             {
                                                 isLoading ?
-                                                <div
-                                                    style={{
-                                                        display: 'flex',
-                                                        height: '100%',
-                                                        justifyContent: 'center',
-                                                        alignItems: 'center'
-                                                    }}
-                                                >
-                                                    <GridLoader />
-                                                </div>
+                                                <Pacman/>
                                                 :
+                                                ToDo ?
                                                 assignments && assignments.map( (el, index) => 
                                                     <div key={index}>
-                                                        
-                                
-                                            <div className="assignments_container top" style={ checked[index] ? { display:'none'} : {display : 'block'}}>
-                                                {console.log(checked[0])}
-                                                <div className="assignments_page_container_time">
-                                                    {el.end_at}
-                                                </div>
-                                                <div className="assignments_page_assignments">{el.title}</div>
-                                                <div className="assignments_page_detail">{el.class}</div>
-                                                <label className="assignments_checkbox"><input type="checkbox" checked={checked[index]} onChange={() => handleOnChange(index)}/></label>
-                                            </div>
-                                           
-                                           
-                                              
-                                        
-                                            </div>
-                                                       
+                                                        <div className="assignments_container top_c" 
+                                                        // style={ checked[index] ? ({ display:'none'})  : {display : 'block'}}
+                                                        >
+                                                            <div className="assignments_page_container_time">
+                                                                {el.end_at.substring(0,10)}
+                                                            </div>
+                                                            <div className="assignments_page_assignments">{el.title}</div>
+                                                            <div className="assignments_page_detail">{el.class}</div>
+                                                            <label className="assignments_checkbox"><input type="checkbox" checked={checked[index]} onChange={() => {handleOnChange(index); moveToCompleted(index)}}/></label>
+                                                        </div>
+                                                    </div>                                  
                                                 )
+                                                :
+                                                assignments && 
+                                                completedAssignments.map( (el, index) => 
+                                                <div>
+                                                <div key={index}>
+                                                    <div className="assignments_container top">
+                                                        <div className="assignments_page_container_time">
+                                                            {el.end_at.substring(0,10)}
+                                                        </div>
+                                                        <div className="assignments_page_assignments">{el.title}</div>
+                                                        <div className="assignments_page_detail">{el.class}</div>
+                                                        <label className="assignments_checkbox"><input type="checkbox" checked={checked[index]} onChange={() => {handleOnChange(index); moveToToDo(index)}}/></label>
+                                                    </div>
+                                                </div>   
+                                                </div>
+                                                )
+                                                
                                             }
-                        {/* </div> */}
+
+                        </div>
                         {/* <div className="assignments_page_container">
 
                         </div>
@@ -200,6 +234,7 @@ export default function Assignments() {
                 </div>
             </div>
         </div>
+    </div>
     </div>
         
         
