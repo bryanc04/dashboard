@@ -51,9 +51,6 @@ export default function Assignments() {
 
     const [assignments, setAssignments] = useState();
     const [completedAssignments, setCompletedAssignments] = useState([]);
-    
-
-
 
     useEffect(()=> {
 
@@ -159,20 +156,7 @@ export default function Assignments() {
             }
           }
 
-          
-
-
-    
-    
-
-
-
-
-      
-
-
-
-    return(
+    return (
 
 
         <div className="all">
@@ -263,9 +247,9 @@ export default function Assignments() {
                         </div> */}
                     </div>
                 </div>
-                </div>
             </div>
         </div>
+    </div>
     </div>
         
         
