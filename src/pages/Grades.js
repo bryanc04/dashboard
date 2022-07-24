@@ -11,7 +11,9 @@ import { GridLoader } from "react-spinners";
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore"
+import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import ChromeDinoGame from 'react-chrome-dino';
+import { EncryptStorage } from "encrypt-storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -32,7 +34,16 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
+    prefix: '@instance',
+    storageType: 'sessionStorage'
+})
+
+
+
 export default function Grades() {
+
+    const [isLoggedin, setIsLoggedIn] = useState(false);
 
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
@@ -43,6 +54,13 @@ export default function Grades() {
     const [grade, setgrade] = useState({});
 
     useEffect(()=> {
+
+        
+        var loggedIn = encryptstorage.getItem("status");
+
+        if (loggedIn == "logged in"){
+            setIsLoggedIn(true)
+        }
      
         const getGrades = async () => {
             setIsLoading(true);
@@ -114,13 +132,19 @@ export default function Grades() {
                                                     <GridLoader />
                                                 </div>
                                                 :
+                                                isLoggedin
+                                                ?
                                                 Object.values(grade).map( (el, index) => 
                                                     <div key={index}>
                                                         <div className='class_1 grade_page_grade_class'>{el.class_name}
                                                         <div className="class_grade grade_page_grade">{el.ptd_letter_grade}</div></div>
                                                     </div>
                                                 )
-                                            }
+                                            
+                                                :
+                                                <ChromeDinoGame/>
+
+                                                }
                                             </div>
                                         </div>
                                     </div>

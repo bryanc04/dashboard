@@ -6,6 +6,8 @@ import moment from "moment";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import { EncryptStorage } from "encrypt-storage";
+
 const firebaseConfig = {
     apiKey: "AIzaSyBDh3yxYRLCaikdnMXYrCuVc0iGL5qn0js",
     authDomain: "dashboard-2a1a3.firebaseapp.com",
@@ -15,6 +17,12 @@ const firebaseConfig = {
     appId: "1:354314041590:web:32b771d8e2a2d4ce4ad4d7",
     measurementId: "G-W02KFP0FY8"
   };
+
+
+const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
+    prefix: '@instance',
+    storageType: 'sessionStorage'
+})
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -33,7 +41,7 @@ export default function Calendar(){
 
     useEffect(()=> {
 
-        var loggedIn = sessionStorage.getItem("status");
+        var loggedIn = encryptstorage.getItem("status");
 
         if (loggedIn == "logged in"){
             setIsLoggedIn(true)

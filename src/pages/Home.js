@@ -34,6 +34,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
+    prefix: '@instance',
+    storageType: 'sessionStorage'
+})
+
+
+
 export default function Home() {
 
     const [isLoggedin, setIsLoggedIn] = useState(false);
@@ -62,7 +69,7 @@ export default function Home() {
     useEffect(()=> {
 
         
-        var loggedIn = sessionStorage.getItem("status");
+        var loggedIn = encryptstorage.getItem("status");
 
         if (loggedIn == "logged in"){
             setIsLoggedIn(true)

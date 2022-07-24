@@ -11,7 +11,8 @@ import DataTable from 'react-data-table-component';
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore"
+import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import { EncryptStorage } from "encrypt-storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -30,6 +31,13 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+
+const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
+    prefix: '@instance',
+    storageType: 'sessionStorage'
+})
+
 
 
 export default function Schedule() {
@@ -77,7 +85,7 @@ export default function Schedule() {
 
     useEffect(()=> {
 
-        var loggedIn = sessionStorage.getItem("status");
+        var loggedIn = encryptstorage.getItem("status");
 
         if (loggedIn == "logged in"){
             setIsLoggedIn(true)

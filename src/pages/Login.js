@@ -5,6 +5,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { message, Space } from 'antd';
 import 'antd/dist/antd.css';
+import { EncryptStorage } from "encrypt-storage";
+
+const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
+    prefix: '@instance',
+    storageType: 'sessionStorage'
+})
 
 
 export default function Login(){
@@ -15,7 +21,7 @@ export default function Login(){
     let navigate = useNavigate();
 
     useEffect(() => {
-        var loggedIn = sessionStorage.getItem("status");
+        var loggedIn = encryptstorage.getItem("status");
         if (loggedIn == "logged in"){
             navigate("/Home", {replace: true})
         }
@@ -40,8 +46,8 @@ export default function Login(){
             var data = response.data;
             setIsLoading(false);
             if (data == "Valid"){
-                sessionStorage.setItem("status", "logged in")
-                navigate("/HOme", { replace: true })
+                encryptstorage.setItem("status", "logged in")
+                navigate("/Home", { replace: true })
             }else{
                 message.error("Wrong username or password.")
             }
