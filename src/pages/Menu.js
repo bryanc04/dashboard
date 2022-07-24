@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup';
 import moment from 'moment';
 import { GridLoader } from "react-spinners";
-
+import ChromeDinoGame from 'react-chrome-dino';
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -32,6 +32,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export default function Menu() {
+    const [isLoggedin, setIsLoggedIn] = useState(false);
 
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("efefef");
@@ -52,6 +53,13 @@ export default function Menu() {
     const classindex = ['class_1', 'class_2', 'class_3', 'class_4', 'class_5', 'class_6', 'class_7']
 
     useEffect(()=> {
+
+        var loggedIn = sessionStorage.getItem("status");
+
+        if (loggedIn == "logged in"){
+            setIsLoggedIn(true)
+        }
+     
 
         const getMenu = async () => {
             const collectionRef = collection(db, "menu");
@@ -118,6 +126,9 @@ export default function Menu() {
                                     Breakfast
                                 </div>
                                 {
+                                    isLoggedin
+                                    ?
+
                                     breakfastMenu ? Object.keys(breakfastMenu).sort().map((el, index) => 
                                         <div key={index}>
                                             <div className="meal_content">
@@ -145,6 +156,8 @@ export default function Menu() {
                                     >
                                         <GridLoader />
                                     </div>
+                                    :
+                                    <ChromeDinoGame/>
                                 }
                             </div>
                             <div className="menu_center menu_content">

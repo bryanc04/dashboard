@@ -13,6 +13,7 @@ import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit, where, documentId, doc } from "firebase/firestore"
+import ChromeDinoGame from 'react-chrome-dino';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -35,6 +36,8 @@ const db = getFirestore(app);
 
 export default function Assignments() {
 
+    const [isLoggedin, setIsLoggedIn] = useState(false);
+
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
     const [color2, setColor2] = useState("#efefef");
@@ -53,6 +56,12 @@ export default function Assignments() {
 
 
     useEffect(()=> {
+
+        var loggedIn = sessionStorage.getItem("status");
+
+        if (loggedIn == "logged in"){
+            setIsLoggedIn(true)
+        }
      
         const getAssignments = async () => {
             setIsLoading(true);
@@ -199,10 +208,14 @@ export default function Assignments() {
                         </div>
                         <div className="assignments_page_container">
                                             {
-                                                isLoading ?
+                                                isLoading 
+                                                ?
                                                 <Pacman/>
                                                 :
-                                                ToDo ?
+                                                isLoggedin 
+                                                ?
+                                                ToDo 
+                                                ?
                                                 assignments && assignments.map( (el, index) => 
                                                     <div key={index}>
                                                         <div className="assignments_container top_c" 
@@ -233,6 +246,8 @@ export default function Assignments() {
                                                 </div>   
                                                 </div>
                                                 )
+                                                :
+                                                <ChromeDinoGame/>
                                                 
                                             }
 

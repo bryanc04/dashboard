@@ -21,6 +21,8 @@ const db = getFirestore(app);
 
 export default function Calendar(){
 
+    const [isLoggedin, setIsLoggedIn] = useState(false);
+
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
     const [color2, setColor2] = useState("#efefef");
@@ -30,6 +32,12 @@ export default function Calendar(){
     const [events, setEvents] = useState([]);
 
     useEffect(()=> {
+
+        var loggedIn = sessionStorage.getItem("status");
+
+        if (loggedIn == "logged in"){
+            setIsLoggedIn(true)
+        }
      
         const getCalendar = async () => {
             setIsLoading(true);
@@ -103,17 +111,22 @@ export default function Calendar(){
                     <p className="grade_page_title welcome_title ">Calendar</p>
                   
                 </div>
-
+                    {isLoggedin
+                    ?
                 <div>
-    <Bigcalendar
+
+            <Bigcalendar
           localizer={localizer}
         
           startAccessor="start"
           endAccessor="end"
           style={{ height: 500 }}
           events = {events && events}
-    />
+            />
   </div>
+  :
+  <ChromeDinoGame/>
+}
             </div>
 
     

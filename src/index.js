@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Home from './pages/Home';
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Calendar from './pages/Calendar';
 import Menu from './pages/Menu';
 import Grades from './pages/Grades';
@@ -23,7 +23,8 @@ root.render(
   // </React.StrictMode>
   <Router>
       <Routes>
-        <Route path="/" element={<Home />}/>
+        <Route path="/" element={<Navigate to="/Login" />} />
+        <Route path="/Home" element={<Home />}/>
         <Route path="/Login" element={<Login />}/>
         <Route path="/Assignments" element={<Assignments />} />
         <Route path="/Calendar" element={<Calendar />}/>

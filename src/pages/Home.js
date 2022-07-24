@@ -12,6 +12,8 @@ import { HexColorPicker } from "react-colorful";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore"
 import '../index.scss';
+import ChromeDinoGame from 'react-chrome-dino';
+import { ChromePicker } from "react-color";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,6 +35,8 @@ const db = getFirestore(app);
 
 
 export default function Home() {
+
+    const [isLoggedin, setIsLoggedIn] = useState(false);
 
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
@@ -56,6 +60,14 @@ export default function Home() {
     const classindex = ['class_1', 'class_2', 'class_3', 'class_4', 'class_5', 'class_6', 'class_7']
 
     useEffect(()=> {
+
+        
+        var loggedIn = sessionStorage.getItem("status");
+
+        if (loggedIn == "logged in"){
+            setIsLoggedIn(true)
+        }
+
         const getDailyBulletin = async () => {
             // const querySnapshot = await getDocs(collection(db, "daily_bulletin"));
             // querySnapshot.forEach((doc)=>{
@@ -212,7 +224,15 @@ export default function Home() {
 
 
     return(
+        <div>
 
+
+        {
+        isLoggedin
+        ?
+
+
+        
 
         <div className="all">
             <div className="container-fluid blur" style={{ 
@@ -517,8 +537,11 @@ export default function Home() {
             </div>
         </div>
         </div>
+        :
+<ChromeDinoGame/>
         
-     
+                                        }
 
+</div>
     )
 }

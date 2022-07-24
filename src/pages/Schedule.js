@@ -6,7 +6,7 @@ import{background} from "../components/popup";
 import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup';
 import moment from 'moment';
-
+import ChromeDinoGame from 'react-chrome-dino';
 import DataTable from 'react-data-table-component';
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
@@ -33,6 +33,8 @@ const db = getFirestore(app);
 
 
 export default function Schedule() {
+
+    const [isLoggedin, setIsLoggedIn] = useState(false);
 
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
@@ -74,6 +76,13 @@ export default function Schedule() {
     
 
     useEffect(()=> {
+
+        var loggedIn = sessionStorage.getItem("status");
+
+        if (loggedIn == "logged in"){
+            setIsLoggedIn(true)
+        }
+     
      
         // const getGrades = async () => {
         //     const collectionRef = collection(db, "grades");
@@ -113,6 +122,8 @@ export default function Schedule() {
 
 
     return(
+        <div>
+        {isLoggedin ?
 
 
         <div className="all">
@@ -156,6 +167,10 @@ export default function Schedule() {
                 </div>
             </div>
             
+        </div>
+        :
+        <ChromeDinoGame/>
+}
         </div>
 
         

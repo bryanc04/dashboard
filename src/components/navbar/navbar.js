@@ -17,7 +17,7 @@ export default function Navbar(){
         </div>
         <ul className="nav nav-pills nav-flush flex-column mb-auto text-center" style ={{flex: 1, justifyContent: 'center'}}>
           <li className="nav-item">
-            <NavLink to = "/" className='navbar_item_container ' > 
+            <NavLink to = "/Home" className='navbar_item_container ' > 
                 <i className="bi bi-house" style={{color: "maroon", fontSize: '25px'}}></i> 
             </NavLink>
           </li>
