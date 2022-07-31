@@ -577,17 +577,16 @@ hr{
 .big_block_container{
   justify-content: center;
   text-align: center;
-  font-size: 50px;
+  font-size: 20px;
   font-weight: 900;
   font-family: 'Varela Round';
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 0px;
 }
 
 .current_block_name{
   justify-content: center;
   text-align: center;
-  margin-top: -10px;
   font-size: 12px;
 
 }
@@ -609,6 +608,7 @@ hr{
   font-size: 13px;
   text-align: center;
   justify-content: center;
+  padding-top: 40px;
 }
 
 .grade_title{
@@ -725,7 +725,7 @@ hr{
   margin-bottom: 0px;
   background-color: white;
   width: 60%;
-  height: 65%;
+
   margin-right: 50px;
   margin-left: 50px;
   border-radius: 30px;
@@ -733,7 +733,7 @@ hr{
 
 
 .navbar_style{
-  height: 67vh;
+  height: 72vh;
   background-color: white;
   width: 90px;
   transform: translateY(160px);
@@ -771,8 +771,8 @@ hr{
 
 .schedule_inner_container{
     background-color: white;
-    height:100%;
-    width: 100%;
+    height:80%;
+    width: 85%;
     border-radius: 50px;
     padding: 20px;
     z-index: 3;
@@ -780,6 +780,7 @@ hr{
     box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
     justify-content: center;
     align-items: center;
+    margin-left:60px;
 }
 
 table{
@@ -831,11 +832,12 @@ td{
 
 
 .menu_inner_container{
-  height: 750px;
+  height: 70vh;
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 90%;
   z-index: 3;
+  margin-left: 60px;
 }
 
 .menu_content{
@@ -845,6 +847,13 @@ td{
   border-radius: 30px;
   margin-top: 10px;
   width: 33%;
+
+}
+
+.menu_scroll{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 60vh;
 }
 
 .meal_title{

@@ -58,7 +58,7 @@ export default function Grades() {
         
         var loggedIn = encryptstorage.getItem("status");
 
-        if (loggedIn == "logged in"){
+        if (loggedIn[0] == "logged in"){
             setIsLoggedIn(true)
         }
      
