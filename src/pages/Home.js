@@ -474,9 +474,7 @@ export default function Home() {
                                                        
                                                 )
                                             }
-                                        </div>
-                                                <div className="arrow_container"><i className="bi bi-arrow-down-short down_arrow"></i></div>
-                                        
+                                        </div>            
                                     </div>
                                 </div>
                                 <div className="home_left_bottom">

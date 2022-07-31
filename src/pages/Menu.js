@@ -133,10 +133,9 @@ export default function Menu() {
                                 <div className="meal_title">
                                     Breakfast
                                 </div>
+                                <div className="menu_scroll">
                                 {
-                                    isLoggedin
-                                    ?
-
+                                
                                     breakfastMenu ? Object.keys(breakfastMenu).sort().map((el, index) => 
                                         <div key={index}>
                                             <div className="meal_content">
@@ -164,14 +163,15 @@ export default function Menu() {
                                     >
                                         <GridLoader />
                                     </div>
-                                    :
-                                    <ChromeDinoGame/>
+                            
                                 }
+                            </div>
                             </div>
                             <div className="menu_center menu_content">
                                 <div className="meal_title">
                                     Lunch
                                 </div>
+                                <div className="menu_scroll">
                                 {
                                     lunchMenu ? Object.keys(lunchMenu).sort().map((el, index) => 
                                         <div key={index}>
@@ -202,10 +202,12 @@ export default function Menu() {
                                     </div>
                                 }
                             </div>
+                            </div>
                             <div className="menu_bottom menu_content">
                                 <div className="meal_title">
                                     Dinner
                                 </div>
+                                <div className="menu_scroll">
                                 {
                                     dinnerMenu ? Object.keys(dinnerMenu).sort().map((el, index) => 
                                         <div key={index}>
@@ -235,6 +237,7 @@ export default function Menu() {
                                         <GridLoader />
                                     </div>
                                 }
+                            </div>
                             </div>
                         </div>
                             
