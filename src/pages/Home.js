@@ -10,10 +10,11 @@ import { GridLoader } from "react-spinners";
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore"
+import { getFirestore, collection, getDocs, query, orderBy, limit, getDoc, doc } from "firebase/firestore"
 import '../index.scss';
 import ChromeDinoGame from 'react-chrome-dino';
 import { ChromePicker } from "react-color";
+import { EncryptStorage } from "encrypt-storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -71,7 +72,7 @@ export default function Home() {
         
         var loggedIn = encryptstorage.getItem("status");
 
-        if (loggedIn == "logged in"){
+        if (loggedIn[0] == "logged in"){
             setIsLoggedIn(true)
         }
 
@@ -92,41 +93,41 @@ export default function Home() {
         };
 
         const getGrades = async () => {
-            const collectionRef = collection(db, "grades");
-            const q = query(collectionRef);
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                var data = doc.data();
-                setgrade(data);
-                })
-            
+            const docRef = doc(db, "Grades", "BChung");
+            const docSnap = await getDoc(docRef);
+            var data = docSnap.data();
+            for(var i = 0; i < data.length; i++)
+            {
+                setgrade(data[i]);
+            }
                 
         };
 
         const getAssignments = async () => {
                 setIsLoading(true);
-                const collectionRef = collection(db, "assignments");
-                const q = query(collectionRef);
-                const querySnapshot = await getDocs(q);
+                const docRef = doc(db, "assignments", "BChung");
+                const docSnap = await getDoc(docRef);
                 var newArray = [];
                 var checkArray = [];
                 var aarray = [];
                 var count = 0;
                 var date;
-                querySnapshot.forEach((doc) => {
-                    var data = doc.data();
+                var data = docSnap.data();
+                var keys = Object.keys(data).sort();
+                for(var i = 0; i < keys.length; i++)
+                {
                     if (count == 0){
-                        date = data.data[0]['end_at']
+                        date = Object.keys(data).sort()[0]
                         console.log('hi')
                     }
                     count = count + 1;
-                    newArray.push(data.data[0])
+                    newArray.push(data[keys[i]][0])
                     checkArray.push(false)
-                    if (data.data[0]['end_at'] == date){
-                        aarray.push(data.data[0])
+                    if (data[keys[i]][0]['end_at'] == date){
+                        aarray.push(data[keys[i]][0])
                         console.log("hi")
                     }
-                    })
+                }
                 setChecked(checkArray);
                 setAssignments(newArray);
                 setDisplayAssignments(aarray);
@@ -140,14 +141,13 @@ export default function Home() {
             
 
         const getBlocks = async() => {
-            const querySnapshot = await getDocs(collection(db, "Block"));
-            querySnapshot.forEach((doc)=>{
-                var data = doc.data();
-                setRotation(data['rotationDay']);
-                delete data['rotationDay'];
-
-                
-                for(var i = 0; i < Object.keys(data).length; i++)
+            const docRef = doc(db, "Block", "BChung");
+            const docSnap = await getDoc(docRef);
+            var data = docSnap.data();
+            console.log(data)
+            setRotation(data['rotationDay']);
+            delete data['rotationDay'];
+            for(var i = 0; i < Object.keys(data).length; i++)
                 {
                     if(i < Object.keys(data).length - 1)
                     {
@@ -198,11 +198,9 @@ export default function Home() {
                             setNextBlock("")
                             setBlockSubject(data[i]['description'].slice(0, -3));
                     }
-                }
-            
-
-            })
-        }
+                
+                 } 
+            }
 
         getDailyBulletin();
         getGrades();

@@ -46,7 +46,7 @@ export default function Login(){
             var data = response.data;
             setIsLoading(false);
             if (data == "Valid"){
-                encryptstorage.setItem("status", "logged in")
+                encryptstorage.setItem("status", ["logged in", username, password])
                 navigate("/Home", { replace: true })
             }else{
                 message.error("Wrong username or password.")
