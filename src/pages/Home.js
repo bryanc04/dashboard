@@ -15,6 +15,10 @@ import '../index.scss';
 import ChromeDinoGame from 'react-chrome-dino';
 import { ChromePicker } from "react-color";
 import { encryptstorage } from '../components/encrypt'
+import axios from "axios";
+import { message, Space } from 'antd';
+import 'antd/dist/antd.css';
+import dayjs from "dayjs";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -65,18 +69,21 @@ export default function Home() {
         
         var loggedIn = encryptstorage.getItem("status");
 
+        var userInfo = encryptstorage.getItem("userInfo")
+        console.log(userInfo)
+
         if (loggedIn == "logged in"){
             setIsLoggedIn(true)
         }
 
         const checkupdated = async () => {
-            var date = new Date(Date.now());
+            var date = new Date();
             console.log(date.toString().substring(0,10))
-            const docRef = doc(db, "last_updated", "BChung");
+            const docRef = doc(db, "last_updated", userInfo[0]);
             const docSnap = await getDoc(docRef);
             var data = docSnap.data();
             if (!docSnap.exists()){
-                await setDoc(doc(db, "last_updated", "BChung"), {
+                await setDoc(doc(db, "last_updated", userInfo[0]), {
                     last_updated: date
                   });
                 console.log("fakjsdhfjkdsahkj")
@@ -87,6 +94,78 @@ export default function Home() {
                 if (data['last_updated'].toDate().toString().substring(0,10) != date.toString().substring(0,10)){
                     console.log("date mismatch")
                     //run update grades
+                        axios.post('https://loomis.herokuapp.com/updateGrades', {
+                            username: userInfo[0],
+                            password: userInfo[1]
+                        })
+                        .then(function(response) {
+                            message.success("Grades were succesfully updated")
+                            axios.post('https://loomis.herokuapp.com/updateAssignments', {
+                                username: userInfo[0],
+                                password: userInfo[1]
+                            })
+                            .then(function(response) {
+                                message.success("Assignments were succesfully updated")
+                                
+                            })
+                            .catch(function(error){
+                                console.log (error);
+                            })
+                            
+                        })
+                        .catch(function(error){
+                            console.log (error);
+                        })
+                }
+
+            }
+        }
+
+        const checkOverallUpdated = async () => {
+            var date = new Date();
+            console.log(date.toString().substring(0,10))
+            const docRef = doc(db, "last_updated", "Overall");
+            const docSnap = await getDoc(docRef);
+            var data = docSnap.data();
+            if (!docSnap.exists()){
+                await setDoc(doc(db, "last_updated", "Overall"), {
+                    last_updated: date
+                  });
+            }
+            else{
+
+                console.log(data['last_updated'].toDate().toString().substring(0,10));
+                if (!dayjs().isSame(data['last_updated'].toDate().toISOString().split('T')[0], 'week')){
+                    console.log("overall date mismatch")
+                    //run updates
+                    axios.get('https://loomis.herokuapp.com/updateNews')
+                        .then(function(response) {
+                            message.success("The Daily Bulletin was succesfully updated")
+                            axios.get('https://loomis.herokuapp.com/updateMenu')
+                            .then(function(response) {
+                                message.success("Menu was succesfully updated")
+                                axios.get('https://loomis.herokuapp.com/updateAthleticSchedule')
+                                .then(function(response) {
+                                    message.success("Althetic Schedule was succesfully updated")
+                                    
+                                    
+                                })
+                                .catch(function(error){
+                                    console.log (error);
+                                })
+                            
+                                
+                            })
+                            .catch(function(error){
+                                console.log (error);
+                            })
+                            
+                        })
+                        .catch(function(error){
+                            console.log (error);
+                        })
+                        
+
                 }
 
             }
@@ -109,7 +188,7 @@ export default function Home() {
         };
 
         const getGrades = async () => {
-            const docRef = doc(db, "grades", "BChung");
+            const docRef = doc(db, "grades", userInfo[0]);
             const docSnap = await getDoc(docRef);
             var data = docSnap.data();
             if (data){
@@ -127,7 +206,7 @@ export default function Home() {
 
         const getAssignments = async () => {
                 setIsLoading(true);
-                const docRef = doc(db, "assignments", "BChung");
+                const docRef = doc(db, "assignments", userInfo[0]);
                 const docSnap = await getDoc(docRef);
             
                 var newArray = [];
@@ -163,7 +242,7 @@ export default function Home() {
             
 
         const getBlocks = async() => {
-           const docRef = doc(db, "Block", "BChung");
+           const docRef = doc(db, "Block", userInfo[0]);
            const docSnap = await getDoc(docRef);
            var data = docSnap.data();
            setRotation(data['rotationDay']);
@@ -228,6 +307,7 @@ export default function Home() {
         getAssignments();
         getBlocks();
         checkupdated();
+        checkOverallUpdated();
 
     }, []);
 
