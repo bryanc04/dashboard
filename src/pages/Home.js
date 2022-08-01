@@ -104,7 +104,7 @@ export default function Home() {
                                 username: userInfo[0],
                                 password: userInfo[1]
                             })
-                            .then(function(response) {
+                            .then(async function(response) {
                                 message.success("Assignments were succesfully updated")
                                 await setDoc(doc(db, "last_updated", userInfo[0]), {
                                     last_updated: date
@@ -148,7 +148,7 @@ export default function Home() {
                             .then(function(response) {
                                 message.success("Menu was succesfully updated")
                                 axios.get('https://loomis.herokuapp.com/updateAthleticSchedule')
-                                .then(function(response) {
+                                .then(async function(response) {
                                     message.success("Althetic Schedule was succesfully updated")
                                     await setDoc(doc(db, "last_updated", "Overall"), {
                                         last_updated: date
