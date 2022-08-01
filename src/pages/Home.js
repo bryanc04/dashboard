@@ -106,6 +106,9 @@ export default function Home() {
                             })
                             .then(function(response) {
                                 message.success("Assignments were succesfully updated")
+                                await setDoc(doc(db, "last_updated", userInfo[0]), {
+                                    last_updated: date
+                                });
                                 
                             })
                             .catch(function(error){
@@ -147,6 +150,9 @@ export default function Home() {
                                 axios.get('https://loomis.herokuapp.com/updateAthleticSchedule')
                                 .then(function(response) {
                                     message.success("Althetic Schedule was succesfully updated")
+                                    await setDoc(doc(db, "last_updated", "Overall"), {
+                                        last_updated: date
+                                    });
                                     
                                     
                                 })
