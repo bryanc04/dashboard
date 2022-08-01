@@ -13,7 +13,7 @@ import { HexColorPicker } from "react-colorful";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import ChromeDinoGame from 'react-chrome-dino';
-import { EncryptStorage } from "encrypt-storage";
+import { encryptstorage } from '../components/encrypt'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -34,10 +34,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
-    prefix: '@instance',
-    storageType: 'sessionStorage'
-})
+
 
 
 
@@ -58,22 +55,23 @@ export default function Grades() {
         
         var loggedIn = encryptstorage.getItem("status");
 
-        if (loggedIn[0] == "logged in"){
+        if (loggedIn == "logged in"){
             setIsLoggedIn(true)
         }
      
         const getGrades = async () => {
-            setIsLoading(true);
-            const collectionRef = collection(db, "grades");
-            const q = query(collectionRef);
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                var data = doc.data();
-                setgrade(data);
-                })
-            
-            setIsLoading(false);
-            };
+            const docRef = doc(db, "grades", "BChung");
+            const docSnap = await getDoc(docRef);
+            var data = docSnap.data();
+            if (data){
+                for (var i = 0; i < data.length; i++){
+                    setgrade(data[i])
+                }
+            }
+            else{
+                setgrade([])
+            }
+        }
 
       
         getGrades();

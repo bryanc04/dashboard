@@ -10,11 +10,11 @@ import { GridLoader } from "react-spinners";
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query, orderBy, limit, getDoc, doc } from "firebase/firestore"
+import { getFirestore, collection, getDocs, query, orderBy, limit, getDoc, doc, documentId, setDoc } from "firebase/firestore"
 import '../index.scss';
 import ChromeDinoGame from 'react-chrome-dino';
 import { ChromePicker } from "react-color";
-import { EncryptStorage } from "encrypt-storage";
+import { encryptstorage } from '../components/encrypt'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,13 +33,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-
-const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
-    prefix: '@instance',
-    storageType: 'sessionStorage'
-})
-
 
 
 export default function Home() {
@@ -72,8 +65,31 @@ export default function Home() {
         
         var loggedIn = encryptstorage.getItem("status");
 
-        if (loggedIn[0] == "logged in"){
+        if (loggedIn == "logged in"){
             setIsLoggedIn(true)
+        }
+
+        const checkupdated = async () => {
+            var date = new Date(Date.now());
+            console.log(date.toString().substring(0,10))
+            const docRef = doc(db, "last_updated", "BChung");
+            const docSnap = await getDoc(docRef);
+            var data = docSnap.data();
+            if (!docSnap.exists()){
+                await setDoc(doc(db, "last_updated", "BChung"), {
+                    last_updated: date
+                  });
+                console.log("fakjsdhfjkdsahkj")
+            }
+            else{
+
+                console.log(data['last_updated'].toDate().toString().substring(0,10));
+                if (data['last_updated'].toDate().toString().substring(0,10) != date.toString().substring(0,10)){
+                    console.log("date mismatch")
+                    //run update grades
+                }
+
+            }
         }
 
         const getDailyBulletin = async () => {
@@ -93,13 +109,19 @@ export default function Home() {
         };
 
         const getGrades = async () => {
-            const docRef = doc(db, "Grades", "BChung");
+            const docRef = doc(db, "grades", "BChung");
             const docSnap = await getDoc(docRef);
             var data = docSnap.data();
-            for(var i = 0; i < data.length; i++)
-            {
-                setgrade(data[i]);
+            if (data){
+                for (var i = 0; i < data.length; i++){
+                    setgrade(data[i])
+                }
             }
+            else{
+                setgrade([])
+            }
+
+            
                 
         };
 
@@ -107,6 +129,7 @@ export default function Home() {
                 setIsLoading(true);
                 const docRef = doc(db, "assignments", "BChung");
                 const docSnap = await getDoc(docRef);
+            
                 var newArray = [];
                 var checkArray = [];
                 var aarray = [];
@@ -114,20 +137,19 @@ export default function Home() {
                 var date;
                 var data = docSnap.data();
                 var keys = Object.keys(data).sort();
-                for(var i = 0; i < keys.length; i++)
-                {
-                    if (count == 0){
-                        date = Object.keys(data).sort()[0]
-                        console.log('hi')
-                    }
-                    count = count + 1;
-                    newArray.push(data[keys[i]][0])
-                    checkArray.push(false)
-                    if (data[keys[i]][0]['end_at'] == date){
-                        aarray.push(data[keys[i]][0])
-                        console.log("hi")
-                    }
+                for (var i = 0; i < keys.length; i++){
+                        if (count == 0){
+                            date = Object.keys(data).sort()[0]
+                            console.log()
+                        }
+                        count = count + 1;
+                        newArray.push(data[keys[i]][0])
+                        checkArray.push(false)
+                        if (data[keys[i]][0]['end_at'].substring(0, 10) == date){
+                            aarray.push(data[keys[i]][0])
+                        }
                 }
+
                 setChecked(checkArray);
                 setAssignments(newArray);
                 setDisplayAssignments(aarray);
@@ -141,71 +163,71 @@ export default function Home() {
             
 
         const getBlocks = async() => {
-            const docRef = doc(db, "Block", "BChung");
-            const docSnap = await getDoc(docRef);
-            var data = docSnap.data();
-            console.log(data)
-            setRotation(data['rotationDay']);
-            delete data['rotationDay'];
-            for(var i = 0; i < Object.keys(data).length; i++)
-                {
-                    if(i < Object.keys(data).length - 1)
-                    {
-                        var nowClassTime = moment(data[i]['time'], 'hh:mmA');
-                        var nextClassTime = moment(data[i+1]['time'], 'hh:mmA');
-                        var nowTime = moment();
-                    
-                        if(nowTime.isBetween(nowClassTime, nextClassTime))
-                        {
-                            if(data[i]['subtitle'].includes("•"))
-                            {
-                                let gIndex = data[i]['subtitle'].indexOf("•");
-                                let blockString = data[i]['subtitle'].substring(gIndex+1, gIndex+3)
-                                setBlock(blockString);
-                            }
-                            else
-                            {
-                                setBlock(data[i]['subtitle'])
-                            }
-            
-                            if(data[i+1]['subtitle'].includes("•"))
-                            {
-                                let gIndex = data[i+1]['subtitle'].indexOf("•");
-                                let blockString = data[i+1]['subtitle'].substring(gIndex+1, gIndex+3)
-                                setNextBlock(blockString);
-                            }
-                            else
-                            {
-                                setNextBlock(data[i+1]['subtitle'])
-                            }
-                            setBlockSubject(data[i]['description'].slice(0, -3));
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        if(data[i]['subtitle'].includes("•"))
-                            {
-                                let gIndex = data[i]['subtitle'].indexOf("•");
-                                let blockString = data[i]['subtitle'].substring(gIndex+1, gIndex+3)
-                                setBlock(blockString);
-                            }
-                            else
-                            {
-                                setBlock(data[i]['subtitle'])
-                            }
-            
-                            setNextBlock("")
-                            setBlockSubject(data[i]['description'].slice(0, -3));
-                    }
-                
-                 } 
-            }
+           const docRef = doc(db, "Block", "BChung");
+           const docSnap = await getDoc(docRef);
+           var data = docSnap.data();
+           setRotation(data['rotationDay']);
+           delete data['rotationDay'];
+           for(var i = 0; i < Object.keys(data).length; i++)
+           {
+               if(i < Object.keys(data).length - 1)
+               {
+                   var nowClassTime = moment(data[i]['time'], 'hh:mmA');
+                   var nextClassTime = moment(data[i+1]['time'], 'hh:mmA');
+                   var nowTime = moment();
+               
+                   if(nowTime.isBetween(nowClassTime, nextClassTime))
+                   {
+                       if(data[i]['subtitle'].includes("•"))
+                       {
+                           let gIndex = data[i]['subtitle'].indexOf("•");
+                           let blockString = data[i]['subtitle'].substring(gIndex+1, gIndex+3)
+                           setBlock(blockString);
+                       }
+                       else
+                       {
+                           setBlock(data[i]['subtitle'])
+                       }
+       
+                       if(data[i+1]['subtitle'].includes("•"))
+                       {
+                           let gIndex = data[i+1]['subtitle'].indexOf("•");
+                           let blockString = data[i+1]['subtitle'].substring(gIndex+1, gIndex+3)
+                           setNextBlock(blockString);
+                       }
+                       else
+                       {
+                           setNextBlock(data[i+1]['subtitle'])
+                       }
+                       setBlockSubject(data[i]['description'].slice(0, -3));
+                       break;
+                   }
+               }
+               else
+               {
+                   if(data[i]['subtitle'].includes("•"))
+                       {
+                           let gIndex = data[i]['subtitle'].indexOf("•");
+                           let blockString = data[i]['subtitle'].substring(gIndex+1, gIndex+3)
+                           setBlock(blockString);
+                       }
+                       else
+                       {
+                           setBlock(data[i]['subtitle'])
+                       }
+       
+                       setNextBlock("")
+                       setBlockSubject(data[i]['description'].slice(0, -3));
+                       
+               }
+           }
+        }
 
         getDailyBulletin();
         getGrades();
         getAssignments();
         getBlocks();
+        checkupdated();
 
     }, []);
 

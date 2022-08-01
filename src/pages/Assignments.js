@@ -12,9 +12,9 @@ import Pacman from 'react-pacman';
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query, orderBy, limit, where, documentId, doc } from "firebase/firestore"
+import { getFirestore, collection, getDocs, query, orderBy, limit, where, documentId, doc, getDoc } from "firebase/firestore"
 import ChromeDinoGame from 'react-chrome-dino';
-import { EncryptStorage } from "encrypt-storage";
+import { encryptstorage } from '../components/encrypt'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,13 +33,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-
-const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
-    prefix: '@instance',
-    storageType: 'sessionStorage'
-})
-
 
 
 export default function Assignments() {
@@ -64,30 +57,44 @@ export default function Assignments() {
 
         var loggedIn = encryptstorage.getItem("status");
 
-        if (loggedIn[0] == "logged in"){
+        if (loggedIn == "logged in"){
             setIsLoggedIn(true)
         }
      
         const getAssignments = async () => {
             setIsLoading(true);
-            const collectionRef = collection(db, "assignments");
-            const q = query(collectionRef);
-            const querySnapshot = await getDocs(q);
+            const docRef = doc(db, "assignments", "BChung");
+            const docSnap = await getDoc(docRef);
+        
             var newArray = [];
             var checkArray = [];
-            var count;
-            querySnapshot.forEach((doc) => {
-                var data = doc.data();
-                count = count + 1;
-                newArray.push(data.data[0])
-                checkArray.push(false)
-                })
+            var aarray = [];
+            var count = 0;
+            var date;
+            var data = docSnap.data();
+            var keys = Object.keys(data).sort();
+            for (var i = 0; i < keys.length; i++){
+                    if (count == 0){
+                        date = Object.keys(data).sort()[0]
+                        console.log()
+                    }
+                    count = count + 1;
+                    newArray.push(data[keys[i]][0])
+                    checkArray.push(false)
+                    if (data[keys[i]][0]['end_at'].substring(0, 10) == date){
+                        aarray.push(data[keys[i]][0])
+                        console.log("hi")
+                    }
+                    console.log(date)
+                    console.log(data[keys[i]][0]['end_at'].substring(0, 10))
+            }
+
             setChecked(checkArray);
             setAssignments(newArray);
             setIsLoading(false);
             
             
-            };
+    };
 
         
         getAssignments();

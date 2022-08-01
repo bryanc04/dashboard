@@ -5,12 +5,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { message, Space } from 'antd';
 import 'antd/dist/antd.css';
-import { EncryptStorage } from "encrypt-storage";
+import { encryptstorage } from '../components/encrypt'
 
-const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
-    prefix: '@instance',
-    storageType: 'sessionStorage'
-})
 
 
 export default function Login(){

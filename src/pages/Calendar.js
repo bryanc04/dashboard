@@ -6,7 +6,7 @@ import moment from "moment";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
-import { EncryptStorage } from "encrypt-storage";
+import { encryptstorage } from '../components/encrypt'
 import ChromeDinoGame from 'react-chrome-dino';
 
 const firebaseConfig = {
@@ -20,10 +20,6 @@ const firebaseConfig = {
   };
 
 
-const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
-    prefix: '@instance',
-    storageType: 'sessionStorage'
-})
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -44,7 +40,7 @@ export default function Calendar(){
 
         var loggedIn = encryptstorage.getItem("status");
 
-        if (loggedIn[0] == "logged in"){
+        if (loggedIn == "logged in"){
             setIsLoggedIn(true)
         }
      

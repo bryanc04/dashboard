@@ -12,7 +12,7 @@ import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
-import { EncryptStorage } from "encrypt-storage";
+import { encryptstorage } from '../components/encrypt'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,10 +33,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
-    prefix: '@instance',
-    storageType: 'sessionStorage'
-})
 
 
 
@@ -87,7 +83,7 @@ export default function Schedule() {
 
         var loggedIn = encryptstorage.getItem("status");
 
-        if (loggedIn[0] == "logged in"){
+        if (loggedIn == "logged in"){
             setIsLoggedIn(true)
         }
      
