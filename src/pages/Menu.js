@@ -58,6 +58,7 @@ export default function Menu() {
 
     const [cardview, setCardview] = useState(true);
 
+    const [cards, setCards] = useState([]);
 
 
     const [themecolor, setthemecolor] = useState("#8b000da8");
@@ -77,113 +78,6 @@ export default function Menu() {
     //     alert($(this).text());
     // });
 
-    
-    
-
-
-
-    
-    const cards = [
-        {
-          key: uuidv4(),
-          content: <MenuCardCarousel mealtype="Breakfast" style={{color: "black"}} alt="1" content={
-            breakfastMenu ? Object.keys(breakfastMenu).sort().map((el, index) => 
-                                        <div key={index}>
-                                            <div className="meal_content">
-                                                {el}:
-                                            </div>
-                                            <div className="meal_content_details">
-                                                {
-                                                    breakfastMenu[el].map((el2, index2) => 
-                                                        <div key={index2}>
-                                                            {el2}
-                                                        </div>
-                                                    )
-                                                }
-                                            </div>
-                                        </div>
-                                    )
-                                    :
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            height: '100%'
-                                        }}
-                                    >
-                                        <GridLoader />
-                                    </div>
-
-          }/>
-        },
-        {
-          key: uuidv4(),
-          content: <MenuCardCarousel mealtype="Lunch" alt="2" content={
-            lunchMenu ? Object.keys(lunchMenu).sort().map((el, index) => 
-                                        <div key={index}>
-                                            <div className="meal_content" style={{fontFamily: "DM Sans", color: "ffffff !important"}}>
-                                                {el}:
-                                            </div>
-                                            <div className="meal_content_details">
-                                                {
-                                                    lunchMenu[el].map((el2, index2) => 
-                                                        <div key={index2} >
-                                                            {el2}
-                                                        </div>
-                                                    )
-                                                }
-                                            </div>
-                                        </div>
-                                    )
-                                    :
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            height: '100%'
-                                        }}
-                                    >
-                                        <GridLoader />
-                                    </div>
-
-          } />
-        },
-        {
-          key: uuidv4(),
-          content: <MenuCardCarousel mealtype="Dinner" alt="3" content={ 
-            dinnerMenu ? Object.keys(dinnerMenu).sort().map((el, index) => 
-            <div key={index}>
-                <div className="meal_content">
-                    {el}:
-                </div>
-                <div className="meal_content_details">
-                    {
-                        dinnerMenu[el].map((el2, index2) => 
-                            <div href='#' key={index2} id="onclick">
-                                {el2}
-                            </div>
-                        )
-                    }
-                </div>
-            </div>
-        )
-        :
-        <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: '100%'
-                    }}
-                >
-                    <GridLoader />
-        </div>
-        }/>
-        },
-      ];
-
 
     useEffect(()=> {
 
@@ -198,13 +92,120 @@ export default function Menu() {
             const collectionRef = collection(db, "menu");
             const q = query(collectionRef);
             const querySnapshot = await getDocs(q);
+            var tempBreakfast;
+            var tempLunch;
+            var tempDinner;
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
                 setBreakfastMenu(data.breakfast);
                 setLunchMenu(data.lunch);
                 setDinnerMenu(data.dinner);
+                tempBreakfast = data.breakfast;
+                tempLunch = data.lunch;
+                tempDinner = data.dinner;
                 console.log("Menu Gotten")
             });
+
+            setCards([
+                {
+                  key: uuidv4(),
+                  content: <MenuCardCarousel mealtype="Breakfast" style={{color: "black"}} alt="1" content={
+                    tempBreakfast ? Object.keys(tempBreakfast).sort().map((el, index) => 
+                                                <div key={index}>
+                                                    <div className="meal_content">
+                                                        {el}:
+                                                    </div>
+                                                    <div className="meal_content_details">
+                                                        {
+                                                            tempBreakfast[el].map((el2, index2) => 
+                                                                <div key={index2}>
+                                                                    {el2}
+                                                                </div>
+                                                            )
+                                                        }
+                                                    </div>
+                                                </div>
+                                            )
+                                            :
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    height: '100%'
+                                                }}
+                                            >
+                                                <GridLoader />
+                                            </div>
+        
+                  }/>
+                },
+                {
+                  key: uuidv4(),
+                  content: <MenuCardCarousel mealtype="Lunch" alt="2" content={
+                    tempLunch ? Object.keys(tempLunch).sort().map((el, index) => 
+                                                <div key={index}>
+                                                    <div className="meal_content" style={{fontFamily: "DM Sans", color: "ffffff !important"}}>
+                                                        {el}:
+                                                    </div>
+                                                    <div className="meal_content_details">
+                                                        {
+                                                            tempLunch[el].map((el2, index2) => 
+                                                                <div key={index2} >
+                                                                    {el2}
+                                                                </div>
+                                                            )
+                                                        }
+                                                    </div>
+                                                </div>
+                                            )
+                                            :
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    height: '100%'
+                                                }}
+                                            >
+                                                <GridLoader />
+                                            </div>
+        
+                  } />
+                },
+                {
+                  key: uuidv4(),
+                  content: <MenuCardCarousel mealtype="Dinner" alt="3" content={ 
+                    tempDinner ? Object.keys(tempDinner).sort().map((el, index) => 
+                    <div key={index}>
+                        <div className="meal_content">
+                            {el}:
+                        </div>
+                        <div className="meal_content_details">
+                            {
+                                tempDinner[el].map((el2, index2) => 
+                                    <div href='#' key={index2} id="onclick">
+                                        {el2}
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </div>
+                )
+                :
+                <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: '100%'
+                            }}
+                        >
+                            <GridLoader />
+                </div>
+                }/>
+                },
+              ])
                 
         }
 
@@ -429,6 +430,7 @@ export default function Menu() {
 
 
                         :
+                        cards.length > 0 ?
                         <MenuCarousel
                         cards={cards}
                         height="500px"
@@ -437,6 +439,8 @@ export default function Menu() {
                         offset={2}
                         showArrows={false}
                       />
+                      :
+                      <GridLoader />
                     
                             }
 
