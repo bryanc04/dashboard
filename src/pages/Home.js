@@ -1,16 +1,22 @@
 import React, {useState, useContext, useEffect } from "react";
+import styled, { css } from "styled-components";
+
 import Navbar from "../components/navbar/navbar";
 import Pop from "../components/popup";
+import Logout from "../components/logout";
 import{bgimage} from "../components/popup";
 import{background} from "../components/popup";
 import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup';
 import moment from 'moment';
-import { GridLoader } from "react-spinners";
+import Login from "./Login";
+import { Link, useLocation } from "react-router-dom";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { GridLoader, PulseLoader } from "react-spinners";
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query, orderBy, limit, getDoc, doc, documentId, setDoc } from "firebase/firestore"
+import { getFirestore, collection, getDocs, query, orderBy, limit, getDoc, doc, documentId, setDoc } from "firebase/firestore";
 import '../index.scss';
 import ChromeDinoGame from 'react-chrome-dino';
 import { ChromePicker } from "react-color";
@@ -19,6 +25,11 @@ import axios from "axios";
 import { message, Space } from 'antd';
 import 'antd/dist/antd.css';
 import dayjs from "dayjs";
+import Highlighter from "react-highlight-words";
+import ThemePop from "../components/popup2";
+import {  useNavigate, Route, Routes } from "react-router-dom";
+import PageTransition from "../components/PageTransition"
+import Assignments from "./Assignments";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -47,11 +58,18 @@ export default function Home() {
     const [color1, setColor1] = useState("#efefef");
     const [color2, setColor2] = useState("#efefef");
 
+    const [theme, setTheme] = useState("change_theme_option_1");
+    const [themecolor, setthemecolor] = useState("#8b000da8");
+
+    const [dayArray, setDayArray] = useState(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
+
     const [isLoading, setIsLoading] = useState(false);
 
     const [dailyBulletin, setDailyBulletin] = useState([{},{},{},{},{},{},{},{}]);
 
     const [grade, setgrade] = useState({});
+
+    const [isNews, setIsNews] = useState(true);
 
     const [assignments, setAssignments] = useState();
     const [displayAssignments, setDisplayAssignments] = useState();
@@ -62,7 +80,18 @@ export default function Home() {
     const [blockSubject, setBlockSubject] = useState();
     const [nextBlock, setNextBlock] = useState("");
     const [rotation, setRotation] = useState("");
-    const classindex = ['class_1', 'class_2', 'class_3', 'class_4', 'class_5', 'class_6', 'class_7']
+
+    const [Menu, setMenu] = useState();
+    const [Meal, setMeal] = useState();
+
+
+    
+    let navigate = useNavigate();
+    const location = useLocation();
+
+    const navigateTo = (destination) => {
+        navigate(destination)
+    }
 
     useEffect(()=> {
 
@@ -90,7 +119,7 @@ export default function Home() {
             }
             else{
 
-                console.log(data['last_updated'].toDate().toString().substring(0,10));
+                console.log(data['last_updated'].toDate().getDay());
                 if (data['last_updated'].toDate().toString().substring(0,10) != date.toString().substring(0,10)){
                     console.log("date mismatch")
                     //run update grades
@@ -123,6 +152,7 @@ export default function Home() {
 
             }
         }
+
 
         const checkOverallUpdated = async () => {
             var date = new Date();
@@ -197,10 +227,10 @@ export default function Home() {
             const docRef = doc(db, "grades", userInfo[0]);
             const docSnap = await getDoc(docRef);
             var data = docSnap.data();
+            console.log(data)
+            console.log(data.size)
             if (data){
-                for (var i = 0; i < data.length; i++){
-                    setgrade(data[i])
-                }
+                setgrade(data)
             }
             else{
                 setgrade([])
@@ -209,6 +239,29 @@ export default function Home() {
             
                 
         };
+        const getMenu = async () => {
+            const collectionRef = collection(db, "menu");
+            const q = query(collectionRef);
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                var data = doc.data();
+                var date = new Date();
+                date = date.getHours();
+                if(( date >= 0 && date < 9 ) || date >= 8) {
+                    setMenu(data.breakfast);
+                    setMeal("Breakfast");
+                }else if (date >= 9 && date <= 1){
+                    setMenu(data.lunch);
+                    setMeal("Lunch");
+                }else if (date > 1 && date < 8){
+                    setMenu(data.dinner);
+                    setMeal("Dinner");
+                }
+
+                console.log(Menu)
+            });
+                
+        }
 
         const getAssignments = async () => {
                 setIsLoading(true);
@@ -305,7 +358,10 @@ export default function Home() {
                        setBlockSubject(data[i]['description'].slice(0, -3));
                        
                }
+    
            }
+
+
         }
 
         getDailyBulletin();
@@ -314,11 +370,17 @@ export default function Home() {
         getBlocks();
         checkupdated();
         checkOverallUpdated();
+        getMenu();
 
     }, []);
 
 
-        
+    const MenuOnclick = () => {
+        setIsNews(!isNews)
+        console.log(isNews)
+        // document.getElementById("name").style.color = "blue";
+        console.log("fdasfasd")
+    }
 
 
 
@@ -334,6 +396,43 @@ export default function Home() {
         text = text.substring(0, last);
         return text ;
     }
+
+    const adjustTheme = (newTheme) => {
+        setthemecolor(newTheme);
+        root.style.setProperty("--main", newTheme);
+        message.success("Theme succesfully changed to " + newTheme);
+    } 
+    const Wrapper = styled.div`
+  .fade-enter {
+    opacity: 0.01;
+  }
+
+  .fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in;
+  }
+
+  .fade-exit {
+    opacity: 1;
+  }
+
+  .fade-exit.fade-exit-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+  }
+
+  div.transition-group {
+    position: relative;
+  }
+
+  section.route-section {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+`;
+
 
 
     return(
@@ -362,16 +461,24 @@ export default function Home() {
         
 
             <div className="row">
-                <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2}/>
-                <Navbar />
+
+                <Navbar theme={themecolor}/>
+                <Logout to="/Home"/>
+
+
                 
                 <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop:'-90px'}}>
 
-                    <div className="home_container" style={{overflow: 'hidden', height: '100%'}}>
+                    <div className="home_container">
+                    <div className="pickers_grid">
+                <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2}/>
+                <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor}/>
+                </div>
                     <div>
+                    <p className="home_title welcome_title " style={{color: themecolor, WebkitTextFillColor: themecolor}}>Welcome</p>
+
                         <p className="home_title welcome_title ">Welcome</p>
-                        <p className="home_title welcome_title ">Welcome</p>
-                        <p className="home_title name_title"> Bryan </p>
+                        <p className="home_title name_title" style={{color: themecolor, WebkitTextFillColor: themecolor}}> Bryan </p>
                         <p className="home_title name_title"> Bryan </p>
                     </div>
                         <div className="home_inner_container">
@@ -379,196 +486,43 @@ export default function Home() {
                                 <div className="home_left_top">
                                     <div className="home_content assignments_home">
                                         <div className="content_title">
+
+                                            <Link to="/Assignments" style={{color: "black"}}>
                                             Assignments
-                                        </div>
-                                            <hr className="hr"/>
-                                            <div className="assignments_content">Due {
-                                                isLoading ? <div></div> : assignments && <span>{Object.values(assignments)[0]['end_at'].substring(0,10)}</span>
+                                            </Link>
+                                            <Wrapper>
+                                            <TransitionGroup className="transition-group">
+        <CSSTransition
+          key={location.key}
+          timeout={{ enter: 300, exit: 300 }}
+          classNames="fade"
+        >
+          <section className="route-section">
+            <Routes location={location}>
+              <Route exact path="/Assignments" component={Assignments} />
+              Assignments
+
+            </Routes>
+          </section>
+        </CSSTransition>
+      </TransitionGroup>
+      </Wrapper>
+                                                 </div>
+                                            <div className="assignments_content" style={{marginLeft: "20px"}}>Due {
+                                                isLoading ? <div></div> : assignments && <span style={{color: themecolor, WebkitTextFillColor: themecolor}}>{dayArray[new Date(Object.values(assignments)[0]['end_at']).getDay()]}</span>
                                             }</div>
                                             <div className="assignments_all_container">
                                             {
                                                 isLoading ?
                                                 <div class="container">
 
-                                                    <div class="h1Container">
+                                                    <PulseLoader/>
 
-                                                        <div class="cube h1 w1 l1">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h1 w1 l2">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h1 w1 l3">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h1 w2 l1">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h1 w2 l2">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h1 w2 l3">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h1 w3 l1">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h1 w3 l2">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h1 w3 l3">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="h2Container">
-
-                                                        <div class="cube h2 w1 l1">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h2 w1 l2">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h2 w1 l3">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h2 w2 l1">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h2 w2 l2">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h2 w2 l3">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h2 w3 l1">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h2 w3 l2">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h2 w3 l3">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="h3Container">
-
-                                                        <div class="cube h3 w1 l1">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h3 w1 l2">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h3 w1 l3">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h3 w2 l1">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h3 w2 l2">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h3 w2 l3">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h3 w3 l1">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h3 w3 l2">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-
-                                                        <div class="cube h3 w3 l3">
-                                                        <div class="face top"></div>
-                                                        <div class="face left"></div>
-                                                        <div class="face right"></div>
-                                                        </div>
-                                                    </div>
-                                                    
                                                     </div>
                                                 :
                                                 displayAssignments && displayAssignments.map( (el, index) => 
                                                 <div key={index}>
-                                                    <div className="assignments_container top_c">
-                                                    <div className="assignments_container_time">
-                                                        {el.end_at.substring(0, 10)}
-                                                    </div>
+                                                    <div className="assignments_container" style={{borderColor: themecolor}}>
                                                     <div className="assignments_assignments">{el.title}</div>
                                                     <div className="assignments_detail">{el.class}</div>
                                                 </div>
@@ -598,8 +552,8 @@ export default function Home() {
                                             <div className="current_block_name">{blockSubject}</div>
                                             </div>
                                             <div className="block_wrapper">
-                                            <div className="content_box a">Today is: {rotation}</div>
-                                            <div className="content_box b">Next up: {nextBlock}</div>
+                                            <div className="content_box a">Today is: <span style={{color: themecolor}}>{rotation}</span></div>
+                                            <div className="content_box b">Next up:  <span style={{color: themecolor}}>{nextBlock}</span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -611,8 +565,10 @@ export default function Home() {
 {
                                             Object.values(grade).map( (el, index) => 
                                                 <div key={index}>
-                                                    <div className='class_1'>{el.class_name}
-                                                    <div className="class_grade">{el.ptd_letter_grade}</div></div>
+                                                    <div className="grade_content_format">
+                                                        <div className='class_1'  style={{borderColor: themecolor}}>{el.class_name}</div>
+                                                        <div className="class_grade">{el.ptd_letter_grade}</div>
+                                                    </div>
                                                 </div>
                                             )
                                         }
@@ -622,22 +578,75 @@ export default function Home() {
                                 </div>
                             </div>
                             <div className="home_right">
-                                <div className="home_content" id="news_content">
-                                    <div style={{overflowY: "scroll", height: '100%'}}>
-                                        <div className="content_title">
+                                <div className="home_content" id="news_content" >
+                                {
+                                    isNews 
+                                ?
+
+                                <><div className="news_menu_grid">
+
+                                                                <button className="content_title news_title_1" onClick={MenuOnclick}>
+                                                                    News
+                                                                </button>
+                                                                <button className="content_title home_menu_title_1" onClick={MenuOnclick}>
+                                                                    Menu
+                                                                </button>
+                                                            </div><div style={{ overflowY: "scroll", height: '93%' }}>
+                                                                    <div className="news-container">
+                                                                        {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news  1">
+
+                                                                            <p className="news_heading">
+                                                                                <Highlighter
+
+                                                                                    searchWords={["NEW", "Important"]}
+                                                                                    autoEscape={true}
+                                                                                    textToHighlight={el.Title}
+                                                                                    highlightStyle={{ color: themecolor, backgroundColor: "white" }} />
+                                                                            </p>
+                                                                            <p className="news_content">{shortenText(el.Content, 100)}</p>
+                                                                        </div>
+                                                                        )}
+                                                                    </div>
+                                                                </div></>
+                                    :
+                                    <><div className="news_menu_grid">
+
+                                    <button className="content_title home_menu_title_2" onClick={MenuOnclick}>
+                                        Menu
+                                    </button>
+                                    <button className="content_title news_title_2" onClick={MenuOnclick}>
                                         News
-                                        </div>
-                                        <div className="news-container">
-                                            {
-                                                Object.values(dailyBulletin).map( (el, index) => 
-                                                    <div key={index} className="news  1">
-                                                        <p className="news_heading">{el.Title}</p>
-                                                        <p className="news_content">{shortenText(el.Content, 100)}</p>
-                                                    </div>
-                                                )
-                                            }
+                                    </button>
+                                </div>
+                                <div className="home_menu_container">
+                                <div style={{marginLeft: "10px", color: themecolor, marginTop: "10px", fontSize: "18px", fontWeight: 600}}>{Meal}</div>
+                                <div style={{ overflowY: "scroll", height: '93%' }}>
+                                        <div  style={{marginLeft: "10px"}}>
+                                            {Object.keys(Menu).sort().map((el, index) => 
+                                            <div key={index}>
+
+                                                <div className="news_heading" style={{fontSize: "15px"}}>
+                                                    {el}:
+                                                </div>
+                                                <div className="news_content" style={{marginLeft: "10px"}}>
+                                                {
+                                                    Menu[el].map((el2, index2) => 
+                                                        <div key={index2}>
+                                                            {el2}
+                                                        </div>
+                                                    )
+                                                }
+                                                </div>
+                                                
+                                               
+                                            </div>
+                                            )}
                                         </div>
                                     </div>
+                                    </div>
+                                    </>
+
+}
                                 </div>
                             </div>
                         </div>
@@ -649,10 +658,11 @@ export default function Home() {
         </div>
         </div>
         :
-<ChromeDinoGame/>
+<Login to="/Home"/>
         
                                         }
 
 </div>
     )
 }
+

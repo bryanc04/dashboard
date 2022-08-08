@@ -1,6 +1,9 @@
 import React, {useState, useContext, useEffect } from "react";
 import Navbar from "../components/navbar/navbar";
 import Pop from "../components/popup";
+import ThemePop from "../components/popup2";
+import Logout from "../components/logout";
+import Login from "./Login";
 import{bgimage} from "../components/popup";
 import{background} from "../components/popup";
 import { useSelector } from 'react-redux';
@@ -12,7 +15,11 @@ import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
-import { encryptstorage } from '../components/encrypt'
+import { encryptstorage } from '../components/encrypt';
+import {v4 as uuidv4} from "uuid";
+import Carousel from "react-spring-3d-carousel";
+import MenuCarousel from "../components/MenuCarousel"
+import MenuCardCarousel from "../components/MenuCarouselCards";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -45,21 +52,144 @@ export default function Menu() {
     const [lunchMenu, setLunchMenu] = useState();
     const [dinnerMenu, setDinnerMenu] = useState();
 
-    const [dailyBulletin, setDailyBulletin] = useState([{},{},{},{},{},{},{},{}]);
+    const [cardbreakfastMenu, setcardBreakfastMenu] = useState();
+    const [cardlunchMenu, setcardLunchMenu] = useState();
+    const [carddinnerMenu, setcardDinnerMenu] = useState();
 
-    const [grade, setgrade] = useState({});
+    const [cardview, setCardview] = useState(true);
 
-    const [block, setBlock] = useState();
-    const [blockSubject, setBlockSubject] = useState();
-    const [nextBlock, setNextBlock] = useState("");
-    const [rotation, setRotation] = useState("");
-    const classindex = ['class_1', 'class_2', 'class_3', 'class_4', 'class_5', 'class_6', 'class_7']
+
+
+    const [themecolor, setthemecolor] = useState("#8b000da8");
+
+    
+    const adjustTheme = (newTheme) => {
+        setthemecolor(newTheme);
+        root.style.setProperty("--main", newTheme);
+        message.success("Theme succesfully changed to " + newTheme);
+    } 
+    
+    const changeView = () => {
+        setCardview(!cardview);
+    }  
+
+    // $('#onclick').click(function(){
+    //     alert($(this).text());
+    // });
+
+    
+    
+
+
+
+    
+    const cards = [
+        {
+          key: uuidv4(),
+          content: <MenuCardCarousel mealtype="Breakfast" style={{color: "black"}} alt="1" content={
+            breakfastMenu ? Object.keys(breakfastMenu).sort().map((el, index) => 
+                                        <div key={index}>
+                                            <div className="meal_content">
+                                                {el}:
+                                            </div>
+                                            <div className="meal_content_details">
+                                                {
+                                                    breakfastMenu[el].map((el2, index2) => 
+                                                        <div key={index2}>
+                                                            {el2}
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
+                                    )
+                                    :
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            height: '100%'
+                                        }}
+                                    >
+                                        <GridLoader />
+                                    </div>
+
+          }/>
+        },
+        {
+          key: uuidv4(),
+          content: <MenuCardCarousel mealtype="Lunch" alt="2" content={
+            lunchMenu ? Object.keys(lunchMenu).sort().map((el, index) => 
+                                        <div key={index}>
+                                            <div className="meal_content" style={{fontFamily: "DM Sans", color: "ffffff !important"}}>
+                                                {el}:
+                                            </div>
+                                            <div className="meal_content_details">
+                                                {
+                                                    lunchMenu[el].map((el2, index2) => 
+                                                        <div key={index2} >
+                                                            {el2}
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
+                                    )
+                                    :
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            height: '100%'
+                                        }}
+                                    >
+                                        <GridLoader />
+                                    </div>
+
+          } />
+        },
+        {
+          key: uuidv4(),
+          content: <MenuCardCarousel mealtype="Dinner" alt="3" content={ 
+            dinnerMenu ? Object.keys(dinnerMenu).sort().map((el, index) => 
+            <div key={index}>
+                <div className="meal_content">
+                    {el}:
+                </div>
+                <div className="meal_content_details">
+                    {
+                        dinnerMenu[el].map((el2, index2) => 
+                            <div href='#' key={index2} id="onclick">
+                                {el2}
+                            </div>
+                        )
+                    }
+                </div>
+            </div>
+        )
+        :
+        <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '100%'
+                    }}
+                >
+                    <GridLoader />
+        </div>
+        }/>
+        },
+      ];
+
 
     useEffect(()=> {
 
         var loggedIn = encryptstorage.getItem("status");
 
-        if (loggedIn[0] == "logged in"){
+        if (loggedIn == "logged in"){
             setIsLoggedIn(true)
         }
      
@@ -73,6 +203,7 @@ export default function Menu() {
                 setBreakfastMenu(data.breakfast);
                 setLunchMenu(data.lunch);
                 setDinnerMenu(data.dinner);
+                console.log("Menu Gotten")
             });
                 
         }
@@ -93,14 +224,59 @@ export default function Menu() {
         return text + "...";
     }
 
+    const returnMenu = (menu) => {
+        
+    //     breakfastMenu ? Object.keys(breakfastMenu).sort().map((el, index) => 
+    //     <div key={index}>
+    //         <div className="meal_content">
+    //             {el}:
+    //         </div>
+    //         <div className="meal_content_details">
+    //             {
+    //                 breakfastMenu[el].map((el2, index2) => 
+    //                     <div key={index2}>
+    //                         {el2}
+    //                     </div>
+    //                 )
+    //             }
+    //         </div>
+    //     </div>
+    // )
+    // :
+    // <div
+    //     style={{
+    //         display: 'flex',
+    //         justifyContent: 'center',
+    //         alignItems: 'center',
+    //         height: '100%'
+    //     }}
+    // >
+    //     <GridLoader />
+    // </div>
+
+}
+    
+
 
 
     return(
 
 
+        <div>
+
+
+        {
+        isLoggedin
+        ?
+
+
+
+
+
+
         <div className="all">
             <div className="container-fluid blur" style={{ 
-            backgroundColor: "rgb(239, 239, 239)", 
+            backgroundColor: "rgb(254, 254, 254)", 
             backgroundImage: backgroundOption === "change_bg_option_1" ?  "none" : 
                             backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
                             backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
@@ -110,21 +286,36 @@ export default function Menu() {
             WebkitAnimation: "gradient 5s ease infinite !important",
             }}>
             
-        
+
 
             <div className="row">
-                <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2}/>
-                <Navbar />
-                
-                <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '175px'}}>
 
+                <Navbar theme={themecolor}/>
+                <Logout to="/Menu" />
+
+
+                
+                <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop:'-90px'}}>
+
+                    <div className="home_container">
+                    <div className="pickers_grid">
+                <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2}/>
+                <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor}/>
+                </div>
                     <div>
-                    <div>
-                        <p className="menu_main_title welcome_title ">Menu</p>
-                        <p className="menu_main_title welcome_title ">Menu</p>
+                        <p className="home_title welcome_title ">Menu</p>
+                        <p className="home_title welcome_title " style={{color: themecolor, WebkitTextFillColor: themecolor}}>Menu</p>
+                       
                     </div>
-                        <div className="menu_inner_container">
-                            <div className="menu_top menu_content">
+                    <span className="menu_view_grid">
+                        <button onClick={() => changeView()} className="menu_icon menu_icon_hover_1"><i className="bi bi-border-all "></i></button>
+                        <button onClick={() => changeView()} className="menu_icon menu_icon_hover_2"><i className="bi bi-view-list menu_icon"></i></button>
+                    </span>
+                    <div className="menu_inner_container">
+
+                        {!cardview
+                        ?
+                            <><div className="menu_top menu_content">
                                 <div className="meal_title">
                                     Breakfast
                                 </div>
@@ -158,7 +349,7 @@ export default function Menu() {
                                     >
                                         <GridLoader />
                                     </div>
-                            
+
                                 }
                             </div>
                             </div>
@@ -221,6 +412,7 @@ export default function Menu() {
                                         </div>
                                     )
                                     :
+
                                     <div
                                         style={{
                                             display: 'flex',
@@ -233,18 +425,54 @@ export default function Menu() {
                                     </div>
                                 }
                             </div>
-                            </div>
-                        </div>
-                            
-    
-        
+                            </div></>
+
+
+                        :
+                        <MenuCarousel
+                        cards={cards}
+                        height="500px"
+                        width="80%"
+                        margin="0 auto"
+                        offset={2}
+                        showArrows={false}
+                      />
+                    
+                            }
+
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
                     </div>
                 </div>
             </div>
         </div>
+        </div>
+        :
+
+
+        <Login to="/Menu"/>
+
+                                        }
+
         </div>
         
      
 
     )
 }
+
+

@@ -2,13 +2,14 @@ import React, { useState, createContext, useContext, useMemo }  from 'react';
 import Loomis from "../../assets/loomis.png"
 import { NavLink, useNavigate } from "react-router-dom";
 import { EncryptStorage } from 'encrypt-storage';
+import loomis2 from "../../assets/loomis2.png";
 
 const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
   prefix: '@instance',
   storageType: 'sessionStorage'
 })
 
-export default function Navbar(){
+export default function Navbar(props){
       const [isShown, setIsShown] = useState(false);
       const handleClick = event => {
           setIsShown(current => !current)
@@ -21,17 +22,17 @@ export default function Navbar(){
       }
 
     return(
-        <div className="hidden_until_hover col-1 d-flex flex-column flex-shrink-4 px-0 navbar_style" id="navbar_bg">
+        <div className="hidden_until_hover col-1 d-flex flex-column flex-shrink-4 px-0 navbar_style" id="navbar_bg" style={{backgroundColor: props.theme}}>
           <div>
               <div style={{padding: 10}}>
-                  <img className="lc_logo" src={Loomis} style={{width: '70%', height: '50%'}}/>
+                  <img className="lc_logo" src={loomis2} style={{width: '70%', height: '50%'}}/>
               </div>
           
         </div>
         <ul className="nav nav-pills nav-flush flex-column mb-auto text-center" style ={{flex: 1, justifyContent: 'center'}}>
           <li className="nav-item">
             <NavLink to = "/Home" className='navbar_item_container ' > 
-                <i className="bi bi-house" style={{color: "maroon", fontSize: '25px'}}></i> 
+                <i className="bi bi-house navbar_item" style={{ fontSize: '27px'}}></i> 
             </NavLink>
           </li>
           <li>
@@ -60,11 +61,10 @@ export default function Navbar(){
               </NavLink>
             </li>
             <li>
-              <div style={{cursor: 'pointer'}} onClick={() => {logout();}}>
-                <i class="bi bi-box-arrow-right" style={{fontSize: 20, color: 'black'}}></i>
-              </div>
+
             </li>
         </ul>
+
   </div>
 
   

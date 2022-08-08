@@ -2,24 +2,30 @@ import React, { useState, useEffect } from "react";
 import s from "./Login.module.css";
 import Loomis from "../assets/loomis.png";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { message, Space } from 'antd';
 import 'antd/dist/antd.css';
 import { encryptstorage } from '../components/encrypt'
 
 
 
-export default function Login(){
+export default function Login(props){
+
+
 
     const[username, setUsername] = useState("");
     const[password, setPassword] = useState("");
     const[isLoading, setIsLoading] = useState(false);
     let navigate = useNavigate();
 
+    const {state} = useLocation();
+
     useEffect(() => {
         var loggedIn = encryptstorage.getItem("status", "logged in", username, password);
         if (loggedIn== "logged in"){
-            navigate("/Home", {replace: true})
+            if (state != null){
+            navigate(state, {replace: true})
+            }
         }
     }, [])
 
@@ -45,7 +51,12 @@ export default function Login(){
 
                 encryptstorage.setItem("status", "logged in")
                 encryptstorage.setItem("userInfo", [username, password])
-                navigate("/Home", { replace: true })
+                if (state== null){
+                    navigate("/Home", {replace: true})
+                }
+                else{
+                navigate(state, {replace: true})
+                }
             }else{
                 message.error("Wrong username or password.")
             }
@@ -53,6 +64,7 @@ export default function Login(){
         .catch(function(error){
             console.log (error);
         })
+
     }
 
     return(
@@ -98,3 +110,4 @@ export default function Login(){
         </div>
     );
 }
+
