@@ -3,11 +3,27 @@ import Loomis from "../../assets/loomis.png"
 import { NavLink, useNavigate } from "react-router-dom";
 import { EncryptStorage } from 'encrypt-storage';
 import loomis2 from "../../assets/loomis2.png";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, getDocs, query, orderBy, limit, getDoc, doc, documentId, setDoc, increment } from "firebase/firestore";
 
 const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
   prefix: '@instance',
   storageType: 'sessionStorage'
 })
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBDh3yxYRLCaikdnMXYrCuVc0iGL5qn0js",
+  authDomain: "dashboard-2a1a3.firebaseapp.com",
+  projectId: "dashboard-2a1a3",
+  storageBucket: "dashboard-2a1a3.appspot.com",
+  messagingSenderId: "354314041590",
+  appId: "1:354314041590:web:32b771d8e2a2d4ce4ad4d7",
+  measurementId: "G-W02KFP0FY8"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export default function Navbar(props){
       const [isShown, setIsShown] = useState(false);
@@ -19,6 +35,17 @@ export default function Navbar(props){
       const logout = () => {
         encryptstorage.clear();
         navigate("/Login", { replace: true })
+      }
+
+
+
+      const update = (type) => {
+        var userInfo = encryptstorage.getItem('userInfo')
+        const ref = doc(db, 'recommendation', userInfo[0])
+        if(type == 'assignments'){
+            setDoc(ref, { type: increment(1)}, { merge: true} )
+        }
+
       }
 
     return(
@@ -36,7 +63,7 @@ export default function Navbar(props){
             </NavLink>
           </li>
           <li>
-            <NavLink to = "/Assignments" className='navbar_item_container'>
+            <NavLink to = "/Assignments" className='navbar_item_container' onClick={() => update("assignments")}>
               <i className="bi bi-journal-text navbar_item"></i>
             </NavLink>
           </li>

@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect } from "react";
 import styled, { css } from "styled-components";
-
+import { Calendar as Bigcalendar, momentLocalizer} from 'react-big-calendar';
 import Navbar from "../components/navbar/navbar";
 import Pop from "../components/popup";
 import Logout from "../components/logout";
@@ -30,6 +30,8 @@ import ThemePop from "../components/popup2";
 import {  useNavigate, Route, Routes } from "react-router-dom";
 import PageTransition from "../components/PageTransition"
 import Assignments from "./Assignments";
+import DataTable from 'react-data-table-component';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -70,6 +72,7 @@ export default function Home() {
     const [grade, setgrade] = useState({});
 
     const [isNews, setIsNews] = useState(true);
+    const [isGrades, setIsGrades] = useState(true);
 
     const [assignments, setAssignments] = useState();
     const [displayAssignments, setDisplayAssignments] = useState();
@@ -81,8 +84,37 @@ export default function Home() {
     const [nextBlock, setNextBlock] = useState("");
     const [rotation, setRotation] = useState("");
 
+    const localizer = momentLocalizer(moment);
+
+    const [events, setEvents] = useState();
+
     const [Menu, setMenu] = useState();
     const [Meal, setMeal] = useState();
+
+    const [assignmentsDisplay, setAssignmentsDisplay] = useState(true);
+
+    const [data, setData] = useState([]);
+    
+    const [schedule, setSchedule] = useState();
+    const columns = [
+        {
+            name: 'Team',
+            selector:row => row.Team,
+        },
+        {
+            name: 'Opponent',
+            selector:row => row.Opponent,
+        },
+        {
+            name: 'Date',
+            selector:row => row.Date,
+        },
+        {
+            name: 'Time',
+            selector:row => row.Time,
+        }
+        ];
+
 
 
     
@@ -295,6 +327,23 @@ export default function Home() {
                 
                 
         };
+        const getSchedule = async () => {
+            const collectionRef = collection(db, "Athletics_schedule");
+            const q = query(collectionRef);
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                var data = doc.data();
+                var tempArray = []
+                Object.values(data).map((element, index) => {
+                    tempArray.push(element);
+                })
+                setData(tempArray);
+                setSchedule(data);
+            })
+        }
+
+      
+        getSchedule();
     
             
             getAssignments();
@@ -382,6 +431,13 @@ export default function Home() {
         console.log("fdasfasd")
     }
 
+    const assignmentsOnClick = () => {
+        setAssignmentsDisplay(!assignmentsDisplay);
+    }
+
+    const GradesOnClick = () => {
+        setIsGrades(!isGrades);
+    }
 
 
     const shortenText = (text, length) => {
@@ -402,36 +458,41 @@ export default function Home() {
         root.style.setProperty("--main", newTheme);
         message.success("Theme succesfully changed to " + newTheme);
     } 
-    const Wrapper = styled.div`
-  .fade-enter {
-    opacity: 0.01;
-  }
 
-  .fade-enter.fade-enter-active {
-    opacity: 1;
-    transition: opacity 300ms ease-in;
-  }
+    const getCalendar = async () => {
+        const collectionRef = collection(db, "calendar");
+        const q = query(collectionRef);
+        const querySnapshot = await getDocs(q);
+        var tempEvents = [];
+        var id = 0;
+        querySnapshot.forEach((doc) => {
+            var data = doc.data();
+            let newData = Object.values(data)
+            for (var i = 0; i < Object.keys(data).length; i++){
+                if (newData[i].events == "No Events"){
+                    continue;
+                }
+                else{
+                    for (var j = 0; j < newData[i].events.length; j++){
+                        let tempDict = {
+                            id: id,
+                            title: newData[i].events[j].title,
+                            allDay: true,
+                            start: newData[i].date,
+                            end: newData[i].date
+                        }
+                        tempEvents.push(tempDict)
+                        id = id + 1
+                    }
 
-  .fade-exit {
-    opacity: 1;
-  }
 
-  .fade-exit.fade-exit-active {
-    opacity: 0.01;
-    transition: opacity 300ms ease-in;
-  }
+                }
+            }
+        })
+        setEvents(tempEvents)
 
-  div.transition-group {
-    position: relative;
-  }
+    }
 
-  section.route-section {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-  }
-`;
 
 
 
@@ -485,30 +546,16 @@ export default function Home() {
                             <div className="home_left">
                                 <div className="home_left_top">
                                     <div className="home_content assignments_home">
-                                        <div className="content_title">
+                                    {assignmentsDisplay ? 
+                                    <>
 
-                                            <Link to="/Assignments" style={{color: "black"}}>
+                                        <button className="content_title news_title_1" onClick={assignmentsOnClick}>
                                             Assignments
-                                            </Link>
-                                            <Wrapper>
-                                            <TransitionGroup className="transition-group">
-        <CSSTransition
-          key={location.key}
-          timeout={{ enter: 300, exit: 300 }}
-          classNames="fade"
-        >
-          <section className="route-section">
-            <Routes location={location}>
-              <Route exact path="/Assignments" component={Assignments} />
-              Assignments
-
-            </Routes>
-          </section>
-        </CSSTransition>
-      </TransitionGroup>
-      </Wrapper>
-                                                 </div>
-                                            <div className="assignments_content" style={{marginLeft: "20px"}}>Due {
+                                        </button>
+                                        <button className="content_title home_menu_title_1" onClick={() => { assignmentsOnClick(); getCalendar();}}>
+                                             Calendar
+                                        </button>
+                                        <div className="assignments_content" style={{marginLeft: "20px"}}>Due {
                                                 isLoading ? <div></div> : assignments && <span style={{color: themecolor, WebkitTextFillColor: themecolor}}>{dayArray[new Date(Object.values(assignments)[0]['end_at']).getDay()]}</span>
                                             }</div>
                                             <div className="assignments_all_container">
@@ -536,7 +583,58 @@ export default function Home() {
                                                        
                                                 )
                                             }
-                                        </div>            
+                                        </div>   
+                                        
+                                        </>
+                                        :
+                                        <>        
+                                    <button className="content_title home_menu_title_2" onClick={assignmentsOnClick}>
+                                        Calendar
+                                    </button>
+                                    <button className="content_title news_title_2" onClick={assignmentsOnClick}>
+                                        Assignments
+                                    </button>
+                                  <div style={{height: "10px !important"}}>  <Bigcalendar
+                                localizer={localizer}
+
+                                startAccessor="start"
+                                endAccessor="end"
+                                style={{ height: "200px" }}
+                                events = {events && events}
+                                /></div>
+                                    </>
+          
+                                        }
+
+                                            {/* <div className="assignments_content" style={{marginLeft: "20px"}}>Due {
+                                                isLoading ? <div></div> : assignments && <span style={{color: themecolor, WebkitTextFillColor: themecolor}}>{dayArray[new Date(Object.values(assignments)[0]['end_at']).getDay()]}</span>
+                                            }</div>
+                                            <div className="assignments_all_container">
+                                            {
+                                                isLoading ?
+                                                <div class="container">
+
+                                                    <PulseLoader/>
+
+                                                    </div>
+                                                :
+                                                displayAssignments && displayAssignments.map( (el, index) => 
+                                                <div key={index}>
+                                                    <div className="assignments_container" style={{borderColor: themecolor}}>
+                                                    <div className="assignments_assignments">{el.title}</div>
+                                                    <div className="assignments_detail">{el.class}</div>
+                                                </div>
+                                                </div>
+                
+                                           
+                                           
+                                              
+                                        
+                                            
+                                                       
+                                                )
+                                            }
+                                        </div>             */}
                                     </div>
                                 </div>
                                 <div className="home_left_bottom">
@@ -559,20 +657,43 @@ export default function Home() {
                                     </div>
                                     <div className="home_left_bottom_right">
                                         <div className="home_content">
-                                            <div className="content_title" style={{marginBottom: 10}}>My Grades</div>
-                                            <div className="grade_container">
 
-{
-                                            Object.values(grade).map( (el, index) => 
-                                                <div key={index}>
-                                                    <div className="grade_content_format">
-                                                        <div className='class_1'  style={{borderColor: themecolor}}>{el.class_name}</div>
-                                                        <div className="class_grade">{el.ptd_letter_grade}</div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        }
-                                            </div>
+                                            {isGrades ? 
+                                                    <>                                        <button className="content_title news_title_1" onClick={() => { GradesOnClick()}}>
+                                                    Grades
+                                                </button>
+                                                <button className="content_title home_menu_title_1" onClick={() => { GradesOnClick()}}>
+                                                     Athletics
+                                                </button>
+                                                    <div className="grade_container">
+
+                                                {
+                                                    Object.values(grade).map( (el, index) => 
+                                                        <div key={index}>
+                                                            <div className="grade_content_format">
+                                                                <div className='class_1'  style={{borderColor: themecolor}}>{el.class_name}</div>
+                                                                <div className="class_grade">{el.ptd_letter_grade}</div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }
+                                                    </div></>
+                                                :
+                                                <>                                                    <><button className="content_title news_title_1" onClick={() => { GradesOnClick()}}>
+                                                Athletics
+                                            </button>
+                                            <button className="content_title home_menu_title_1" onClick={() => { GradesOnClick()}}>
+                                                 Grades
+                                            </button>
+                                                <div className="grade_container">
+
+                                                <div style={{overflowY: "scroll", margin: "1px !important"}}><DataTable
+
+columns={columns}
+data = {data}
+/></div>
+                                                </div></></>
+                                                }   
                                         </div>
                                     </div>
                                 </div>
