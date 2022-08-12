@@ -1074,3 +1074,7 @@ td{
   margin-right: 30px;
 }
 
+
+.home_calendar .rbc-toolbar {
+  display: none;
+}

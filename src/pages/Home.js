@@ -594,14 +594,14 @@ export default function Home() {
                                     <button className="content_title news_title_2" onClick={assignmentsOnClick}>
                                         Assignments
                                     </button>
-                                  <div style={{height: "10px !important"}}>  <Bigcalendar
+                                 <div className="home_calendar"> <div onClick={() => {navigate("/Calendar")}}>  <Bigcalendar
                                 localizer={localizer}
 
                                 startAccessor="start"
                                 endAccessor="end"
-                                style={{ height: "200px" }}
+                                style={{ height: "190px" }}
                                 events = {events && events}
-                                /></div>
+                                /></div></div>
                                     </>
           
                                         }
