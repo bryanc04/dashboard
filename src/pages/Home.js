@@ -91,7 +91,7 @@ export default function Home() {
     const [Menu, setMenu] = useState();
     const [Meal, setMeal] = useState();
 
-    const [assignmentsDisplay, setAssignmentsDisplay] = useState(true);
+    const [assignmentsDisplay, setAssignmentsDisplay] = useState();
 
     const [data, setData] = useState([]);
     
@@ -151,7 +151,8 @@ export default function Home() {
             }
             else{
 
-                console.log(data['last_updated'].toDate().getDay());
+                console.log(data['last_updated'].toDate().getDay())
+                ;
                 if (data['last_updated'].toDate().toString().substring(0,10) != date.toString().substring(0,10)){
                     console.log("date mismatch")
                     //run update grades
@@ -187,6 +188,19 @@ export default function Home() {
 
 
         const checkOverallUpdated = async () => {
+            axios.post("https://loomis.herokuapp.com/getRecommendation", {
+                username: userInfo[0],
+                password: userInfo[1]
+                })
+                .then(function(response) {
+                    var array = response.data;
+                    console.log(response.data)
+                    if (array.indexOf('assignments') <= array.indexOf('calendar')){
+                        setAssignmentsDisplay(true);
+                    }else{
+                        setAssignmentsDisplay(false);
+                    }
+                })
             var date = new Date();
             console.log(date.toString().substring(0,10))
             const docRef = doc(db, "last_updated", "Overall");
@@ -324,6 +338,7 @@ export default function Home() {
                 setAssignments(newArray);
                 setDisplayAssignments(aarray);
                 setIsLoading(false);
+
                 
                 
         };
@@ -433,6 +448,7 @@ export default function Home() {
 
     const assignmentsOnClick = () => {
         setAssignmentsDisplay(!assignmentsDisplay);
+
     }
 
     const GradesOnClick = () => {
@@ -546,7 +562,7 @@ export default function Home() {
                             <div className="home_left">
                                 <div className="home_left_top">
                                     <div className="home_content assignments_home">
-                                    {assignmentsDisplay ? 
+                                    {assignmentsDisplay && assignmentsDisplay ? 
                                     <>
 
                                         <button className="content_title news_title_1" onClick={assignmentsOnClick}>
@@ -601,6 +617,7 @@ export default function Home() {
                                 endAccessor="end"
                                 style={{ height: "190px" }}
                                 events = {events && events}
+                                defaultView={'agenda'}
                                 /></div></div>
                                     </>
           
