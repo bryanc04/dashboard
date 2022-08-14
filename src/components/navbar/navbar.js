@@ -39,12 +39,102 @@ export default function Navbar(props){
 
 
 
-      const update = (type) => {
+      const update = async(type) => {
         var userInfo = encryptstorage.getItem('userInfo')
         const ref = doc(db, 'recommendation', userInfo[0])
         if(type == 'assignments'){
-            setDoc(ref, { type: increment(1)}, { merge: true} )
+            setDoc(ref, { assignments: increment(1)}, { merge: true} )
         }
+        if (type == 'calendar'){
+          setDoc(ref, { calendar: increment(1)}, { merge: true} )
+        }
+        if (type == 'menu'){
+          setDoc(ref, { menu: increment(1)}, { merge: true} )
+        }
+        if (type == 'schedule'){
+          setDoc(ref, { schedule: increment(1)}, { merge: true} )
+        }
+        if (type == 'grades'){
+          setDoc(ref, { grades: increment(1)}, { merge: true} )
+        }
+
+        const docSnap = await getDoc(ref);
+        var userGrade = docSnap.data()['grade']
+        if (userGrade == 9 ){
+            const ref2 = doc(db, 'recommendation', 'totalClicksForFreshmen')
+            if (type == 'assignments'){
+              setDoc(ref2, {type: increment(1)}, {merge: true})
+            }
+            if (type == 'calendar'){
+              setDoc(ref2, { calendar: increment(1)}, { merge: true} )
+            }
+            if (type == 'menu'){
+              setDoc(ref2, { menu: increment(1)}, { merge: true} )
+            }
+            if (type == 'schedule'){
+              setDoc(ref2, { schedule: increment(1)}, { merge: true} )
+            }
+            if (type == 'grades'){
+              setDoc(ref2, { grades: increment(1)}, { merge: true} )
+            }
+        }
+        else if (userGrade == 10){
+          const ref2 = doc(db, 'recommendation', 'totalClicksForSophomores')
+          if (type == 'assignments'){
+            setDoc(ref2, {type: increment(1)}, {merge: true})
+          }
+          if (type == 'calendar'){
+            setDoc(ref2, { calendar: increment(1)}, { merge: true} )
+          }
+          if (type == 'menu'){
+            setDoc(ref2, { menu: increment(1)}, { merge: true} )
+          }
+          if (type == 'schedule'){
+            setDoc(ref2, { schedule: increment(1)}, { merge: true} )
+          }
+          if (type == 'grades'){
+            setDoc(ref2, { grades: increment(1)}, { merge: true} )
+          }
+        }
+          else if (userGrade == 11){
+            const ref2 = doc(db, 'recommendation', 'totalClicksForJuniors')
+            if (type == 'assignments'){
+              setDoc(ref2, {type: increment(1)}, {merge: true})
+            }
+            if (type == 'calendar'){
+              setDoc(ref2, { calendar: increment(1)}, { merge: true} )
+            }
+            if (type == 'menu'){
+              setDoc(ref2, { menu: increment(1)}, { merge: true} )
+            }
+            if (type == 'schedule'){
+              setDoc(ref2, { schedule: increment(1)}, { merge: true} )
+            }
+            if (type == 'grades'){
+              setDoc(ref2, { grades: increment(1)}, { merge: true} )
+            }
+          }
+          else if (userGrade == 12){
+            const ref2 = doc(db, 'recommendation', 'totalClicksForSeniors')
+            if (type == 'assignments'){
+              setDoc(ref2, {type: increment(1)}, {merge: true})
+            }
+            if (type == 'calendar'){
+              setDoc(ref2, { calendar: increment(1)}, { merge: true} )
+            }
+            if (type == 'menu'){
+              setDoc(ref2, { menu: increment(1)}, { merge: true} )
+            }
+            if (type == 'schedule'){
+              setDoc(ref2, { schedule: increment(1)}, { merge: true} )
+            }
+            if (type == 'grades'){
+              setDoc(ref2, { grades: increment(1)}, { merge: true} )
+            }
+        }
+
+
+
 
       }
 
@@ -68,22 +158,22 @@ export default function Navbar(props){
             </NavLink>
           </li>
           <li>
-              <NavLink to = "/Calendar" className='navbar_item_container'>
+              <NavLink to = "/Calendar" className='navbar_item_container'onClick={() => update("calendar")}>
                   <i className="bi bi-calendar navbar_item" ></i>
               </NavLink>
           </li>
             <li>
-              <NavLink to = "/Menu" className='navbar_item_container'>
+              <NavLink to = "/Menu" className='navbar_item_container' onClick={() => update("menu")}>
               <i className="bi bi-table navbar_item" ></i>
               </NavLink>
             </li>
             <li>
-              <NavLink to = "/Grades" className='navbar_item_container'>
+              <NavLink to = "/Grades" className='navbar_item_container' onClick={() => update("grades")}>
               <i className="bi bi-mortarboard navbar_item" ></i>
               </NavLink>
             </li>
             <li>
-              <NavLink to = "/Schedule" className='navbar_item_container'>
+              <NavLink to = "/Schedule" className='navbar_item_container' onClick={() => update("schedule")}>
               <i className='bi bi-dribbble navbar_item' ></i>
               </NavLink>
             </li>
