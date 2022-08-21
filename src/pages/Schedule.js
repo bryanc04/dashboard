@@ -180,8 +180,8 @@ export default function Schedule() {
                         <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor}/>
                         </div>
                             <div>
-                                <p className="home_title welcome_title ">Athletics Scheudle</p>
-                                <p className="home_title welcome_title " style={{color: themecolor, WebkitTextFillColor: themecolor}}>Athletics Scheudle</p>
+                                <p className="home_title welcome_title ">Athletics Schedule</p>
+                                <p className="home_title welcome_title " style={{color: themecolor, WebkitTextFillColor: themecolor}}>Athletics Schedule</p>
                                
                             </div>
                                 <div className="calendar_page_container viewport_message">
