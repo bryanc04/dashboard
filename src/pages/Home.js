@@ -199,6 +199,7 @@ export default function Home() {
                         setAssignmentsDisplay(true);
                     }else{
                         setAssignmentsDisplay(false);
+                        getCalendar();
                     }
                 })
             var date = new Date();

@@ -338,6 +338,7 @@ hr{
 }
 
 .assignments_container{
+  display: grid;
   background: white;
   border-radius: 30px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
@@ -346,6 +347,9 @@ hr{
   border: 2px solid var(--main);
   margin-left: 20px;
   margin-top: 10px;
+  grid-template-areas: 'time assignments checkbox'
+  'time detail checkbox';
+  grid-template-columns: 14% 70% 16%;
 }
 
 .gap{
@@ -1034,44 +1038,39 @@ td{
 
 .assignments_page_container_time{
   border-right: 1px solid black;
-  margin-bottom: 40px;
-  margin-top: 30px;
   padding-top: 20px;
   margin-left: 10px;
-  top: 50px;
-  width: 14%;
-  font-size:20px;
-  z-index: 3;
-  margin-right: 20px;
   font-size: 15px !important;
-  padding-bottom: 30px;
+  grid-area: time;
 }
 
 
 .assignments_page_assignments{
-  font-size: 15px !important;
+  /* font-size: 15px !important;
   margin-top: -100px;
   transform: translateX(17%);
   z-index: 3;
   margin-left: 0px;
-  font-size: 15px;
+  font-size: 15px; */
+  grid-area: assignments;
+  margin-left: 10px;
 }
 
 .assignments_page_detail{
   font-size: 15px !important;
   margin-top: 5px;
-  transform: translateX(17%);
   z-index: 3;
   margin-left: 0px;
   font-size: 15px;
   font-weight: 500;
+  grid-area: detail;
+  margin-left: 10px;
 }
 
 .assignments_checkbox{
-  position: relative;
-  float: right;
-  transform: translateY(-55px);
   margin-right: 30px;
+  grid-area: checkbox;
+  text-align: right;
 }
 
 
