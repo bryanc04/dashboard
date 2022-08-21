@@ -110,7 +110,7 @@ export default function Menu() {
                 {
                   key: uuidv4(),
                   content: <MenuCardCarousel mealtype="Breakfast" style={{color: "black"}} alt="1" content={
-                    tempBreakfast ? Object.keys(tempBreakfast).sort().map((el, index) => 
+                    tempBreakfast ? Object.keys(tempBreakfast).length > 0 ? Object.keys(tempBreakfast).sort().map((el, index) => 
                                                 <div key={index}>
                                                     <div className="meal_content">
                                                         {el}:
@@ -126,6 +126,10 @@ export default function Menu() {
                                                     </div>
                                                 </div>
                                             )
+                                            :
+                                            <div>
+                                                No Breakfast Menu
+                                            </div>
                                             :
                                             <div
                                                 style={{
@@ -143,7 +147,7 @@ export default function Menu() {
                 {
                   key: uuidv4(),
                   content: <MenuCardCarousel mealtype="Lunch" alt="2" content={
-                    tempLunch ? Object.keys(tempLunch).sort().map((el, index) => 
+                    tempLunch ? Object.keys(tempLunch).length > 0 ? Object.keys(tempLunch).sort().map((el, index) => 
                                                 <div key={index}>
                                                     <div className="meal_content" style={{fontFamily: "DM Sans", color: "ffffff !important"}}>
                                                         {el}:
@@ -159,6 +163,10 @@ export default function Menu() {
                                                     </div>
                                                 </div>
                                             )
+                                            :
+                                            <div>
+                                                No Lunch Menu
+                                            </div>
                                             :
                                             <div
                                                 style={{
@@ -176,7 +184,7 @@ export default function Menu() {
                 {
                   key: uuidv4(),
                   content: <MenuCardCarousel mealtype="Dinner" alt="3" content={ 
-                    tempDinner ? Object.keys(tempDinner).sort().map((el, index) => 
+                    tempDinner ? Object.keys(tempDinner).length > 0 ? Object.keys(tempDinner).sort().map((el, index) => 
                     <div key={index}>
                         <div className="meal_content">
                             {el}:
@@ -192,6 +200,10 @@ export default function Menu() {
                         </div>
                     </div>
                 )
+                :
+                <div>
+                    No Dinner Menu
+                </div>
                 :
                 <div
                             style={{
@@ -323,7 +335,9 @@ export default function Menu() {
                                 <div className="menu_scroll">
                                 {
                                 
-                                    breakfastMenu ? Object.keys(breakfastMenu).sort().map((el, index) => 
+                                    breakfastMenu ? 
+                                    Object.keys(breakfastMenu).length > 0 ?
+                                    Object.keys(breakfastMenu).sort().map((el, index) => 
                                         <div key={index}>
                                             <div className="meal_content">
                                                 {el}:
@@ -338,7 +352,10 @@ export default function Menu() {
                                                 }
                                             </div>
                                         </div>
-                                    )
+                                    ) :
+                                    <div>
+                                        No breakfast menu
+                                    </div>
                                     :
                                     <div
                                         style={{
@@ -360,7 +377,9 @@ export default function Menu() {
                                 </div>
                                 <div className="menu_scroll">
                                 {
-                                    lunchMenu ? Object.keys(lunchMenu).sort().map((el, index) => 
+                                    lunchMenu ? 
+                                    Object.keys(lunchMenu).length > 0 ?
+                                    Object.keys(lunchMenu).sort().map((el, index) => 
                                         <div key={index}>
                                             <div className="meal_content">
                                                 {el}:
@@ -376,6 +395,10 @@ export default function Menu() {
                                             </div>
                                         </div>
                                     )
+                                    :
+                                    <div>
+                                        No Lunch Menu
+                                    </div>
                                     :
                                     <div
                                         style={{
@@ -396,7 +419,9 @@ export default function Menu() {
                                 </div>
                                 <div className="menu_scroll">
                                 {
-                                    dinnerMenu ? Object.keys(dinnerMenu).sort().map((el, index) => 
+                                    dinnerMenu ? 
+                                    Object.keys(dinnerMenu).length > 0 ?
+                                    Object.keys(dinnerMenu).sort().map((el, index) => 
                                         <div key={index}>
                                             <div className="meal_content">
                                                 {el}:
@@ -412,6 +437,10 @@ export default function Menu() {
                                             </div>
                                         </div>
                                     )
+                                    :
+                                    <div>
+                                        No Dinner Menu
+                                    </div>
                                     :
 
                                     <div
@@ -440,7 +469,7 @@ export default function Menu() {
                         showArrows={false}
                       />
                       :
-                      <GridLoader />
+                      <GridLoader style={{marginLeft: 'auto', marginRight: 'auto'}} />
                     
                             }
 

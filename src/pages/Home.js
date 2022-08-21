@@ -282,9 +282,6 @@ export default function Home() {
             else{
                 setgrade([])
             }
-
-            
-                
         };
         const getMenu = async () => {
             const collectionRef = collection(db, "menu");

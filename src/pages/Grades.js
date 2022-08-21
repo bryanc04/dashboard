@@ -11,7 +11,7 @@ import { GridLoader } from "react-spinners";
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import { getFirestore, collection, getDoc, query, orderBy, limit, doc } from "firebase/firestore";
 import ChromeDinoGame from 'react-chrome-dino';
 import { encryptstorage } from '../components/encrypt'
 // TODO: Add SDKs for Firebase products that you want to use
@@ -55,23 +55,23 @@ export default function Grades() {
         
         var loggedIn = encryptstorage.getItem("status");
 
+        var userInfo = encryptstorage.getItem("userInfo")
+
         if (loggedIn == "logged in"){
             setIsLoggedIn(true)
         }
      
         const getGrades = async () => {
-            const docRef = doc(db, "grades", "BChung");
+            const docRef = doc(db, "grades", userInfo[0]);
             const docSnap = await getDoc(docRef);
             var data = docSnap.data();
             if (data){
-                for (var i = 0; i < data.length; i++){
-                    setgrade(data[i])
-                }
+                setgrade(data)
             }
             else{
                 setgrade([])
             }
-        }
+        };
 
       
         getGrades();
