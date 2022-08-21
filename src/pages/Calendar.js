@@ -154,7 +154,7 @@ export default function Calendar(){
 
                                 startAccessor="start"
                                 endAccessor="end"
-                                style={{ height: 460 }}
+                                style={{ height: 420 }}
                                 events = {events && events}
                                 />
                                 </div>

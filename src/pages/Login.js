@@ -68,7 +68,7 @@ export default function Login(props){
     }
 
     const enterPress = (el) => {
-        if(el.keyCode === 13) {
+        if (el.keyCode === 13){
             login();
         }
     }
@@ -87,11 +87,14 @@ export default function Login(props){
                             <div className="form-group" style={{marginTop: 20}}>
                                 <label for="inputUsername">Username</label>
                                 <input type="text" className="form-control" id="inputUsername" aria-describedby="usernameHelp" placeholder="Enter your username" onChange={(event) => setUsername(event.target.value)} onKeyDown={(el) => enterPress(el)} />
+                                <input type="text" className="form-control" id="inputUsername" aria-describedby="usernameHelp" placeholder="Enter your username" onChange={(event) => setUsername(event.target.value)} onKeyDown={(el) => enterPress(el)}/>
                                 <small id="usernameHelp" className="form-text text-muted">Enter your Veracross username</small>
                             </div>
                             <div className="form-group" style={{marginTop: 20}}>
                                 <label for="inputPassword">Password</label>
                                 <input type="password" className="form-control" id="inputPassword" aria-describedby="passwordHelp" placeholder="Enter your password" onChange={(event) => setPassword(event.target.value)} onKeyDown={(el) => enterPress(el)} />
+
+                                <input type="password" className="form-control" id="inputPassword" aria-describedby="passwordHelp" placeholder="Enter your password" onChange={(event) => setPassword(event.target.value)} onKeyDown={(el) => enterPress(el)}/>
                                 <small id="usernameHelp" className="form-text text-muted">Enter your Veracross password</small>
                                 <button type="submit" onClick={() => {login();}} className={`${s.login_button} btn btn-primary shadow-none`} style={{width: '100%', marginTop: 20}}>
                                     { 
