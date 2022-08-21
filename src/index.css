@@ -279,9 +279,6 @@ hr{
 }
 
 @media only screen and (max-width: 800px){
-  .calendar_page_container{
-    display: none;
-  }
 
   .fullscreen_msg{
     display: block !important;
