@@ -22,9 +22,10 @@ export default function Login(props){
 
     useEffect(() => {
         var loggedIn = encryptstorage.getItem("status", "logged in", username, password);
-
-        if (loggedIn === "logged in"){
-            navigate("/Home", {replace: true})
+        if (loggedIn== "logged in"){
+            if (state != null){
+            navigate(state, {replace: true})
+            }
         }
     }, [])
 
@@ -50,8 +51,12 @@ export default function Login(props){
 
                 encryptstorage.setItem("status", "logged in")
                 encryptstorage.setItem("userInfo", [username, password])
-
-                navigate("/Home", {replace: true})
+                if (state== null){
+                    navigate("/Home", {replace: true})
+                }
+                else{
+                navigate(state, {replace: true})
+                }
             }else{
                 message.error("Wrong username or password.")
             }
