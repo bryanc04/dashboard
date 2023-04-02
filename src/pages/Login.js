@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import s from "./Login.module.css";
 import Loomis from "../assets/loomis.png";
+import Logo from "../assets/logo.png";
+import Logo2 from "../assets/logo2.png";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { message, Space } from 'antd';
@@ -77,7 +79,7 @@ export default function Login(props){
         <div className={s.login_container}>
             <div className={s.left_container}>
                 <div className={s.login_title}>
-                    LOOMIS
+                    LCDASHBOARD
                 </div>
                 <div style={{padding: '0 20%', display: 'flex', justifyContent: 'center', flexDirection: 'column', height: '80%'}}>
                     <div style={{fontSize: '30px', fontWeight: 'bold'}}>
@@ -109,7 +111,7 @@ export default function Login(props){
             </div>
             <div className={s.right_container}>
                 <div style={{padding: '40%'}}>
-                    <img className="lc_logo" src={Loomis} style={{width: '100%', height: '100%'}}/>
+                    <img className="lc_logo" src={Logo2} style={{width: '100%', height: '100%'}}/>
                 </div>
             </div>
 
