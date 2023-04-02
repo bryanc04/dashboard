@@ -10,6 +10,7 @@ import 'antd/dist/antd.css';
 import { encryptstorage } from '../components/encrypt'
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBDh3yxYRLCaikdnMXYrCuVc0iGL5qn0js",
@@ -68,12 +69,15 @@ export default function Signup(props){
         setIsLoading(true);
 //collection called users, dID doesnt matter, save email and name       
         createUserWithEmailAndPassword(auth, username, password)
-        .then((userCredential) => {
+        .then(async(userCredential) => {
             const user = userCredential.user;
 
             setIsLoading(false);
             navigate("/Home", {replace: true});
-            setDoc(doc(db, "Users", "Users"), {"username": username, "first_name": name});
+            const docRef = await addDoc(collection(db, "Users"), {
+                username: username,
+                first_name: name
+            });
         })
         .catch((error) => {
             const errorCode = error.code;
