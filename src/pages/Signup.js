@@ -66,12 +66,14 @@ export default function Signup(props){
         }
 
         setIsLoading(true);
-        
+//collection called users, dID doesnt matter, save email and name       
         createUserWithEmailAndPassword(auth, username, password)
         .then((userCredential) => {
             const user = userCredential.user;
+
             setIsLoading(false);
             navigate("/Home", {replace: true});
+            setDoc(doc(db, "Users", "Users"), {"username": username, "first_name": name});
         })
         .catch((error) => {
             const errorCode = error.code;
