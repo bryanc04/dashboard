@@ -280,19 +280,7 @@ export default function Home() {
             })
         };
 
-        const getGrades = async () => {
-            const docRef = doc(db, "grades", userInfo[0]);
-            const docSnap = await getDoc(docRef);
-            var data = docSnap.data();
-            console.log(data)
-            console.log(data.size)
-            if (data){
-                setgrade(data)
-            }
-            else{
-                setgrade([])
-            }
-        };
+
         const getMenu = async () => {
             const collectionRef = collection(db, "menu");
             const q = query(collectionRef);
@@ -317,39 +305,11 @@ export default function Home() {
                 
         }
 
-        const getAssignments = async () => {
-                setIsLoading(true);
-                const docRef = doc(db, "assignments", userInfo[0]);
-                const docSnap = await getDoc(docRef);
-            
-                var newArray = [];
-                var checkArray = [];
-                var aarray = [];
-                var count = 0;
-                var date;
-                var data = docSnap.data();
-                var keys = Object.keys(data).sort();
-                for (var i = 0; i < keys.length; i++){
-                        if (count == 0){
-                            date = Object.keys(data).sort()[0]
-                            console.log()
-                        }
-                        count = count + 1;
-                        newArray.push(data[keys[i]][0])
-                        checkArray.push(false)
-                        if (data[keys[i]][0]['end_at'].substring(0, 10) == date){
-                            aarray.push(data[keys[i]][0])
-                        }
-                }
-
-                setChecked(checkArray);
-                setAssignments(newArray);
-                setDisplayAssignments(aarray);
                 setIsLoading(false);
 
                 
                 
-        };
+        
         const getSchedule = async () => {
             const collectionRef = collection(db, "Athletics_schedule");
             const q = query(collectionRef);
@@ -368,9 +328,7 @@ export default function Home() {
       
         getSchedule();
     
-            
-            getAssignments();
-            
+                        
 
         const getBlocks = async() => {
            const docRef = doc(db, "Block", userInfo[0]);
@@ -437,8 +395,6 @@ export default function Home() {
         }
 
         getDailyBulletin();
-        getGrades();
-        getAssignments();
         getBlocks();
         checkupdated();
         checkOverallUpdated();
@@ -454,14 +410,9 @@ export default function Home() {
         console.log("fdasfasd")
     }
 
-    const assignmentsOnClick = () => {
-        setAssignmentsDisplay(!assignmentsDisplay);
 
-    }
 
-    const GradesOnClick = () => {
-        setIsGrades(!isGrades);
-    }
+
 
 
     const shortenText = (text, length) => {
@@ -570,54 +521,11 @@ export default function Home() {
                             <div className="home_left">
                                 <div className="home_left_top">
                                     <div className="home_content assignments_home">
-                                    {assignmentsDisplay && assignmentsDisplay ? 
-                                    <>
-
-                                        <button className="content_title news_title_1" onClick={assignmentsOnClick}>
-                                            Assignments
-                                        </button>
-                                        <button className="content_title home_menu_title_1" onClick={() => { assignmentsOnClick(); getCalendar();}}>
-                                             Calendar
-                                        </button>
-                                        <div className="assignments_content" style={{marginLeft: "20px"}}>Due {
-                                                isLoading ? <div></div> : assignments && <span style={{color: themecolor, WebkitTextFillColor: themecolor}}>{dayArray[new Date(Object.values(assignments)[0]['end_at']).getDay()]}</span>
-                                            }</div>
-                                            <div className="assignments_all_container">
-                                            {
-                                                isLoading ?
-                                                <div class="container">
-
-                                                    <PulseLoader/>
-
-                                                    </div>
-                                                :
-                                                displayAssignments && displayAssignments.map( (el, index) => 
-                                                <div key={index}>
-                                                    <div className="assignments_container" style={{borderColor: themecolor}}>
-                                                    <div className="assignments_assignments">{el.title}</div>
-                                                    <div className="assignments_detail">{el.class}</div>
-                                                </div>
-                                                </div>
-                
-                                           
-                                           
-                                              
-                                        
-                                            
-                                                       
-                                                )
-                                            }
-                                        </div>   
-                                        
-                                        </>
-                                        :
-                                        <>        
-                                    <button className="content_title home_menu_title_2" onClick={assignmentsOnClick}>
+      
+                                    <button className="content_title home_menu_title_2">
                                         Calendar
                                     </button>
-                                    <button className="content_title news_title_2" onClick={assignmentsOnClick}>
-                                        Assignments
-                                    </button>
+
                                  <div className="home_calendar"> <div onClick={() => {navigate("/Calendar")}}>  <Bigcalendar
                                 localizer={localizer}
 
@@ -627,9 +535,9 @@ export default function Home() {
                                 events = {events && events}
                                 defaultView={'agenda'}
                                 /></div></div>
-                                    </>
+                
           
-                                        }
+                                        
 
                                             {/* <div className="assignments_content" style={{marginLeft: "20px"}}>Due {
                                                 isLoading ? <div></div> : assignments && <span style={{color: themecolor, WebkitTextFillColor: themecolor}}>{dayArray[new Date(Object.values(assignments)[0]['end_at']).getDay()]}</span>
@@ -683,32 +591,9 @@ export default function Home() {
                                     <div className="home_left_bottom_right">
                                         <div className="home_content">
 
-                                            {isGrades ? 
-                                                    <>                                        <button className="content_title news_title_1" onClick={() => { GradesOnClick()}}>
-                                                    Grades
-                                                </button>
-                                                <button className="content_title home_menu_title_1" onClick={() => { GradesOnClick()}}>
-                                                     Athletics
-                                                </button>
-                                                    <div className="grade_container">
-
-                                                {
-                                                    Object.values(grade).map( (el, index) => 
-                                                        <div key={index}>
-                                                            <div className="grade_content_format">
-                                                                <div className='class_1'  style={{borderColor: themecolor}}>{el.class_name}</div>
-                                                                <div className="class_grade">{el.ptd_letter_grade}</div>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                }
-                                                    </div></>
-                                                :
-                                                <>                                                    <><button className="content_title news_title_1" onClick={() => { GradesOnClick()}}>
+                                           
+                                                                                    <button className="content_title news_title_1" onClick={() => { GradesOnClick()}}>
                                                 Athletics
-                                            </button>
-                                            <button className="content_title home_menu_title_1" onClick={() => { GradesOnClick()}}>
-                                                 Grades
                                             </button>
                                                 <div className="grade_container">
 
@@ -717,8 +602,7 @@ export default function Home() {
 columns={columns}
 data = {data}
 /></div>
-                                                </div></></>
-                                                }   
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
