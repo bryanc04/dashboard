@@ -7,9 +7,8 @@ import Home from './pages/Home';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Calendar from './pages/Calendar';
 import Menu from './pages/Menu';
-import Grades from './pages/Grades';
+
 import Schedule from './pages/Schedule';
-import Assignments from './pages/Assignments';
 import Login from './pages/Login';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -27,10 +26,8 @@ root.render(
         <Route path="/" element={<Navigate to="/Login" />} />
         <Route path="/Home" element={<Home />}/>
         <Route path="/Login" element={<Login />}/>
-        <Route path="/Assignments" element={<Assignments />} />
         <Route path="/Calendar" element={<Calendar />}/>
         <Route path="/Menu" element={<Menu />}/>
-        <Route path="/Grades" element={<Grades />}/>
         <Route path="/Schedule" element={<Schedule />}/>
         <Route path="/Signup" element={<Signup />}/>
       </Routes>

@@ -16,6 +16,9 @@ import { encryptstorage } from '../components/encrypt';
 import Login from "./Login";
 import Logout from "../components/logout";
 import ThemePop from "../components/popup2";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -36,6 +39,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 
 
@@ -43,7 +47,7 @@ const db = getFirestore(app);
 
 export default function Schedule() {
 
-    const [isLoggedin, setIsLoggedIn] = useState(true);
+    const [isLoggedin, setIsLoggedIn] = useState(false);
 
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
@@ -51,6 +55,15 @@ export default function Schedule() {
 
     const [themecolor, setthemecolor] = useState("#8b000da8");
     const [data, setData] = useState([]);
+
+    const [user, loading, error] = useAuthState(auth);
+
+    useEffect(() => {
+        if(user) {
+          setIsLoggedIn(true);
+        }
+    }, [user])
+
     const columns = [
     {
         name: 'Team',

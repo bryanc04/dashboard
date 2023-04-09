@@ -11,6 +11,9 @@ import { getFirestore, collection, getDocs, query, orderBy, limit } from "fireba
 import { encryptstorage } from '../components/encrypt'
 import ChromeDinoGame from 'react-chrome-dino';
 import ThemePop from "../components/popup2";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyBDh3yxYRLCaikdnMXYrCuVc0iGL5qn0js",
@@ -26,10 +29,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 export default function Calendar(){
 
-    const [isLoggedin, setIsLoggedIn] = useState(true);
+    const [isLoggedin, setIsLoggedIn] = useState(false);
 
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
@@ -40,6 +44,14 @@ export default function Calendar(){
 
     const localizer = momentLocalizer(moment);
     const [events, setEvents] = useState([]);
+
+    const [user, loading, error] = useAuthState(auth);
+
+    useEffect(() => {
+        if(user) {
+          setIsLoggedIn(true);
+        }
+    }, [user])
 
     useEffect(()=> {
 

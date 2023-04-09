@@ -30,7 +30,6 @@ import Highlighter from "react-highlight-words";
 import ThemePop from "../components/popup2";
 import {  useNavigate, Route, Routes } from "react-router-dom";
 import PageTransition from "../components/PageTransition"
-import Assignments from "./Assignments";
 import DataTable from 'react-data-table-component';
 import { useAuthState } from "react-firebase-hooks/auth";
 

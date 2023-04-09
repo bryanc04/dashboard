@@ -5,6 +5,8 @@ import ThemePop from "../components/popup2";
 import Logout from "../components/logout";
 import Login from "./Login";
 import{bgimage} from "../components/popup";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 import{background} from "../components/popup";
 import { useSelector } from 'react-redux';
 import { UserContext} from '../components/popup';
@@ -20,6 +22,8 @@ import {v4 as uuidv4} from "uuid";
 import Carousel from "react-spring-3d-carousel";
 import MenuCarousel from "../components/MenuCarousel"
 import MenuCardCarousel from "../components/MenuCarouselCards";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -38,11 +42,12 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 
 
 export default function Menu() {
-    const [isLoggedin, setIsLoggedIn] = useState(true);
+    const [isLoggedin, setIsLoggedIn] = useState(false);
 
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("efefef");
@@ -63,6 +68,9 @@ export default function Menu() {
 
     const [themecolor, setthemecolor] = useState("#8b000da8");
 
+    const [user, loading, error] = useAuthState(auth);
+
+
     
     const adjustTheme = (newTheme) => {
         setthemecolor(newTheme);
@@ -77,6 +85,13 @@ export default function Menu() {
     // $('#onclick').click(function(){
     //     alert($(this).text());
     // });
+
+    useEffect(() => {
+        if(user) {
+          setIsLoggedIn(true);
+        }
+    }, [user])
+
 
 
     useEffect(()=> {
