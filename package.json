@@ -28,6 +28,7 @@
     "react-colorful": "^5.5.1",
     "react-data-table-component": "^7.5.2",
     "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
     "react-highlight-words": "^0.18.0",
     "react-pacman": "^0.0.4",
     "react-redux": "^8.0.2",

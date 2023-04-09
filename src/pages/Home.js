@@ -32,6 +32,7 @@ import {  useNavigate, Route, Routes } from "react-router-dom";
 import PageTransition from "../components/PageTransition"
 import Assignments from "./Assignments";
 import DataTable from 'react-data-table-component';
+import { useAuthState } from "react-firebase-hooks/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -95,6 +96,8 @@ export default function Home() {
     const [assignmentsDisplay, setAssignmentsDisplay] = useState();
 
     const [data, setData] = useState([]);
+
+    const [user, loading, error] = useAuthState(auth);
     
     const [schedule, setSchedule] = useState();
     const columns = [
@@ -126,18 +129,11 @@ export default function Home() {
         navigate(destination)
     }
 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          const uid = user.uid;
+      useEffect(() => {
+        if(user) {
           setIsLoggedIn(true);
-          // ...
-        } else {
-          // User is signed out
-          // ...
         }
-      });
+    }, [user])
 
     useEffect(()=> {
 

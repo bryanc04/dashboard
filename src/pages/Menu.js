@@ -42,7 +42,7 @@ const db = getFirestore(app);
 
 
 export default function Menu() {
-    const [isLoggedin, setIsLoggedIn] = useState(false);
+    const [isLoggedin, setIsLoggedIn] = useState(true);
 
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("efefef");

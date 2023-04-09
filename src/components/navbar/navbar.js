@@ -5,6 +5,7 @@ import { EncryptStorage } from 'encrypt-storage';
 import loomis2 from "../../assets/loomis2.png";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit, getDoc, doc, documentId, setDoc, increment } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
   prefix: '@instance',

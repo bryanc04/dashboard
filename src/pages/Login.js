@@ -9,10 +9,11 @@ import { message, Space } from 'antd';
 import 'antd/dist/antd.css';
 import { encryptstorage } from '../components/encrypt'
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBDh3yxYRLCaikdnMXYrCuVc0iGL5qn0js",
@@ -36,6 +37,7 @@ export default function Login(props){
     const[username, setUsername] = useState("");
     const[password, setPassword] = useState("");
     const[isLoading, setIsLoading] = useState(false);
+    const [user, loading, error] = useAuthState(auth);
     let navigate = useNavigate();
 
     const {state} = useLocation();
@@ -45,13 +47,16 @@ export default function Login(props){
     }, [])
 
     useEffect(() => {
-        var loggedIn = encryptstorage.getItem("status", "logged in", username, password);
-        if (loggedIn== "logged in"){
+        if(user) {
             if (state != null){
-            navigate(state, {replace: true})
+                navigate(state, {replace: true})
+            }
+            else
+            {
+                navigate('/Home', {replace: true})
             }
         }
-    }, [])
+    }, [user])
 
     const login = () => {
 
