@@ -11,6 +11,8 @@ import { encryptstorage } from '../components/encrypt'
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBDh3yxYRLCaikdnMXYrCuVc0iGL5qn0js",
@@ -46,6 +48,10 @@ export default function Signup(props){
             navigate(state, {replace: true})
             }
         }
+    }, [])
+
+    useEffect(() => {
+        AOS.init();
     }, [])
 
     const register = () => {
@@ -110,10 +116,20 @@ export default function Signup(props){
 
     return(
         <div className={s.login_container}>
-            <div className={s.left_container}>
-                <div className={s.login_title}>
-                    LC DASHBOARD
-                </div>
+            <div style={{
+                width: '100%'
+            }}>
+            <div 
+                className={s.login_title}
+                style={{
+                    alignItems: 'center',
+                    display: 'flex'
+                }}
+            >
+                <img className="lc_logo" src={Logo2} style={{width: 20, height: 20, marginRight: 10}}/>
+                LC DASHBOARD
+            </div>
+            <div className={s.left_container} data-aos="fade-up" data-aos-duration="1000">
                 <div style={{padding: '0 20%', display: 'flex', justifyContent: 'center', flexDirection: 'column', height: '80%'}}>
                     <div style={{fontSize: '30px', fontWeight: 'bold'}}>
                         Welcome!
@@ -152,12 +168,7 @@ export default function Signup(props){
                     </div>
                 </div>
             </div>
-            <div className={s.right_container}>
-                <div style={{padding: '40%'}}>
-                    <img className="lc_logo" src={Logo2} style={{width: '100%', height: '100%'}}/>
-                </div>
             </div>
-
         </div>
     );
 }
