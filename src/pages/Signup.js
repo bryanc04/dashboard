@@ -164,7 +164,13 @@ export default function Signup(props){
                                     "Sign up"
                                     }
                             </button>
-
+                            <div
+                                style={{
+                                    textAlign: 'center'
+                                }}
+                            >
+                                Already have an account? <span style={{fontWeight: 'bold', cursor: 'pointer'}} onClick={() => {navigate("/Login");}}>Login</span>
+                            </div>
                     </div>
                 </div>
             </div>
