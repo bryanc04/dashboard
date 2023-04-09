@@ -16,6 +16,7 @@ import { GridLoader, PulseLoader } from "react-spinners";
 import { HexColorPicker } from "react-colorful";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, getDocs, query, orderBy, limit, getDoc, doc, documentId, setDoc } from "firebase/firestore";
 import '../index.scss';
 import ChromeDinoGame from 'react-chrome-dino';
@@ -50,11 +51,11 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
+const auth = getAuth(app);
 
 export default function Home() {
 
-    const [isLoggedin, setIsLoggedIn] = useState(true);
+    const [isLoggedin, setIsLoggedIn] = useState(false);
 
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
@@ -124,6 +125,19 @@ export default function Home() {
     const navigateTo = (destination) => {
         navigate(destination)
     }
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          const uid = user.uid;
+          setIsLoggedIn(true);
+          // ...
+        } else {
+          // User is signed out
+          // ...
+        }
+      });
 
     useEffect(()=> {
 
