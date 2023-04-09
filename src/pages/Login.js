@@ -8,7 +8,25 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { message, Space } from 'antd';
 import 'antd/dist/antd.css';
 import { encryptstorage } from '../components/encrypt'
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
+const firebaseConfig = {
+    apiKey: "AIzaSyBDh3yxYRLCaikdnMXYrCuVc0iGL5qn0js",
+    authDomain: "dashboard-2a1a3.firebaseapp.com",
+    projectId: "dashboard-2a1a3",
+    storageBucket: "dashboard-2a1a3.appspot.com",
+    messagingSenderId: "354314041590",
+    appId: "1:354314041590:web:32b771d8e2a2d4ce4ad4d7",
+    measurementId: "G-W02KFP0FY8"
+  };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 
 export default function Login(props){
@@ -23,6 +41,10 @@ export default function Login(props){
     const {state} = useLocation();
 
     useEffect(() => {
+        AOS.init();
+    }, [])
+
+    useEffect(() => {
         var loggedIn = encryptstorage.getItem("status", "logged in", username, password);
         if (loggedIn== "logged in"){
             if (state != null){
@@ -33,41 +55,36 @@ export default function Login(props){
 
     const login = () => {
 
-        if(username == ""){
-            message.error("Please input a username");
-            return;
-        }else if(password == ""){
-            message.error("Please input a password");
-            return;
-        }
-
         setIsLoading(true);
-        axios.post('https://loomis.herokuapp.com/', {
-            username: username,
-            password: password
-        })
-        .then(function(response) {
-            var data = response.data;
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, username, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
             setIsLoading(false);
-            if (data == "Valid"){
-
-                encryptstorage.setItem("status", "logged in")
-                encryptstorage.setItem("userInfo", [username, password])
-                if (state== null){
-                    navigate("/Home", {replace: true})
-                }
-                else{
-                navigate(state, {replace: true})
-                }
-            }else{
-                message.error("Wrong username or password.")
+            navigate("/Home", {replace: true});
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            if(errorCode == "auth/invalid-email")
+            {
+                message.error("Invalid email format.");
+                setIsLoading(false);
             }
-        })
-        .catch(function(error){
-            console.log (error);
-        })
-
-    }
+            else if (errorCode == "auth/wrong-password")
+            {
+                message.error("Incorrect Password")
+                setIsLoading(false);
+            }
+            else if (errorCode == "auth/user-not-found")
+            {
+                message.error("User does not exist, please sign up")
+                setIsLoading(false);
+            }
+        });
+        }
 
     const enterPress = (el) => {
         if (el.keyCode === 13){
@@ -76,26 +93,38 @@ export default function Login(props){
     }
 
     return(
-        <div className={s.login_container}>
-            <div className={s.left_container}>
-                <div className={s.login_title}>
-                    LCDASHBOARD
-                </div>
+          <div className={s.login_container}>
+            <div style={{
+                width: '100%'
+            }}>
+            <div 
+                className={s.login_title}
+                style={{
+                    alignItems: 'center',
+                    display: 'flex'
+                }}
+            >
+                <img className="lc_logo" src={Logo2} style={{width: 20, height: 20, marginRight: 10}}/>
+                LC Dashboard
+            </div>
+            <div className={s.left_container} data-aos="fade-up" data-aos-duration="1000">
                 <div style={{padding: '0 20%', display: 'flex', justifyContent: 'center', flexDirection: 'column', height: '80%'}}>
                     <div style={{fontSize: '30px', fontWeight: 'bold'}}>
-                        Welcome Back
+                        Welcome!
                     </div>
                     <div>
                             <div className="form-group" style={{marginTop: 20}}>
-                                <label for="inputUsername">Username</label>
-                                <input type="text" className="form-control" id="inputUsername" aria-describedby="usernameHelp" placeholder="Enter your username" onChange={(event) => setUsername(event.target.value)} onKeyDown={(el) => enterPress(el)} />
-                                <small id="usernameHelp" className="form-text text-muted">Enter your Veracross username</small>
+                                <label for="inputUsername">Email</label>
+                                <input type="text" className="form-control" id="inputUsername" aria-describedby="usernameHelp" placeholder="example@example.com" onChange={(event) => setUsername(event.target.value)} onKeyDown={(el) => enterPress(el)} />
+                                <small id="usernameHelp" className="form-text text-muted">Enter your email</small>
                             </div>
                             <div className="form-group" style={{marginTop: 20}}>
                                 <label for="inputPassword">Password</label>
                                 <input type="password" className="form-control" id="inputPassword" aria-describedby="passwordHelp" placeholder="Enter your password" onChange={(event) => setPassword(event.target.value)} onKeyDown={(el) => enterPress(el)}/>
-                                <small id="usernameHelp" className="form-text text-muted">Enter your Veracross password</small>
-                                <button type="submit" onClick={() => {login();}} className={`${s.login_button} btn btn-primary shadow-none`} style={{width: '100%', marginTop: 20}}>
+                                <small id="usernameHelp" className="form-text text-muted">Enter your new password</small>
+                            </div>
+
+                            <button type="submit" onClick={() => {login();}} className={`${s.login_button} btn btn-primary shadow-none`} style={{width: '100%', marginTop: 20}}>
                                     { 
                                     isLoading 
                                     ? 
@@ -103,18 +132,12 @@ export default function Login(props){
                                     :
                                     "Sign in"
                                     }
-                                </button>
-                            </div>
+                            </button>
 
                     </div>
                 </div>
             </div>
-            <div className={s.right_container}>
-                <div style={{padding: '40%'}}>
-                    <img className="lc_logo" src={Logo2} style={{width: '100%', height: '100%'}}/>
-                </div>
             </div>
-
         </div>
     );
 }
