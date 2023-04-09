@@ -153,11 +153,6 @@ export default function Navbar(props){
             </NavLink>
           </li>
           <li>
-            <NavLink to = "/Assignments" className='navbar_item_container' onClick={() => update("assignments")}>
-              <i className="bi bi-journal-text navbar_item"></i>
-            </NavLink>
-          </li>
-          <li>
               <NavLink to = "/Calendar" className='navbar_item_container'onClick={() => update("calendar")}>
                   <i className="bi bi-calendar navbar_item" ></i>
               </NavLink>
@@ -167,11 +162,7 @@ export default function Navbar(props){
               <i className="bi bi-table navbar_item" ></i>
               </NavLink>
             </li>
-            <li>
-              <NavLink to = "/Grades" className='navbar_item_container' onClick={() => update("grades")}>
-              <i className="bi bi-mortarboard navbar_item" ></i>
-              </NavLink>
-            </li>
+
             <li>
               <NavLink to = "/Schedule" className='navbar_item_container' onClick={() => update("schedule")}>
               <i className='bi bi-dribbble navbar_item' ></i>
