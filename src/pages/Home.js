@@ -32,7 +32,7 @@ import {  useNavigate, Route, Routes } from "react-router-dom";
 import PageTransition from "../components/PageTransition"
 import DataTable from 'react-data-table-component';
 import { useAuthState } from "react-firebase-hooks/auth";
-
+import { Navbar2 } from "../components/navbar/navbar2.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -497,7 +497,7 @@ export default function Home() {
 
             <div className="row">
 
-                <Navbar theme={themecolor}/>
+                <Navbar2 theme={themecolor}/>
                 <Logout to="/Home"/>
 
 

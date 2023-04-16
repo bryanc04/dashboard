@@ -40,13 +40,14 @@ export default function Login(props){
     const [user, loading, error] = useAuthState(auth);
     let navigate = useNavigate();
 
-    const {state} = useLocation();
+    const location = useLocation();
 
     useEffect(() => {
         AOS.init();
     }, [])
 
     useEffect(() => {
+        var state = location.pathname
         if(user) {
             if (state != null){
                 navigate(state, {replace: true})
