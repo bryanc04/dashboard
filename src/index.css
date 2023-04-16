@@ -224,7 +224,7 @@ hr{
   width: 83%;
   top: 50px;
   z-index: 3;
-  margin-top: -45px;
+  /* margin-top: -45px; */
   filter: blur(0px) !important;
 }
 
@@ -235,7 +235,7 @@ hr{
   width: 83%;
   top: 50px;
   z-index: 3;
-  margin-top: -45px;
+  /* margin-top: -45px; */
   filter: blur(0px) !important;
 }
 
@@ -473,7 +473,7 @@ hr{
   display: grid;
   position: absolute;
   right: -100px;
-  bottom: 20px;
+  bottom: 80px;
   width: 75px;
   z-index: 1;
 }
@@ -836,16 +836,16 @@ hr{
    margin-left: 10px;
 }
 
-.container{
+/* .container{
   font-size: 100px;
   width: 500px;
-}
+} */
 
-.logout{
+/* .logout{
   bottom: 10px;
   left: 40px;
   position: absolute;
-}
+} */
 
 .grade_page_container > .class_1{
   animation: none;

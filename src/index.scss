@@ -7,17 +7,6 @@ $duration: 3s;
 $timingFunction: ease;
 
 
-
-.container {
-  position:absolute;
-  height:100px;
-  width:86px;
-  transform:scale(#{$scale * .3});
-  justify-content: center;
-  margin-left: 200px;
-  margin-top: 20px;
-}
-
 .cube {
   position:absolute;
   width:86px;

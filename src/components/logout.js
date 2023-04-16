@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useMemo }  from 'react';
+import React, { useState, createContext, useContext, useMemo } from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
 import { EncryptStorage } from 'encrypt-storage';
 import { initializeApp } from "firebase/app";
@@ -26,20 +26,28 @@ const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
 })
 
 
-export default function Logout(props){
-    const logout = () => {
-        signOut(auth).then(() => {
-          navigate("/Login", { replace: true, state: props.to })
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-      }
+export default function Logout(props) {
+  const logout = () => {
+    signOut(auth).then(() => {
+      navigate("/Login", { replace: true, state: props.to })
+    })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
 
-      let navigate = useNavigate();
-      return (
-         <div style={{cursor: 'pointer'}} onClick={() => {logout();}}>
-                <i class="bi bi-box-arrow-right logout" style={{fontSize: 25, color: 'black'}}></i>
-        </div>       
-      )
+  let navigate = useNavigate();
+  return (
+    <div 
+      style={{ 
+        cursor: 'pointer',
+        border: '1px solid black',
+        padding: '5px 10px',
+        borderRadius: 10
+      }} 
+      onClick={() => { logout(); }}
+    >
+      Logout
+    </div>
+  )
 }
