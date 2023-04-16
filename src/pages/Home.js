@@ -62,7 +62,7 @@ export default function Home() {
     const [color2, setColor2] = useState("#efefef");
 
     const [theme, setTheme] = useState("change_theme_option_1");
-    const [themecolor, setthemecolor] = useState("#8b000da8");
+    const [themecolor, setthemecolor] = useState("#ffffff");
 
     const [dayArray, setDayArray] = useState(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
 

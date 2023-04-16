@@ -83,14 +83,14 @@ hr{
 
 
 
-.container-fluid {
+/* .container-fluid {
   -webkit-animation: gradient 30s ease infinite !important;
    animation: gradient 5s ease infinite !important;
    background-size: 150% !important;
    height: 100vh !important;
    justify-content: center;
 
-}
+} */
 
 .welcome_title {
   left: 155px;
@@ -359,11 +359,11 @@ hr{
   top: 400px;
 }
 
-.container-fluid{
+/* .container-fluid{
   z-index: 3;
   overflow: hidden;
 
-}
+} */
 
 .hr {
   width: 100%;

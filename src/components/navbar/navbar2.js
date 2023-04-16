@@ -10,8 +10,9 @@ export function Navbar2(props){
         backgroundColor: props.theme,
       }}
       expand="lg"
+      fixed="top"
     >
-      <Container>
+      <Container fluid>
         <Navbar.Brand href="#home">LC DASHBOARD</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
