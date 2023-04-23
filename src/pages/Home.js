@@ -33,6 +33,7 @@ import PageTransition from "../components/PageTransition"
 import DataTable from 'react-data-table-component';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Navbar2 } from "../components/navbar/navbar2.js";
+import { Navbar3 } from "../components/navbar/navbar3.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -383,11 +384,11 @@ export default function Home() {
 
         }
 
-        getDailyBulletin();
-        getBlocks();
-        checkupdated();
-        checkOverallUpdated();
-        getMenu();
+        // getDailyBulletin();
+        // getBlocks();
+        // checkupdated();
+        // checkOverallUpdated();
+        // getMenu();
 
     }, []);
 
@@ -462,19 +463,16 @@ export default function Home() {
 
     return (
         <>
-            <Navbar2 theme={themecolor} />
+            <Navbar3 theme={themecolor} />
             <div>
-
-
                 {
                     isLoggedin
                         ?
-
-
-
-
                         <div className="all">
-
+                             <div className="pickers_grid">
+                                                <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
+                                                <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
+                            </div>
                             <div className="container-fluid blur" style={{
                                 backgroundColor: "rgb(254, 254, 254)",
                                 backgroundImage: backgroundOption === "change_bg_option_1" ? "none" :
@@ -484,12 +482,26 @@ export default function Home() {
                                                 backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
                                 animation: "gradient 5s ease infinite !important",
                                 WebkitAnimation: "gradient 5s ease infinite !important",
-                            }}>
+                            }}></div>
+                            <div className="row">
+                                Hi
+                                <div className="home_column home_column_left"></div>
+                                <div className="home_column home_column_right"></div>
+                        </div>
+                        </div>
+                        :
+                        <Login to="/Home" />
+                        
 
+                }
+            
 
+            </div>
+        </>
+    )
+}
 
-                                <div className="row">
-                                    <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '-90px' }}>
+ {/* <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '-90px' }}>
 
                                         <div className="home_container">
                                             <div className="pickers_grid">
@@ -525,35 +537,7 @@ export default function Home() {
 
 
 
-                                                            {/* <div className="assignments_content" style={{marginLeft: "20px"}}>Due {
-                                                isLoading ? <div></div> : assignments && <span style={{color: themecolor, WebkitTextFillColor: themecolor}}>{dayArray[new Date(Object.values(assignments)[0]['end_at']).getDay()]}</span>
-                                            }</div>
-                                            <div className="assignments_all_container">
-                                            {
-                                                isLoading ?
-                                                <div class="container">
-
-                                                    <PulseLoader/>
-
-                                                    </div>
-                                                :
-                                                displayAssignments && displayAssignments.map( (el, index) => 
-                                                <div key={index}>
-                                                    <div className="assignments_container" style={{borderColor: themecolor}}>
-                                                    <div className="assignments_assignments">{el.title}</div>
-                                                    <div className="assignments_detail">{el.class}</div>
-                                                </div>
-                                                </div>
-                
-                                           
-                                           
-                                              
-                                        
-                                            
-                                                       
-                                                )
-                                            }
-                                        </div>             */}
+                                                
                                                         </div>
                                                     </div>
                                                     <div className="home_left_bottom">
@@ -670,16 +654,5 @@ export default function Home() {
 
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        :
-                        <Login to="/Home" />
-
-                }
-
-            </div>
-        </>
-    )
-}
+                                </div> */}
 
