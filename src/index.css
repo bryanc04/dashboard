@@ -103,15 +103,18 @@ hr{
 }
 
 .navbar_item {
-  color: white;
-  font-size: 20px;
+  color: #909DA1;
+  font-size: 13px;
+  padding-right: 25px;
+  width: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .navbar_item_container {
-  margin-bottom: 40px;
+  margin: 40px;
   cursor: pointer;
   display: block;
-  z-index: 3;
 }
 
 .menu_main_title {
@@ -472,8 +475,8 @@ hr{
 .pickers_grid{
   display: grid;
   position: absolute;
-  right: -100px;
-  bottom: 80px;
+  right: 0px;
+  bottom: 0px;
   width: 75px;
   z-index: 1;
 }
@@ -821,12 +824,11 @@ hr{
 
 
 .navbar_style{
-  height: 65vh;
-  background-color: var(--main);
-  width: 75px;
-  margin-top: 170px;
-  margin-left: 20px;
-  border-radius: 15px;
+  padding-top: 25%;
+  height: 100vh;
+  background-color: white;
+  width: 15%;
+  color: black;
   /* background: linear-gradient(rgba(255,255,255,.2), rgba(255,255,255,.2)); */
   justify-content: center;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -912,11 +914,6 @@ th{
 td{
 }
 
-
-.row{
-  /* margin-right: -1000px !important; */
-  filter: none !important;
-}
 
 .news_content_title{
   font-weight: 600;
@@ -1123,4 +1120,18 @@ td{
 
 .home_calendar .rbc-toolbar {
   display: none;
+}
+
+.home_column {
+  float: left;
+  height: 100vh;
+}
+
+.home_column_left {
+  width: 65%;
+  background-color: #8EC5FC;
+}
+
+.home_column_right {
+  width: 35%;
 }

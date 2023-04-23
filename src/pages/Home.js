@@ -32,6 +32,7 @@ import PageTransition from "../components/PageTransition"
 import DataTable from 'react-data-table-component';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Navbar2 } from "../components/navbar/navbar2.js";
+import { Navbar3 } from "../components/navbar/navbar3.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -382,11 +383,11 @@ export default function Home() {
 
         }
 
-        getDailyBulletin();
-        getBlocks();
-        checkupdated();
-        checkOverallUpdated();
-        getMenu();
+        // getDailyBulletin();
+        // getBlocks();
+        // checkupdated();
+        // checkOverallUpdated();
+        // getMenu();
 
     }, []);
 
@@ -461,93 +462,118 @@ export default function Home() {
 
     return (
         <>
-
+            <Navbar3 theme={themecolor} />
             <div>
-                <>
-                    <Navbar2 theme={themecolor} />
-
-
-                    <div className="all">
-
-                        <div className="container-fluid blur" style={{
-                            backgroundColor: "rgb(254, 254, 254)",
-                            backgroundImage: backgroundOption === "change_bg_option_1" ? "none" :
-                                backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
-                                    backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
-                                        backgroundOption === "change_bg_option_4" ? "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)" :
-                                            backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
-                            animation: "gradient 5s ease infinite !important",
-                            WebkitAnimation: "gradient 5s ease infinite !important",
-                        }}>
-
-
-
+                {
+                    isLoggedin
+                        ?
+                        <div className="all">
+                             <div className="pickers_grid">
+                                                <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
+                                                <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
+                            </div>
+                            <div className="container-fluid blur" style={{
+                                backgroundColor: "rgb(254, 254, 254)",
+                                backgroundImage: backgroundOption === "change_bg_option_1" ? "none" :
+                                    backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
+                                        backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
+                                            backgroundOption === "change_bg_option_4" ? "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)" :
+                                                backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
+                                animation: "gradient 5s ease infinite !important",
+                                WebkitAnimation: "gradient 5s ease infinite !important",
+                            }}></div>
                             <div className="row">
-                                <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '-90px' }}>
+                                Hi
+                                <div className="home_column home_column_left"></div>
+                                <div className="home_column home_column_right"></div>
+                        </div>
+                        </div>
+                        :
+                        <Login to="/Home" />
+                        
 
-                                    <div className="home_container">
-                                        <div className="pickers_grid">
-                                            <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
-                                            <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
-                                        </div>
-                                        <div>
-                                            <p className="home_title welcome_title " style={{ color: themecolor, WebkitTextFillColor: themecolor }}>Welcome</p>
+                }
+            
 
-                                            <p className="home_title welcome_title ">Welcome</p>
-                                            <p className="home_title name_title" style={{ color: themecolor, WebkitTextFillColor: themecolor }}> Bryan </p>
-                                            <p className="home_title name_title"> Bryan </p>
-                                        </div>
-                                        <div className="home_inner_container">
-                                            <div className="home_left">
-                                                <div className="home_left_top">
-                                                    <div className="home_content assignments_home">
+            </div>
+        </>
+    )
+}
 
-                                                        <button className="content_title home_menu_title_2">
-                                                            Calendar
-                                                        </button>
+ {/* <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '-90px' }}>
 
-                                                        <div className="home_calendar"> <div onClick={() => { navigate("/Calendar") }}>  <Bigcalendar
-                                                            localizer={localizer}
+                                        <div className="home_container">
+                                            <div className="pickers_grid">
+                                                <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
+                                                <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
+                                            </div>
+                                            <div>
+                                                <p className="home_title welcome_title " style={{ color: themecolor, WebkitTextFillColor: themecolor }}>Welcome</p>
 
-                                                            startAccessor="start"
-                                                            endAccessor="end"
-                                                            style={{ height: "190px" }}
-                                                            events={events && events}
-                                                            defaultView={'agenda'}
-                                                        /></div></div>
+                                                <p className="home_title welcome_title ">Welcome</p>
+                                                <p className="home_title name_title" style={{ color: themecolor, WebkitTextFillColor: themecolor }}> Bryan </p>
+                                                <p className="home_title name_title"> Bryan </p>
+                                            </div>
+                                            <div className="home_inner_container">
+                                                <div className="home_left">
+                                                    <div className="home_left_top">
+                                                        <div className="home_content assignments_home">
+
+                                                            <button className="content_title home_menu_title_2">
+                                                                Calendar
+                                                            </button>
+
+                                                            <div className="home_calendar"> <div onClick={() => { navigate("/Calendar") }}>  <Bigcalendar
+                                                                localizer={localizer}
+
+                                                                startAccessor="start"
+                                                                endAccessor="end"
+                                                                style={{ height: "190px" }}
+                                                                events={events && events}
+                                                                defaultView={'agenda'}
+                                                            /></div></div>
 
 
 
 
-                                                        {/* <div className="assignments_content" style={{marginLeft: "20px"}}>Due {
-                                                isLoading ? <div></div> : assignments && <span style={{color: themecolor, WebkitTextFillColor: themecolor}}>{dayArray[new Date(Object.values(assignments)[0]['end_at']).getDay()]}</span>
-                                            }</div>
-                                            <div className="assignments_all_container">
-                                            {
-                                                isLoading ?
-                                                <div class="container">
-
-                                                    <PulseLoader/>
-
+                                                
+                                                        </div>
                                                     </div>
-                                                :
-                                                displayAssignments && displayAssignments.map( (el, index) => 
-                                                <div key={index}>
-                                                    <div className="assignments_container" style={{borderColor: themecolor}}>
-                                                    <div className="assignments_assignments">{el.title}</div>
-                                                    <div className="assignments_detail">{el.class}</div>
-                                                </div>
-                                                </div>
-                
-                                           
-                                           
-                                              
-                                        
-                                            
-                                                       
-                                                )
-                                            }
-                                        </div>             */}
+                                                    <div className="home_left_bottom">
+                                                        <div className="home_left_bottom_left">
+                                                            <div className="home_content current_block">
+                                                                <div className="content_title">
+                                                                    Current Block
+                                                                </div>
+                                                                <div className="big_container">
+                                                                    <div className="big_block_container">
+                                                                        {block}
+                                                                    </div>
+                                                                    <div className="current_block_name">{blockSubject}</div>
+                                                                </div>
+                                                                <div className="block_wrapper">
+                                                                    <div className="content_box a">Today is: <span style={{ color: themecolor }}>{rotation}</span></div>
+                                                                    <div className="content_box b">Next up:  <span style={{ color: themecolor }}>{nextBlock}</span></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="home_left_bottom_right">
+                                                            <div className="home_content">
+
+
+                                                                <button className="content_title news_title_1" onClick={() => { GradesOnClick() }}>
+                                                                    Athletics
+                                                                </button>
+                                                                <div className="grade_container">
+
+                                                                    <div style={{ overflowY: "scroll", margin: "1px !important" }}><DataTable
+
+                                                                        columns={columns}
+                                                                        data={data}
+                                                                    /></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="home_left_bottom">
@@ -663,13 +689,5 @@ export default function Home() {
 
 
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </>
-            </div>
-        </>
-    )
-}
+                                </div> */}
 
