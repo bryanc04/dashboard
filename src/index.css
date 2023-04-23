@@ -98,13 +98,9 @@ hr{
   z-index: 3;
 }
 
-.active {
-  border-left: 5px solid white;
-}
-
 .navbar_item {
   color: #909DA1;
-  font-size: 13px;
+  font-size: 18px;
   padding-right: 25px;
   width: 10px;
   display: flex;
@@ -112,7 +108,7 @@ hr{
 }
 
 .navbar_item_container {
-  margin: 40px;
+  margin: 20px 50px;
   cursor: pointer;
   display: block;
 }
@@ -824,14 +820,21 @@ hr{
 
 
 .navbar_style{
-  padding-top: 25%;
   height: 100vh;
   background-color: white;
-  width: 15%;
+  width: 250px;
   color: black;
   /* background: linear-gradient(rgba(255,255,255,.2), rgba(255,255,255,.2)); */
   justify-content: center;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar3_content {
+  display: flex;
+  flex: 1;
+  margin-top: 50px;
 }
 
 .lc_logo{
