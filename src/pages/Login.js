@@ -47,17 +47,13 @@ export default function Login(props){
     }, [])
 
     useEffect(() => {
-        var state = location.pathname
-        if(user) {
-            if (state != null){
-                navigate(state, {replace: true})
-            }
-            else
-            {
-                navigate('/Home', {replace: true})
-            }
+        if(loading) {
+            return;
         }
-    }, [user])
+        if(user) {
+            navigate('/Home', {replace: true})
+        }
+    }, [user, loading])
 
     const login = () => {
 
