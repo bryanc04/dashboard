@@ -1,15 +1,16 @@
-import React, {useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Navbar from "../components/navbar/navbar";
+import { Navbar2 } from "../components/navbar/navbar2";
 import Pop from "../components/popup";
 import ThemePop from "../components/popup2";
 import Logout from "../components/logout";
 import Login from "./Login";
-import{bgimage} from "../components/popup";
+import { bgimage } from "../components/popup";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-import{background} from "../components/popup";
+import { background } from "../components/popup";
 import { useSelector } from 'react-redux';
-import { UserContext} from '../components/popup';
+import { UserContext } from '../components/popup';
 import moment from 'moment';
 import { GridLoader } from "react-spinners";
 import ChromeDinoGame from 'react-chrome-dino';
@@ -18,11 +19,12 @@ import { HexColorPicker } from "react-colorful";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { encryptstorage } from '../components/encrypt';
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import Carousel from "react-spring-3d-carousel";
 import MenuCarousel from "../components/MenuCarousel"
 import MenuCardCarousel from "../components/MenuCarouselCards";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -30,13 +32,13 @@ import { useAuthState } from "react-firebase-hooks/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBDh3yxYRLCaikdnMXYrCuVc0iGL5qn0js",
-  authDomain: "dashboard-2a1a3.firebaseapp.com",
-  projectId: "dashboard-2a1a3",
-  storageBucket: "dashboard-2a1a3.appspot.com",
-  messagingSenderId: "354314041590",
-  appId: "1:354314041590:web:32b771d8e2a2d4ce4ad4d7",
-  measurementId: "G-W02KFP0FY8"
+    apiKey: "AIzaSyBDh3yxYRLCaikdnMXYrCuVc0iGL5qn0js",
+    authDomain: "dashboard-2a1a3.firebaseapp.com",
+    projectId: "dashboard-2a1a3",
+    storageBucket: "dashboard-2a1a3.appspot.com",
+    messagingSenderId: "354314041590",
+    appId: "1:354314041590:web:32b771d8e2a2d4ce4ad4d7",
+    measurementId: "G-W02KFP0FY8"
 };
 
 // Initialize Firebase
@@ -66,42 +68,45 @@ export default function Menu() {
     const [cards, setCards] = useState([]);
 
 
-    const [themecolor, setthemecolor] = useState("#8b000da8");
+    const [themecolor, setthemecolor] = useState("#ffffff");
 
     const [user, loading, error] = useAuthState(auth);
+    const navigate = useNavigate();
 
 
-    
     const adjustTheme = (newTheme) => {
         setthemecolor(newTheme);
         root.style.setProperty("--main", newTheme);
         message.success("Theme succesfully changed to " + newTheme);
-    } 
-    
+    }
+
     const changeView = () => {
         setCardview(!cardview);
-    }  
+    }
 
     // $('#onclick').click(function(){
     //     alert($(this).text());
     // });
 
     useEffect(() => {
-        if(user) {
-          setIsLoggedIn(true);
+        if (loading) {
+            return;
         }
-    }, [user])
+        if (!user) {
+            navigate('/Login');
+        }
+    }, [user, loading])
 
 
 
-    useEffect(()=> {
+    useEffect(() => {
 
         var loggedIn = encryptstorage.getItem("status");
 
-        if (loggedIn == "logged in"){
+        if (loggedIn == "logged in") {
             setIsLoggedIn(true)
         }
-     
+
 
         const getMenu = async () => {
             const collectionRef = collection(db, "menu");
@@ -123,127 +128,127 @@ export default function Menu() {
 
             setCards([
                 {
-                  key: uuidv4(),
-                  content: <MenuCardCarousel mealtype="Breakfast" style={{color: "black"}} alt="1" content={
-                    tempBreakfast ? Object.keys(tempBreakfast).length > 0 ? Object.keys(tempBreakfast).sort().map((el, index) => 
-                                                <div key={index}>
-                                                    <div className="meal_content">
-                                                        {el}:
-                                                    </div>
-                                                    <div className="meal_content_details">
-                                                        {
-                                                            tempBreakfast[el].map((el2, index2) => 
-                                                                <div key={index2}>
-                                                                    {el2}
-                                                                </div>
-                                                            )
-                                                        }
-                                                    </div>
-                                                </div>
-                                            )
-                                            :
-                                            <div>
-                                                No Breakfast Menu
+                    key: uuidv4(),
+                    content: <MenuCardCarousel mealtype="Breakfast" style={{ color: "black" }} alt="1" content={
+                        tempBreakfast ? Object.keys(tempBreakfast).length > 0 ? Object.keys(tempBreakfast).sort().map((el, index) =>
+                            <div key={index}>
+                                <div className="meal_content">
+                                    {el}:
+                                </div>
+                                <div className="meal_content_details">
+                                    {
+                                        tempBreakfast[el].map((el2, index2) =>
+                                            <div key={index2}>
+                                                {el2}
                                             </div>
-                                            :
-                                            <div
-                                                style={{
-                                                    display: 'flex',
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center',
-                                                    height: '100%'
-                                                }}
-                                            >
-                                                <GridLoader />
-                                            </div>
-        
-                  }/>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        )
+                            :
+                            <div>
+                                No Breakfast Menu
+                            </div>
+                            :
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: '100%'
+                                }}
+                            >
+                                <GridLoader />
+                            </div>
+
+                    } />
                 },
                 {
-                  key: uuidv4(),
-                  content: <MenuCardCarousel mealtype="Lunch" alt="2" content={
-                    tempLunch ? Object.keys(tempLunch).length > 0 ? Object.keys(tempLunch).sort().map((el, index) => 
-                                                <div key={index}>
-                                                    <div className="meal_content" style={{fontFamily: "DM Sans", color: "ffffff !important"}}>
-                                                        {el}:
-                                                    </div>
-                                                    <div className="meal_content_details">
-                                                        {
-                                                            tempLunch[el].map((el2, index2) => 
-                                                                <div key={index2} >
-                                                                    {el2}
-                                                                </div>
-                                                            )
-                                                        }
-                                                    </div>
-                                                </div>
-                                            )
-                                            :
-                                            <div>
-                                                No Lunch Menu
+                    key: uuidv4(),
+                    content: <MenuCardCarousel mealtype="Lunch" alt="2" content={
+                        tempLunch ? Object.keys(tempLunch).length > 0 ? Object.keys(tempLunch).sort().map((el, index) =>
+                            <div key={index}>
+                                <div className="meal_content" style={{ fontFamily: "DM Sans", color: "ffffff !important" }}>
+                                    {el}:
+                                </div>
+                                <div className="meal_content_details">
+                                    {
+                                        tempLunch[el].map((el2, index2) =>
+                                            <div key={index2} >
+                                                {el2}
                                             </div>
-                                            :
-                                            <div
-                                                style={{
-                                                    display: 'flex',
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center',
-                                                    height: '100%'
-                                                }}
-                                            >
-                                                <GridLoader />
-                                            </div>
-        
-                  } />
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        )
+                            :
+                            <div>
+                                No Lunch Menu
+                            </div>
+                            :
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: '100%'
+                                }}
+                            >
+                                <GridLoader />
+                            </div>
+
+                    } />
                 },
                 {
-                  key: uuidv4(),
-                  content: <MenuCardCarousel mealtype="Dinner" alt="3" content={ 
-                    tempDinner ? Object.keys(tempDinner).length > 0 ? Object.keys(tempDinner).sort().map((el, index) => 
-                    <div key={index}>
-                        <div className="meal_content">
-                            {el}:
-                        </div>
-                        <div className="meal_content_details">
-                            {
-                                tempDinner[el].map((el2, index2) => 
-                                    <div href='#' key={index2} id="onclick">
-                                        {el2}
-                                    </div>
-                                )
-                            }
-                        </div>
-                    </div>
-                )
-                :
-                <div>
-                    No Dinner Menu
-                </div>
-                :
-                <div
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                height: '100%'
-                            }}
-                        >
-                            <GridLoader />
-                </div>
-                }/>
+                    key: uuidv4(),
+                    content: <MenuCardCarousel mealtype="Dinner" alt="3" content={
+                        tempDinner ? Object.keys(tempDinner).length > 0 ? Object.keys(tempDinner).sort().map((el, index) =>
+                            <div key={index}>
+                                <div className="meal_content">
+                                    {el}:
+                                </div>
+                                <div className="meal_content_details">
+                                    {
+                                        tempDinner[el].map((el2, index2) =>
+                                            <div href='#' key={index2} id="onclick">
+                                                {el2}
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        )
+                            :
+                            <div>
+                                No Dinner Menu
+                            </div>
+                            :
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: '100%'
+                                }}
+                            >
+                                <GridLoader />
+                            </div>
+                    } />
                 },
-              ])
-                
+            ])
+
         }
 
         getMenu();
     }, []);
 
     const shortenText = (text, length) => {
-        if(text == null) {
+        if (text == null) {
             return "";
         }
-        if(text.length < length) {
+        if (text.length < length) {
             return text;
         }
         text = text.substring(0, length);
@@ -253,272 +258,254 @@ export default function Menu() {
     }
 
     const returnMenu = (menu) => {
-        
-    //     breakfastMenu ? Object.keys(breakfastMenu).sort().map((el, index) => 
-    //     <div key={index}>
-    //         <div className="meal_content">
-    //             {el}:
-    //         </div>
-    //         <div className="meal_content_details">
-    //             {
-    //                 breakfastMenu[el].map((el2, index2) => 
-    //                     <div key={index2}>
-    //                         {el2}
-    //                     </div>
-    //                 )
-    //             }
-    //         </div>
-    //     </div>
-    // )
-    // :
-    // <div
-    //     style={{
-    //         display: 'flex',
-    //         justifyContent: 'center',
-    //         alignItems: 'center',
-    //         height: '100%'
-    //     }}
-    // >
-    //     <GridLoader />
-    // </div>
 
-}
-    
+        //     breakfastMenu ? Object.keys(breakfastMenu).sort().map((el, index) => 
+        //     <div key={index}>
+        //         <div className="meal_content">
+        //             {el}:
+        //         </div>
+        //         <div className="meal_content_details">
+        //             {
+        //                 breakfastMenu[el].map((el2, index2) => 
+        //                     <div key={index2}>
+        //                         {el2}
+        //                     </div>
+        //                 )
+        //             }
+        //         </div>
+        //     </div>
+        // )
+        // :
+        // <div
+        //     style={{
+        //         display: 'flex',
+        //         justifyContent: 'center',
+        //         alignItems: 'center',
+        //         height: '100%'
+        //     }}
+        // >
+        //     <GridLoader />
+        // </div>
 
+    }
 
 
-    return(
+
+
+    return (
 
 
         <div>
-
-
-        {
-        isLoggedin
-        ?
-
-
-
-
-
-
-        <div className="all">
-            <div className="container-fluid blur" style={{ 
-            backgroundColor: "rgb(254, 254, 254)", 
-            backgroundImage: backgroundOption === "change_bg_option_1" ?  "none" : 
-                            backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
+            <div className="all">
+                <div className="container-fluid blur" style={{
+                    backgroundColor: "rgb(254, 254, 254)",
+                    backgroundImage: backgroundOption === "change_bg_option_1" ? "none" :
+                        backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
                             backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
-                            backgroundOption === "change_bg_option_4" ? "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)":
-                            backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
-            animation: "gradient 5s ease infinite !important",
-            WebkitAnimation: "gradient 5s ease infinite !important",
-            }}>
-            
+                                backgroundOption === "change_bg_option_4" ? "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)" :
+                                    backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
+                    animation: "gradient 5s ease infinite !important",
+                    WebkitAnimation: "gradient 5s ease infinite !important",
+                }}>
 
 
-            <div className="row">
 
-                <Navbar theme={themecolor}/>
-                <Logout to="/Menu" />
+                    <div className="row">
+
+                        <Navbar2 theme={themecolor} />
 
 
-                
-                <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop:'-90px'}}>
 
-                    <div className="home_container">
-                    <div className="pickers_grid">
-                <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2}/>
-                <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor}/>
-                </div>
-                    <div>
-                        <p className="home_title welcome_title ">Menu</p>
-                        <p className="home_title welcome_title " style={{color: themecolor, WebkitTextFillColor: themecolor}}>Menu</p>
-                       
-                    </div>
-                    <span className="menu_view_grid">
-                        <button onClick={() => changeView()} className="menu_icon menu_icon_hover_1"><i className="bi bi-border-all "></i></button>
-                        <button onClick={() => changeView()} className="menu_icon menu_icon_hover_2"><i className="bi bi-view-list menu_icon"></i></button>
-                    </span>
-                    <div className="menu_inner_container">
+                        <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '-90px' }}>
 
-                        {!cardview
-                        ?
-                            <><div className="menu_top menu_content">
-                                <div className="meal_title">
-                                    Breakfast
+                            <div className="home_container">
+                                <div className="pickers_grid">
+                                    <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
+                                    <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
                                 </div>
-                                <div className="menu_scroll">
-                                {
-                                
-                                    breakfastMenu ? 
-                                    Object.keys(breakfastMenu).length > 0 ?
-                                    Object.keys(breakfastMenu).sort().map((el, index) => 
-                                        <div key={index}>
-                                            <div className="meal_content">
-                                                {el}:
+                                <div>
+                                    <p className="home_title welcome_title ">Menu</p>
+                                    <p className="home_title welcome_title " style={{ color: themecolor, WebkitTextFillColor: themecolor }}>Menu</p>
+
+                                </div>
+                                <span className="menu_view_grid">
+                                    <button onClick={() => changeView()} className="menu_icon menu_icon_hover_1"><i className="bi bi-border-all "></i></button>
+                                    <button onClick={() => changeView()} className="menu_icon menu_icon_hover_2"><i className="bi bi-view-list menu_icon"></i></button>
+                                </span>
+                                <div className="menu_inner_container">
+
+                                    {!cardview
+                                        ?
+                                        <><div className="menu_top menu_content">
+                                            <div className="meal_title">
+                                                Breakfast
                                             </div>
-                                            <div className="meal_content_details">
+                                            <div className="menu_scroll">
                                                 {
-                                                    breakfastMenu[el].map((el2, index2) => 
-                                                        <div key={index2}>
-                                                            {el2}
+
+                                                    breakfastMenu ?
+                                                        Object.keys(breakfastMenu).length > 0 ?
+                                                            Object.keys(breakfastMenu).sort().map((el, index) =>
+                                                                <div key={index}>
+                                                                    <div className="meal_content">
+                                                                        {el}:
+                                                                    </div>
+                                                                    <div className="meal_content_details">
+                                                                        {
+                                                                            breakfastMenu[el].map((el2, index2) =>
+                                                                                <div key={index2}>
+                                                                                    {el2}
+                                                                                </div>
+                                                                            )
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            ) :
+                                                            <div>
+                                                                No breakfast menu
+                                                            </div>
+                                                        :
+                                                        <div
+                                                            style={{
+                                                                display: 'flex',
+                                                                justifyContent: 'center',
+                                                                alignItems: 'center',
+                                                                height: '100%'
+                                                            }}
+                                                        >
+                                                            <GridLoader />
                                                         </div>
-                                                    )
+
                                                 }
                                             </div>
                                         </div>
-                                    ) :
-                                    <div>
-                                        No breakfast menu
-                                    </div>
-                                    :
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            height: '100%'
-                                        }}
-                                    >
-                                        <GridLoader />
-                                    </div>
+                                            <div className="menu_center menu_content">
+                                                <div className="meal_title">
+                                                    Lunch
+                                                </div>
+                                                <div className="menu_scroll">
+                                                    {
+                                                        lunchMenu ?
+                                                            Object.keys(lunchMenu).length > 0 ?
+                                                                Object.keys(lunchMenu).sort().map((el, index) =>
+                                                                    <div key={index}>
+                                                                        <div className="meal_content">
+                                                                            {el}:
+                                                                        </div>
+                                                                        <div className="meal_content_details">
+                                                                            {
+                                                                                lunchMenu[el].map((el2, index2) =>
+                                                                                    <div key={index2}>
+                                                                                        {el2}
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                                :
+                                                                <div>
+                                                                    No Lunch Menu
+                                                                </div>
+                                                            :
+                                                            <div
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    height: '100%'
+                                                                }}
+                                                            >
+                                                                <GridLoader />
+                                                            </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div className="menu_bottom menu_content">
+                                                <div className="meal_title">
+                                                    Dinner
+                                                </div>
+                                                <div className="menu_scroll">
+                                                    {
+                                                        dinnerMenu ?
+                                                            Object.keys(dinnerMenu).length > 0 ?
+                                                                Object.keys(dinnerMenu).sort().map((el, index) =>
+                                                                    <div key={index}>
+                                                                        <div className="meal_content">
+                                                                            {el}:
+                                                                        </div>
+                                                                        <div className="meal_content_details">
+                                                                            {
+                                                                                dinnerMenu[el].map((el2, index2) =>
+                                                                                    <div key={index2}>
+                                                                                        {el2}
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                                :
+                                                                <div>
+                                                                    No Dinner Menu
+                                                                </div>
+                                                            :
 
-                                }
-                            </div>
-                            </div>
-                            <div className="menu_center menu_content">
-                                <div className="meal_title">
-                                    Lunch
+                                                            <div
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    height: '100%'
+                                                                }}
+                                                            >
+                                                                <GridLoader />
+                                                            </div>
+                                                    }
+                                                </div>
+                                            </div></>
+
+
+                                        :
+                                        cards.length > 0 ?
+                                            <MenuCarousel
+                                                cards={cards}
+                                                height="500px"
+                                                width="80%"
+                                                margin="0 auto"
+                                                offset={2}
+                                                showArrows={false}
+                                            />
+                                            :
+                                            <GridLoader style={{ marginLeft: 'auto', marginRight: 'auto' }} />
+
+                                    }
+
+
+
+
                                 </div>
-                                <div className="menu_scroll">
-                                {
-                                    lunchMenu ? 
-                                    Object.keys(lunchMenu).length > 0 ?
-                                    Object.keys(lunchMenu).sort().map((el, index) => 
-                                        <div key={index}>
-                                            <div className="meal_content">
-                                                {el}:
-                                            </div>
-                                            <div className="meal_content_details">
-                                                {
-                                                    lunchMenu[el].map((el2, index2) => 
-                                                        <div key={index2}>
-                                                            {el2}
-                                                        </div>
-                                                    )
-                                                }
-                                            </div>
-                                        </div>
-                                    )
-                                    :
-                                    <div>
-                                        No Lunch Menu
-                                    </div>
-                                    :
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            height: '100%'
-                                        }}
-                                    >
-                                        <GridLoader />
-                                    </div>
-                                }
+
+
+
+
+
+
+
+
+
+
+
+
                             </div>
-                            </div>
-                            <div className="menu_bottom menu_content">
-                                <div className="meal_title">
-                                    Dinner
-                                </div>
-                                <div className="menu_scroll">
-                                {
-                                    dinnerMenu ? 
-                                    Object.keys(dinnerMenu).length > 0 ?
-                                    Object.keys(dinnerMenu).sort().map((el, index) => 
-                                        <div key={index}>
-                                            <div className="meal_content">
-                                                {el}:
-                                            </div>
-                                            <div className="meal_content_details">
-                                                {
-                                                    dinnerMenu[el].map((el2, index2) => 
-                                                        <div key={index2}>
-                                                            {el2}
-                                                        </div>
-                                                    )
-                                                }
-                                            </div>
-                                        </div>
-                                    )
-                                    :
-                                    <div>
-                                        No Dinner Menu
-                                    </div>
-                                    :
-
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            height: '100%'
-                                        }}
-                                    >
-                                        <GridLoader />
-                                    </div>
-                                }
-                            </div>
-                            </div></>
-
-
-                        :
-                        cards.length > 0 ?
-                        <MenuCarousel
-                        cards={cards}
-                        height="500px"
-                        width="80%"
-                        margin="0 auto"
-                        offset={2}
-                        showArrows={false}
-                      />
-                      :
-                      <GridLoader style={{marginLeft: 'auto', marginRight: 'auto'}} />
-                    
-                            }
-
-
-
-
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
-        :
-
-
-        <Login to="/Menu"/>
-
-                                        }
 
         </div>
-        
-     
+
+
 
     )
 }

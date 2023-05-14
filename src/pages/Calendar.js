@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/navbar/navbar"
-import { Calendar as Bigcalendar, momentLocalizer} from 'react-big-calendar';
+import { Calendar as Bigcalendar, momentLocalizer } from 'react-big-calendar';
 import Pop from "../components/popup";
 import Logout from "../components/logout";
 import Login from "./Login";
@@ -13,6 +13,8 @@ import ChromeDinoGame from 'react-chrome-dino';
 import ThemePop from "../components/popup2";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { Navbar2 } from "../components/navbar/navbar2";
+import { useNavigate } from "react-router-dom";
 
 
 const firebaseConfig = {
@@ -23,7 +25,7 @@ const firebaseConfig = {
     messagingSenderId: "354314041590",
     appId: "1:354314041590:web:32b771d8e2a2d4ce4ad4d7",
     measurementId: "G-W02KFP0FY8"
-  };
+};
 
 
 
@@ -31,7 +33,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-export default function Calendar(){
+export default function Calendar() {
 
     const [isLoggedin, setIsLoggedIn] = useState(false);
 
@@ -40,27 +42,31 @@ export default function Calendar(){
     const [color2, setColor2] = useState("#efefef");
     const [isLoading, setIsLoading] = useState(false);
 
-    const [themecolor, setthemecolor] = useState("#8b000da8");
+    const [themecolor, setthemecolor] = useState("#ffffff");
 
     const localizer = momentLocalizer(moment);
     const [events, setEvents] = useState([]);
 
     const [user, loading, error] = useAuthState(auth);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if(user) {
-          setIsLoggedIn(true);
+        if (loading) {
+            return;
         }
-    }, [user])
+        if (!user) {
+            navigate("/Login");
+        }
+    }, [user, loading])
 
-    useEffect(()=> {
+    useEffect(() => {
 
         var loggedIn = encryptstorage.getItem("status");
 
-        if (loggedIn == "logged in"){
+        if (loggedIn == "logged in") {
             setIsLoggedIn(true)
         }
-     
+
         const getCalendar = async () => {
             setIsLoading(true);
             const collectionRef = collection(db, "calendar");
@@ -71,12 +77,12 @@ export default function Calendar(){
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
                 let newData = Object.values(data)
-                for (var i = 0; i < Object.keys(data).length; i++){
-                    if (newData[i].events == "No Events"){
+                for (var i = 0; i < Object.keys(data).length; i++) {
+                    if (newData[i].events == "No Events") {
                         continue;
                     }
-                    else{
-                        for (var j = 0; j < newData[i].events.length; j++){
+                    else {
+                        for (var j = 0; j < newData[i].events.length; j++) {
                             let tempDict = {
                                 id: id,
                                 title: newData[i].events[j].title,
@@ -92,105 +98,90 @@ export default function Calendar(){
                     }
                 }
 
-                })
+            })
 
             setEvents(tempEvents)
-            
-            setIsLoading(false);
-            };
 
-      
+            setIsLoading(false);
+        };
+
+
         getCalendar();
 
-        
+
     }, []);
 
     const adjustTheme = (newTheme) => {
         setthemecolor(newTheme);
         root.style.setProperty("--main", newTheme);
         message.success("Theme succesfully changed to " + newTheme);
-    } 
+    }
 
 
-    return(
+    return (
         <div>
-
-
-        {
-        isLoggedin
-        ?
-
-
-
-
-        <div className="all">
-            <div className="container-fluid blur" style={{ 
-            backgroundColor: "rgb(254, 254, 254)", 
-            backgroundImage: backgroundOption === "change_bg_option_1" ?  "none" : 
-                            backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
+            <div className="all">
+                <div className="container-fluid blur" style={{
+                    backgroundColor: "rgb(254, 254, 254)",
+                    backgroundImage: backgroundOption === "change_bg_option_1" ? "none" :
+                        backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
                             backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
-                            backgroundOption === "change_bg_option_4" ? "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)":
-                            backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
-            animation: "gradient 5s ease infinite !important",
-            WebkitAnimation: "gradient 5s ease infinite !important",
-            }}>
-            
+                                backgroundOption === "change_bg_option_4" ? "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)" :
+                                    backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
+                    animation: "gradient 5s ease infinite !important",
+                    WebkitAnimation: "gradient 5s ease infinite !important",
+                }}>
 
 
-            <div className="row">
 
-                <Navbar theme={themecolor}/>
-                <Logout />
+                    <div className="row">
+
+                        <Navbar2 theme={themecolor} />
 
 
-                
-                <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop:'-90px'}}>
 
-                    <div className="home_container">
-                    <div className="pickers_grid">
-                <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2}/>
-                <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor}/>
-                </div>
-                    <div>
-                        <p className="home_title welcome_title ">Calendar</p>
-                        <p className="home_title welcome_title " style={{color: themecolor, WebkitTextFillColor: themecolor}}>Calendar</p>
-                       
-                    </div>
-                        <div className="calendar_page_container">
-                        {isLoggedin
-                                    ?
-                                <div>
+                        <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '-90px' }}>
 
-                                <Bigcalendar
-                                localizer={localizer}
-
-                                startAccessor="start"
-                                endAccessor="end"
-                                style={{ height: 420 }}
-                                events = {events && events}
-                                />
+                            <div className="home_container">
+                                <div className="pickers_grid">
+                                    <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
+                                    <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
                                 </div>
-                                :
-                                <ChromeDinoGame/>
-                        }
+                                <div>
+                                    <p className="home_title welcome_title ">Calendar</p>
+                                    <p className="home_title welcome_title " style={{ color: themecolor, WebkitTextFillColor: themecolor }}>Calendar</p>
+
+                                </div>
+                                <div className="calendar_page_container">
+                                    {/* {isLoggedin
+                                        ? */}
+                                        <div>
+
+                                            <Bigcalendar
+                                                localizer={localizer}
+
+                                                startAccessor="start"
+                                                endAccessor="end"
+                                                style={{ height: 420 }}
+                                                events={events && events}
+                                            />
+                                        </div>
+                                        {/*  :
+                                         <ChromeDinoGame />
+                                    } */}
+                                </div>
+
+
+                            </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-        :
-        <Login to="/Calendar"/>
 
-                                        }
 
-        </div>
-            
-            
-        
-            )
-        }
+
+    )
+}
 
 

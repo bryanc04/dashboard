@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { UserContext } from '../components/popup';
 import moment from 'moment';
 import Login from "./Login";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { GridLoader, PulseLoader } from "react-spinners";
 import { HexColorPicker } from "react-colorful";
@@ -29,6 +29,7 @@ import dayjs from "dayjs";
 import Highlighter from "react-highlight-words";
 import ThemePop from "../components/popup2";
 import { useNavigate, Route, Routes } from "react-router-dom";
+import PageTransition from "../components/PageTransition"
 import DataTable from 'react-data-table-component';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Navbar2 } from "../components/navbar/navbar2.js";
@@ -97,6 +98,7 @@ export default function Home() {
     const [data, setData] = useState([]);
 
     const [user, loading, error] = useAuthState(auth);
+    const navigate = useNavigate();
 
     const [schedule, setSchedule] = useState();
     const columns = [
@@ -118,10 +120,6 @@ export default function Home() {
         }
     ];
 
-
-
-
-    let navigate = useNavigate();
     const location = useLocation();
 
     const navigateTo = (destination) => {
@@ -129,10 +127,13 @@ export default function Home() {
     }
 
     useEffect(() => {
-        if (user) {
-            setIsLoggedIn(true);
+        if(loading) {
+            return;
         }
-    }, [user])
+        if (!user) {
+            navigate("/Login");
+        }
+    }, [user, loading])
 
     useEffect(() => {
 
@@ -641,82 +642,118 @@ export default function Home() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="home_right">
-                                                    <div className="home_content" id="news_content" >
-                                                        {
-                                                            isNews
-                                                                ?
-
-                                                                <><div className="news_menu_grid">
-
-                                                                    <button className="content_title news_title_1" onClick={MenuOnclick}>
-                                                                        News
-                                                                    </button>
-                                                                    <button className="content_title home_menu_title_1" onClick={MenuOnclick}>
-                                                                        Menu
-                                                                    </button>
-                                                                </div><div style={{ overflowY: "scroll", height: '93%' }}>
-                                                                        <div className="news-container">
-                                                                            {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news  1">
-
-                                                                                <p className="news_heading">
-                                                                                    <Highlighter
-
-                                                                                        searchWords={["NEW", "Important"]}
-                                                                                        autoEscape={true}
-                                                                                        textToHighlight={el.Title}
-                                                                                        highlightStyle={{ color: themecolor, backgroundColor: "white" }} />
-                                                                                </p>
-                                                                                <p className="news_content">{shortenText(el.Content, 100)}</p>
-                                                                            </div>
-                                                                            )}
-                                                                        </div>
-                                                                    </div></>
-                                                                :
-                                                                <><div className="news_menu_grid">
-
-                                                                    <button className="content_title home_menu_title_2" onClick={MenuOnclick}>
-                                                                        Menu
-                                                                    </button>
-                                                                    <button className="content_title news_title_2" onClick={MenuOnclick}>
-                                                                        News
-                                                                    </button>
+                                                <div className="home_left_bottom">
+                                                    <div className="home_left_bottom_left">
+                                                        <div className="home_content current_block">
+                                                            <div className="content_title">
+                                                                Current Block
+                                                            </div>
+                                                            <div className="big_container">
+                                                                <div className="big_block_container">
+                                                                    {block}
                                                                 </div>
-                                                                    <div className="home_menu_container">
-                                                                        <div style={{ marginLeft: "10px", color: themecolor, marginTop: "10px", fontSize: "18px", fontWeight: 600 }}>{Meal}</div>
-                                                                        <div style={{ overflowY: "scroll", height: '93%' }}>
-                                                                            <div style={{ marginLeft: "10px" }}>
-                                                                                {Object.keys(Menu).sort().map((el, index) =>
-                                                                                    <div key={index}>
-
-                                                                                        <div className="news_heading" style={{ fontSize: "15px" }}>
-                                                                                            {el}:
-                                                                                        </div>
-                                                                                        <div className="news_content" style={{ marginLeft: "10px" }}>
-                                                                                            {
-                                                                                                Menu[el].map((el2, index2) =>
-                                                                                                    <div key={index2}>
-                                                                                                        {el2}
-                                                                                                    </div>
-                                                                                                )
-                                                                                            }
-                                                                                        </div>
+                                                                <div className="current_block_name">{blockSubject}</div>
+                                                            </div>
+                                                            <div className="block_wrapper">
+                                                                <div className="content_box a">Today is: <span style={{ color: themecolor }}>{rotation}</span></div>
+                                                                <div className="content_box b">Next up:  <span style={{ color: themecolor }}>{nextBlock}</span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="home_left_bottom_right">
+                                                        <div className="home_content">
 
 
-                                                                                    </div>
-                                                                                )}
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </>
+                                                            <button className="content_title news_title_1" onClick={() => { GradesOnClick() }}>
+                                                                Athletics
+                                                            </button>
+                                                            <div className="grade_container">
 
-                                                        }
+                                                                <div style={{ overflowY: "scroll", margin: "1px !important" }}><DataTable
+
+                                                                    columns={columns}
+                                                                    data={data}
+                                                                /></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div className="home_right">
+                                                <div className="home_content" id="news_content" >
+                                                    {
+                                                        isNews
+                                                            ?
+
+                                                            <><div className="news_menu_grid">
+
+                                                                <button className="content_title news_title_1" onClick={MenuOnclick}>
+                                                                    News
+                                                                </button>
+                                                                <button className="content_title home_menu_title_1" onClick={MenuOnclick}>
+                                                                    Menu
+                                                                </button>
+                                                            </div><div style={{ overflowY: "scroll", height: '93%' }}>
+                                                                    <div className="news-container">
+                                                                        {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news  1">
+
+                                                                            <p className="news_heading">
+                                                                                <Highlighter
+
+                                                                                    searchWords={["NEW", "Important"]}
+                                                                                    autoEscape={true}
+                                                                                    textToHighlight={el.Title}
+                                                                                    highlightStyle={{ color: themecolor, backgroundColor: "white" }} />
+                                                                            </p>
+                                                                            <p className="news_content">{shortenText(el.Content, 100)}</p>
+                                                                        </div>
+                                                                        )}
+                                                                    </div>
+                                                                </div></>
+                                                            :
+                                                            <><div className="news_menu_grid">
+
+                                                                <button className="content_title home_menu_title_2" onClick={MenuOnclick}>
+                                                                    Menu
+                                                                </button>
+                                                                <button className="content_title news_title_2" onClick={MenuOnclick}>
+                                                                    News
+                                                                </button>
+                                                            </div>
+                                                                <div className="home_menu_container">
+                                                                    <div style={{ marginLeft: "10px", color: themecolor, marginTop: "10px", fontSize: "18px", fontWeight: 600 }}>{Meal}</div>
+                                                                    <div style={{ overflowY: "scroll", height: '93%' }}>
+                                                                        <div style={{ marginLeft: "10px" }}>
+                                                                            {Object.keys(Menu).sort().map((el, index) =>
+                                                                                <div key={index}>
+
+                                                                                    <div className="news_heading" style={{ fontSize: "15px" }}>
+                                                                                        {el}:
+                                                                                    </div>
+                                                                                    <div className="news_content" style={{ marginLeft: "10px" }}>
+                                                                                        {
+                                                                                            Menu[el].map((el2, index2) =>
+                                                                                                <div key={index2}>
+                                                                                                    {el2}
+                                                                                                </div>
+                                                                                            )
+                                                                                        }
+                                                                                    </div>
 
 
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </>
+
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
+
+
                                     </div>
                                 </div> */}
 

@@ -45,16 +45,13 @@ export default function Signup(props){
 
 
     useEffect(() => {
-        if(user) {
-            if (state != null){
-                navigate(state, {replace: true})
-            }
-            else
-            {
-                navigate('/Home', {replace: true})
-            }
+        if(loading) {
+            return;
         }
-    }, [user])
+        if(user) {
+            navigate('/Home', {replace: true})
+        }
+    }, [user, loading])
 
     useEffect(() => {
         AOS.init();
