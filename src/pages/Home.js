@@ -28,7 +28,7 @@ import 'antd/dist/antd.css';
 import dayjs from "dayjs";
 import Highlighter from "react-highlight-words";
 import ThemePop from "../components/popup2";
-import { useNavigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import PageTransition from "../components/PageTransition"
 import DataTable from 'react-data-table-component';
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -127,10 +127,11 @@ export default function Home() {
     }
 
     useEffect(() => {
-        if(loading) {
+        if (loading) {
             return;
         }
         if (!user) {
+            console.log('not user')
             navigate("/Login");
         }
     }, [user, loading])
@@ -463,110 +464,102 @@ export default function Home() {
 
     return (
         <>
-            
+
             <div>
-                {
-                    isLoggedin
-                        ?
-                        <div className="all">
-                             <div className="pickers_grid">
-                                                <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
-                                                <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
+                <div className="all">
+                    <div className="pickers_grid">
+                        <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
+                        <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
+                    </div>
+                    <div className="container-fluid blur" style={{
+                        backgroundColor: "rgb(254, 254, 254)",
+                        backgroundImage: backgroundOption === "change_bg_option_1" ? "none" :
+                            backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
+                                backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
+                                    backgroundOption === "change_bg_option_4" ? "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)" :
+                                        backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
+                        animation: "gradient 5s ease infinite !important",
+                        WebkitAnimation: "gradient 5s ease infinite !important",
+                    }}></div>
+                    <div className="row">
+                        Hi
+                        <div className="home_column home_column_left"><Navbar3 theme={themecolor} /></div>
+                        <div className="home_column home_column_center">
+                            <p className="home_hi">Hi Bryan!</p>
+                            <div className="home_center_top">
+                                <div className="content_title">
+                                    Current Block
+                                </div>
+                                <div className="big_container">
+                                    <div className="big_block_container">
+                                        {block}
+                                    </div>
+                                    <div className="current_block_name">{blockSubject}</div>
+                                </div>
+                                <div className="block_wrapper">
+                                    <div className="content_box a">Today is: <span style={{ color: themecolor }}>{rotation}</span></div>
+                                    <div className="content_box b">Next up:  <span style={{ color: themecolor }}>{nextBlock}</span></div>
+                                </div>
                             </div>
-                            <div className="container-fluid blur" style={{
-                                backgroundColor: "rgb(254, 254, 254)",
-                                backgroundImage: backgroundOption === "change_bg_option_1" ? "none" :
-                                    backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
-                                        backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
-                                            backgroundOption === "change_bg_option_4" ? "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)" :
-                                                backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
-                                animation: "gradient 5s ease infinite !important",
-                                WebkitAnimation: "gradient 5s ease infinite !important",
-                            }}></div>
-                            <div className="row">
-                                Hi
-                                <div className="home_column home_column_left"><Navbar3 theme={themecolor} /></div>
-                                <div className="home_column home_column_center">
-                                    <p className="home_hi">Hi Bryan!</p>
-                                    <div className="home_center_top">
-                                                                <div className="content_title">
-                                                                    Current Block
-                                                                </div>
-                                                                <div className="big_container">
-                                                                    <div className="big_block_container">
-                                                                        {block}
-                                                                    </div>
-                                                                    <div className="current_block_name">{blockSubject}</div>
-                                                                </div>
-                                                                <div className="block_wrapper">
-                                                                    <div className="content_box a">Today is: <span style={{ color: themecolor }}>{rotation}</span></div>
-                                                                    <div className="content_box b">Next up:  <span style={{ color: themecolor }}>{nextBlock}</span></div>
-                                                                </div>
-                                    </div>
-                                    <div className="home_center_bottom">
-                                    <div className="content_title">
-                                                                    Current Block
-                                                                </div>
-                                                                <div className="big_container">
-                                                                    <div className="big_block_container">
-                                                                        {block}
-                                                                    </div>
-                                                                    <div className="current_block_name">{blockSubject}</div>
-                                                                </div>
-                                                                <div className="block_wrapper">
-                                                                    <div className="content_box a">Today is: <span style={{ color: themecolor }}>{rotation}</span></div>
-                                                                    <div className="content_box b">Next up:  <span style={{ color: themecolor }}>{nextBlock}</span></div>
-                                                                </div>
-                                    </div>
+                            <div className="home_center_bottom">
+                                <div className="content_title">
+                                    Current Block
                                 </div>
-                                <div className="home_column home_column_right">
-                                    <div className="home_right_top">
-                                    <div className="home_calendar"> <div onClick={() => { navigate("/Calendar") }}>  <Bigcalendar
-                                                                localizer={localizer}
-
-                                                                startAccessor="start"
-                                                                endAccessor="end"
-                                                                style={{ height: "190px" }}
-                                                                events={events && events}
-                                                                defaultView={'agenda'}
-                                                            /></div></div>
-
+                                <div className="big_container">
+                                    <div className="big_block_container">
+                                        {block}
                                     </div>
-                                    <div className="home_right_bottom">
-                                    <div className="news-container">
-                                                                            {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news  1">
-
-                                                                                <p className="news_heading">
-                                                                                    <Highlighter
-
-                                                                                        searchWords={["NEW", "Important"]}
-                                                                                        autoEscape={true}
-                                                                                        textToHighlight={el.Title}
-                                                                                        highlightStyle={{ color: themecolor, backgroundColor: "white" }} />
-                                                                                </p>
-                                                                                <p className="news_content">{shortenText(el.Content, 100)}</p>
-                                                                            </div>
-                                                                            )}
-                                                                        </div>                              
-                                    </div>
-
-
+                                    <div className="current_block_name">{blockSubject}</div>
                                 </div>
+                                <div className="block_wrapper">
+                                    <div className="content_box a">Today is: <span style={{ color: themecolor }}>{rotation}</span></div>
+                                    <div className="content_box b">Next up:  <span style={{ color: themecolor }}>{nextBlock}</span></div>
+                                </div>
+                            </div>
                         </div>
-                        </div>
-                        :
-                        <Login to="/Home" />
-                        
+                        <div className="home_column home_column_right">
+                            <div className="home_right_top">
+                                <div className="home_calendar"> <div onClick={() => { navigate("/Calendar") }}>  <Bigcalendar
+                                    localizer={localizer}
 
-                }
-            
+                                    startAccessor="start"
+                                    endAccessor="end"
+                                    style={{ height: "190px" }}
+                                    events={events && events}
+                                    defaultView={'agenda'}
+                                /></div></div>
+
+                            </div>
+                            <div className="home_right_bottom">
+                                <div className="news-container">
+                                    {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news  1">
+
+                                        <p className="news_heading">
+                                            <Highlighter
+
+                                                searchWords={["NEW", "Important"]}
+                                                autoEscape={true}
+                                                textToHighlight={el.Title}
+                                                highlightStyle={{ color: themecolor, backgroundColor: "white" }} />
+                                        </p>
+                                        <p className="news_content">{shortenText(el.Content, 100)}</p>
+                                    </div>
+                                    )}
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
         </>
     )
 }
 
- {/* <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '-90px' }}>
+{/* <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '-90px' }}>
 
                                         <div className="home_container">
                                             <div className="pickers_grid">

@@ -135,12 +135,6 @@ export function Navbar3(props) {
       }
     }
 
-<<<<<<< HEAD
-    return(
-        <div className="navbar_style" id="navbar_bg" style={{backgroundColor: props.theme, marginTop: "200px"} }>
-          <div>
-=======
->>>>>>> 78a765f0cd5eda287267a7aa824b787249bfdadc
 
 
 
