@@ -29,7 +29,6 @@ import dayjs from "dayjs";
 import Highlighter from "react-highlight-words";
 import ThemePop from "../components/popup2";
 import { useNavigate, Route, Routes } from "react-router-dom";
-import PageTransition from "../components/PageTransition"
 import DataTable from 'react-data-table-component';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Navbar2 } from "../components/navbar/navbar2.js";
@@ -463,7 +462,7 @@ export default function Home() {
 
     return (
         <>
-            <Navbar3 theme={themecolor} />
+            
             <div>
                 {
                     isLoggedin
@@ -485,8 +484,73 @@ export default function Home() {
                             }}></div>
                             <div className="row">
                                 Hi
-                                <div className="home_column home_column_left"></div>
-                                <div className="home_column home_column_right"></div>
+                                <div className="home_column home_column_left"><Navbar3 theme={themecolor} /></div>
+                                <div className="home_column home_column_center">
+                                    <p className="home_hi">Hi Bryan!</p>
+                                    <div className="home_center_top">
+                                                                <div className="content_title">
+                                                                    Current Block
+                                                                </div>
+                                                                <div className="big_container">
+                                                                    <div className="big_block_container">
+                                                                        {block}
+                                                                    </div>
+                                                                    <div className="current_block_name">{blockSubject}</div>
+                                                                </div>
+                                                                <div className="block_wrapper">
+                                                                    <div className="content_box a">Today is: <span style={{ color: themecolor }}>{rotation}</span></div>
+                                                                    <div className="content_box b">Next up:  <span style={{ color: themecolor }}>{nextBlock}</span></div>
+                                                                </div>
+                                    </div>
+                                    <div className="home_center_bottom">
+                                    <div className="content_title">
+                                                                    Current Block
+                                                                </div>
+                                                                <div className="big_container">
+                                                                    <div className="big_block_container">
+                                                                        {block}
+                                                                    </div>
+                                                                    <div className="current_block_name">{blockSubject}</div>
+                                                                </div>
+                                                                <div className="block_wrapper">
+                                                                    <div className="content_box a">Today is: <span style={{ color: themecolor }}>{rotation}</span></div>
+                                                                    <div className="content_box b">Next up:  <span style={{ color: themecolor }}>{nextBlock}</span></div>
+                                                                </div>
+                                    </div>
+                                </div>
+                                <div className="home_column home_column_right">
+                                    <div className="home_right_top">
+                                    <div className="home_calendar"> <div onClick={() => { navigate("/Calendar") }}>  <Bigcalendar
+                                                                localizer={localizer}
+
+                                                                startAccessor="start"
+                                                                endAccessor="end"
+                                                                style={{ height: "190px" }}
+                                                                events={events && events}
+                                                                defaultView={'agenda'}
+                                                            /></div></div>
+
+                                    </div>
+                                    <div className="home_right_bottom">
+                                    <div className="news-container">
+                                                                            {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news  1">
+
+                                                                                <p className="news_heading">
+                                                                                    <Highlighter
+
+                                                                                        searchWords={["NEW", "Important"]}
+                                                                                        autoEscape={true}
+                                                                                        textToHighlight={el.Title}
+                                                                                        highlightStyle={{ color: themecolor, backgroundColor: "white" }} />
+                                                                                </p>
+                                                                                <p className="news_content">{shortenText(el.Content, 100)}</p>
+                                                                            </div>
+                                                                            )}
+                                                                        </div>                              
+                                    </div>
+
+
+                                </div>
                         </div>
                         </div>
                         :
