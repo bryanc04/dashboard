@@ -158,9 +158,7 @@ export function Navbar3(props) {
           LC DASHBOARD
         </div>
       </div>
-      <div
-        className="navbar3_content"
-      >
+      <div className="navbar3_content">
         <ul className="nav" style={{ flex: 1, flexDirection: 'column' }}>
           <li>
             <NavLink to="/Home" className='navbar_item_container ' >

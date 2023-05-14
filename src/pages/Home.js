@@ -2,6 +2,10 @@ import React, { useState, useContext, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { Calendar as Bigcalendar, momentLocalizer } from 'react-big-calendar';
 import Navbar from "../components/navbar/navbar";
+import { v4 as uuidv4 } from "uuid";
+import MenuCardCarousel from "../components/MenuCarouselCards";
+import MenuCarousel from "../components/MenuCarousel"
+
 import Pop from "../components/popup";
 import Logout from "../components/logout";
 import { bgimage } from "../components/popup";
@@ -61,6 +65,11 @@ export default function Home() {
     const [backgroundOption, setBackgroundOption] = useState("change_bg_option_1");
     const [color1, setColor1] = useState("#efefef");
     const [color2, setColor2] = useState("#efefef");
+    const [cardview, setCardview] = useState(true);
+    const [cards, setCards] = useState([]);
+    const [breakfastMenu, setBreakfastMenu] = useState();
+    const [lunchMenu, setLunchMenu] = useState();
+    const [dinnerMenu, setDinnerMenu] = useState();
 
     const [theme, setTheme] = useState("change_theme_option_1");
     const [themecolor, setthemecolor] = useState("#ffffff");
@@ -282,27 +291,137 @@ export default function Home() {
         };
 
 
+
         const getMenu = async () => {
             const collectionRef = collection(db, "menu");
             const q = query(collectionRef);
             const querySnapshot = await getDocs(q);
+            var tempBreakfast;
+            var tempLunch;
+            var tempDinner;
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
-                var date = new Date();
-                date = date.getHours();
-                if ((date >= 0 && date < 9) || date >= 8) {
-                    setMenu(data.breakfast);
-                    setMeal("Breakfast");
-                } else if (date >= 9 && date <= 1) {
-                    setMenu(data.lunch);
-                    setMeal("Lunch");
-                } else if (date > 1 && date < 8) {
-                    setMenu(data.dinner);
-                    setMeal("Dinner");
-                }
-
-                console.log(Menu)
+                setBreakfastMenu(data.breakfast);
+                setLunchMenu(data.lunch);
+                setDinnerMenu(data.dinner);
+                tempBreakfast = data.breakfast;
+                tempLunch = data.lunch;
+                tempDinner = data.dinner;
+                console.log("Menu Gotten")
             });
+
+            setCards([
+                {
+                    key: uuidv4(),
+                    content: <MenuCardCarousel mealtype="Breakfast" style={{ color: "black" }} alt="1" content={
+                        tempBreakfast ? Object.keys(tempBreakfast).length > 0 ? Object.keys(tempBreakfast).sort().map((el, index) =>
+                            <div key={index}>
+                                <div className="meal_content">
+                                    {el}:
+                                </div>
+                                <div className="meal_content_details">
+                                    {
+                                        tempBreakfast[el].map((el2, index2) =>
+                                            <div key={index2}>
+                                                {el2}
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        )
+                            :
+                            <div>
+                                No Breakfast Menu
+                            </div>
+                            :
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: '100%'
+                                }}
+                            >
+                                <GridLoader />
+                            </div>
+
+                    } />
+                },
+                {
+                    key: uuidv4(),
+                    content: <MenuCardCarousel mealtype="Lunch" alt="2" content={
+                        tempLunch ? Object.keys(tempLunch).length > 0 ? Object.keys(tempLunch).sort().map((el, index) =>
+                            <div key={index}>
+                                <div className="meal_content" style={{ fontFamily: "DM Sans", color: "ffffff !important" }}>
+                                    {el}:
+                                </div>
+                                <div className="meal_content_details">
+                                    {
+                                        tempLunch[el].map((el2, index2) =>
+                                            <div key={index2} >
+                                                {el2}
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        )
+                            :
+                            <div>
+                                No Lunch Menu
+                            </div>
+                            :
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: '100%'
+                                }}
+                            >
+                                <GridLoader />
+                            </div>
+
+                    } />
+                },
+                {
+                    key: uuidv4(),
+                    content: <MenuCardCarousel mealtype="Dinner" alt="3" content={
+                        tempDinner ? Object.keys(tempDinner).length > 0 ? Object.keys(tempDinner).sort().map((el, index) =>
+                            <div key={index}>
+                                <div className="meal_content">
+                                    {el}:
+                                </div>
+                                <div className="meal_content_details">
+                                    {
+                                        tempDinner[el].map((el2, index2) =>
+                                            <div href='#' key={index2} id="onclick">
+                                                {el2}
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        )
+                            :
+                            <div>
+                                No Dinner Menu
+                            </div>
+                            :
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: '100%'
+                                }}
+                            >
+                                <GridLoader />
+                            </div>
+                    } />
+                },
+            ])
 
         }
 
@@ -385,11 +504,12 @@ export default function Home() {
 
         }
 
-        // getDailyBulletin();
-        // getBlocks();
-        // checkupdated();
-        // checkOverallUpdated();
-        // getMenu();
+        getDailyBulletin();
+        getBlocks();
+        checkupdated();
+        checkOverallUpdated();
+        getMenu();
+        getCalendar();
 
     }, []);
 
@@ -426,6 +546,7 @@ export default function Home() {
     }
 
     const getCalendar = async () => {
+        setIsLoading(true);
         const collectionRef = collection(db, "calendar");
         const q = query(collectionRef);
         const querySnapshot = await getDocs(q);
@@ -454,10 +575,13 @@ export default function Home() {
 
                 }
             }
+
         })
+
         setEvents(tempEvents)
 
-    }
+        setIsLoading(false);
+    };
 
 
 
@@ -487,19 +611,14 @@ export default function Home() {
                         <div className="home_column home_column_center">
                             <p className="home_hi">Hi Bryan!</p>
                             <div className="home_center_top">
-                                <div className="content_title">
-                                    Current Block
-                                </div>
-                                <div className="big_container">
-                                    <div className="big_block_container">
-                                        {block}
-                                    </div>
-                                    <div className="current_block_name">{blockSubject}</div>
-                                </div>
-                                <div className="block_wrapper">
-                                    <div className="content_box a">Today is: <span style={{ color: themecolor }}>{rotation}</span></div>
-                                    <div className="content_box b">Next up:  <span style={{ color: themecolor }}>{nextBlock}</span></div>
-                                </div>
+                            <Bigcalendar
+                                                localizer={localizer}
+
+                                                startAccessor="start"
+                                                endAccessor="end"
+                                                style={{ height: 420 }}
+                                                events={events && events}
+                                            />
                             </div>
                             <div className="home_center_bottom">
                                 <div className="content_title">
@@ -519,20 +638,11 @@ export default function Home() {
                         </div>
                         <div className="home_column home_column_right">
                             <div className="home_right_top">
-                                <div className="home_calendar"> <div onClick={() => { navigate("/Calendar") }}>  <Bigcalendar
-                                    localizer={localizer}
-
-                                    startAccessor="start"
-                                    endAccessor="end"
-                                    style={{ height: "190px" }}
-                                    events={events && events}
-                                    defaultView={'agenda'}
-                                /></div></div>
+                                    Breakfast Menu:
 
                             </div>
                             <div className="home_right_bottom">
-                                <div className="news-container">
-                                    {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news  1">
+                                    {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news">
 
                                         <p className="news_heading">
                                             <Highlighter
@@ -540,12 +650,11 @@ export default function Home() {
                                                 searchWords={["NEW", "Important"]}
                                                 autoEscape={true}
                                                 textToHighlight={el.Title}
-                                                highlightStyle={{ color: themecolor, backgroundColor: "white" }} />
+                                                highlightStyle={{ color: "black", backgroundColor: "white" }} />
                                         </p>
                                         <p className="news_content">{shortenText(el.Content, 100)}</p>
                                     </div>
                                     )}
-                                </div>
                             </div>
 
 
