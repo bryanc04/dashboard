@@ -140,41 +140,32 @@ export default function Calendar() {
 
 
 
-                        <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '-90px' }}>
-
-                            <div className="home_container">
                                 <div className="pickers_grid">
                                     <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
                                     <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
                                 </div>
-                                <div>
-                                    <p className="home_title welcome_title ">Calendar</p>
-                                    <p className="home_title welcome_title " style={{ color: themecolor, WebkitTextFillColor: themecolor }}>Calendar</p>
-
-                                </div>
-                                <div className="calendar_page_container">
+        
                                     {/* {isLoggedin
                                         ? */}
                                         <div>
+                                            <div className="calendar_page_container">
 
                                             <Bigcalendar
                                                 localizer={localizer}
 
                                                 startAccessor="start"
                                                 endAccessor="end"
-                                                style={{ height: 420 }}
+                                                style={{ height: 700, marginTop: 100, width: 1400}}
                                                 events={events && events}
                                             />
+                                            </div>
                                         </div>
                                         {/*  :
                                          <ChromeDinoGame />
                                     } */}
-                                </div>
 
 
                             </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

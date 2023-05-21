@@ -310,24 +310,18 @@ export default function Menu() {
 
 
 
-                    <div className="row">
 
                         <Navbar2 theme={themecolor} />
 
 
 
-                        <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '-90px' }}>
 
-                            <div className="home_container">
+                            <div className="menu_container">
                                 <div className="pickers_grid">
                                     <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
                                     <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
                                 </div>
-                                <div>
-                                    <p className="home_title welcome_title ">Menu</p>
-                                    <p className="home_title welcome_title " style={{ color: themecolor, WebkitTextFillColor: themecolor }}>Menu</p>
 
-                                </div>
                                 <span className="menu_view_grid">
                                     <button onClick={() => changeView()} className="menu_icon menu_icon_hover_1"><i className="bi bi-border-all "></i></button>
                                     <button onClick={() => changeView()} className="menu_icon menu_icon_hover_2"><i className="bi bi-view-list menu_icon"></i></button>
@@ -370,7 +364,7 @@ export default function Menu() {
                                                                 display: 'flex',
                                                                 justifyContent: 'center',
                                                                 alignItems: 'center',
-                                                                height: '100%'
+                                                                height: '1000%'
                                                             }}
                                                         >
                                                             <GridLoader />
@@ -470,8 +464,8 @@ export default function Menu() {
                                         cards.length > 0 ?
                                             <MenuCarousel
                                                 cards={cards}
-                                                height="500px"
-                                                width="80%"
+                                                height="1000px"
+                                                width="100%"
                                                 margin="0 auto"
                                                 offset={2}
                                                 showArrows={false}
@@ -499,8 +493,7 @@ export default function Menu() {
 
                             </div>
                         </div>
-                    </div>
-                </div>
+
             </div>
 
         </div>

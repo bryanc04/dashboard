@@ -174,25 +174,19 @@ export default function Schedule() {
 
 
 
-                    <div className="row">
 
                         <Navbar2 theme={themecolor} />
 
 
 
-                        <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '-90px' }}>
+                        <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
 
-                            <div className="home_container">
                                 <div className="pickers_grid">
                                     <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
                                     <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
                                 </div>
-                                <div>
-                                    <p className="home_title welcome_title ">Athletics Schedule</p>
-                                    <p className="home_title welcome_title " style={{ color: themecolor, WebkitTextFillColor: themecolor }}>Athletics Schedule</p>
-
-                                </div>
-                                <div className="calendar_page_container viewport_message">
+                            
+                                <div className="viewport_message athletics_table">
                                     {/* {isLoggedin
                                         ? */}
 
@@ -211,8 +205,7 @@ export default function Schedule() {
 
 
 
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
