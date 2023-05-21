@@ -941,22 +941,23 @@ td{
   display: flex;
   flex-direction: row;
   margin: 10px;
-  width: 80%;
+  width: 70%;
   height: 100%;
   align-items: center;
   float: left;
 }
 
 .athletics_table {
+  width: 80%;
   margin-top: 200px;
 }
 .menu_view_grid{
   display: inline-block;
   grid-template-columns: 20px 20px;
   font-size: 20px;
-  right: 12%;
+  left: 12%;
   top: 17%;
-
+  position: absolute;
 }
 
 .menu_icon{

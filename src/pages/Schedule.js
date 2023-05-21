@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import Navbar from "../components/navbar/navbar";
-import { Navbar2 } from "../components/navbar/navbar2";
+import { Navbar3 } from "../components/navbar/navbar3";
 import Pop from "../components/popup";
 import { bgimage } from "../components/popup";
 import { background } from "../components/popup";
@@ -172,14 +172,14 @@ export default function Schedule() {
                     WebkitAnimation: "gradient 5s ease infinite !important",
                 }}>
 
+<div className="row">
+
+
+<div className="home_column_left">
+                            <Navbar3 theme={themecolor} currentPage="Schedule"/></div>
 
 
 
-                        <Navbar2 theme={themecolor} />
-
-
-
-                        <div className="col-10 px-0" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
 
                                 <div className="pickers_grid">
                                     <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
@@ -209,10 +209,9 @@ export default function Schedule() {
                     </div>
                 </div>
             </div>
-        </div>
 
 
-
+</div>
 
 
 
