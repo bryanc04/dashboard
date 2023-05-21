@@ -15,7 +15,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Navbar2 } from "../components/navbar/navbar2";
 import { useNavigate } from "react-router-dom";
-
+import {Navbar3} from "../components/navbar/navbar3";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBDh3yxYRLCaikdnMXYrCuVc0iGL5qn0js",
@@ -119,60 +119,49 @@ export default function Calendar() {
 
 
     return (
-        <div>
-            <div className="all">
-                <div className="container-fluid blur" style={{
-                    backgroundColor: "rgb(254, 254, 254)",
-                    backgroundImage: backgroundOption === "change_bg_option_1" ? "none" :
-                        backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
-                            backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
-                                backgroundOption === "change_bg_option_4" ? "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)" :
-                                    backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
-                    animation: "gradient 5s ease infinite !important",
-                    WebkitAnimation: "gradient 5s ease infinite !important",
-                }}>
+        <>
 
-
-
+            <div>
+                <div className="all">
+                    <div className="pickers_grid">
+                        <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
+                        <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
+                    </div>
+                    <div className="container-fluid blur" style={{
+                        backgroundColor: "rgb(254, 254, 254)",
+                        backgroundImage: backgroundOption === "change_bg_option_1" ? "none" :
+                            backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
+                                backgroundOption === "change_bg_option_3" ? "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)" :
+                                    backgroundOption === "change_bg_option_4" ? "linear-gradient(120deg, #fccb90 0%, #d57eeb 100%)" :
+                                        backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
+                        animation: "gradient 5s ease infinite !important",
+                        WebkitAnimation: "gradient 5s ease infinite !important",
+                    }}></div>
                     <div className="row">
+                        Hi
+                        <div className="home_column home_column_left">
+                            <Navbar3 theme={themecolor} currentPage="Calendar"/></div>
+                            <div className="calendar_page_container">
+                            <Bigcalendar
+localizer={localizer}
 
-                        <Navbar2 theme={themecolor} />
-
-
-
-                                <div className="pickers_grid">
-                                    <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
-                                    <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
-                                </div>
-        
-                                    {/* {isLoggedin
-                                        ? */}
-                                        <div>
-                                            <div className="calendar_page_container">
-
-                                            <Bigcalendar
-                                                localizer={localizer}
-
-                                                startAccessor="start"
-                                                endAccessor="end"
-                                                style={{ height: 700, marginTop: 100, width: 1400}}
-                                                events={events && events}
-                                            />
-                                            </div>
-                                        </div>
-                                        {/*  :
-                                         <ChromeDinoGame />
-                                    } */}
-
-
-                            </div>
+startAccessor="start"
+endAccessor="end"
+style={{ height: 700, marginTop: 100, width: 1000}}
+events={events && events}
+/></div>
+                    </div>
                 </div>
+
+
             </div>
-        </div>
+        </>
 
 
 
     )
 }
+
+
 
 

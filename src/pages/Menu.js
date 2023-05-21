@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import Navbar from "../components/navbar/navbar";
-import { Navbar2 } from "../components/navbar/navbar2";
+import { Navbar3 } from "../components/navbar/navbar3";
 import Pop from "../components/popup";
 import ThemePop from "../components/popup2";
 import Logout from "../components/logout";
@@ -307,16 +307,13 @@ export default function Menu() {
                     animation: "gradient 5s ease infinite !important",
                     WebkitAnimation: "gradient 5s ease infinite !important",
                 }}>
+<div className="row">
 
+    <div className="home_column_left">
+                            <Navbar3 theme={themecolor} currentPage="Menu"/>
+                            
+    </div>
 
-
-
-                        <Navbar2 theme={themecolor} />
-
-
-
-
-                            <div className="menu_container">
                                 <div className="pickers_grid">
                                     <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
                                     <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
@@ -364,7 +361,7 @@ export default function Menu() {
                                                                 display: 'flex',
                                                                 justifyContent: 'center',
                                                                 alignItems: 'center',
-                                                                height: '1000%'
+                                                                height: '1000%',
                                                             }}
                                                         >
                                                             <GridLoader />
@@ -465,7 +462,7 @@ export default function Menu() {
                                             <MenuCarousel
                                                 cards={cards}
                                                 height="1000px"
-                                                width="100%"
+                                                width="20%"
                                                 margin="0 auto"
                                                 offset={2}
                                                 showArrows={false}
@@ -493,9 +490,7 @@ export default function Menu() {
 
                             </div>
                         </div>
-
-            </div>
-
+        </div>
         </div>
 
 

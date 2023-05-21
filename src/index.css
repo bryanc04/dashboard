@@ -858,11 +858,7 @@ hr{
 }
 
 .calendar_page_container{
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  justify-content: center;
-  margin-top: 70px;
+  width: 80%;
 }
 
 
@@ -945,9 +941,10 @@ td{
   display: flex;
   flex-direction: row;
   margin: 10px;
-  width: 100%;
+  width: 80%;
   height: 100%;
   align-items: center;
+  float: left;
 }
 
 .athletics_table {

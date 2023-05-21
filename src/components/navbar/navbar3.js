@@ -163,8 +163,8 @@ export function Navbar3(props) {
           <li>
             <NavLink to="/Home" className='navbar_item_container ' >
               <span className="navbar_item">
-                <i className="bi bi-house navbar_item" style={{ fontSize: '19px' }}></i>
-                Home
+                <i className="bi bi-house navbar_item" style={{ fontSize: '19px'}}></i>
+                {"Home" == props.currentPage ? <span style={{fontWeight: "bold"}}>Home</span> : "Home"}
               </span>
             </NavLink>
           </li>
@@ -172,7 +172,7 @@ export function Navbar3(props) {
             <NavLink to="/Calendar" className='navbar_item_container' onClick={() => update("calendar")}>
               <span className="navbar_item">
                 <i className="bi bi-calendar navbar_item" ></i>
-                Calendar
+                {"Calendar" == props.currentPage ? <span style={{fontWeight: "bold"}}>Calendar</span> : "Calendar"}
               </span>
             </NavLink>
           </li>
@@ -180,7 +180,7 @@ export function Navbar3(props) {
             <NavLink to="/Menu" className='navbar_item_container' onClick={() => update("menu")}>
               <span className="navbar_item">
                 <i className="bi bi-table navbar_item" ></i>
-                Menu
+                {"Menu" == props.currentPage ? <span style={{fontWeight: "bold"}}>Menu</span> : "Menu"}
               </span>
             </NavLink>
           </li>
@@ -189,7 +189,8 @@ export function Navbar3(props) {
             <NavLink to="/Schedule" className='navbar_item_container' onClick={() => update("schedule")}>
               <span className="navbar_item">
                 <i className="bi bi-dribbble navbar_item" ></i>
-                Calendar
+                {"Schedule" == props.currentPage ? <span style={{fontWeight: "bold"}}>Schedule</span> : "Schedule"}
+
               </span>
             </NavLink>
           </li>

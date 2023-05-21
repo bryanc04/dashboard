@@ -607,7 +607,8 @@ export default function Home() {
                     }}></div>
                     <div className="row">
                         Hi
-                        <div className="home_column home_column_left"><Navbar3 theme={themecolor} /></div>
+                        <div className="home_column home_column_left">
+                            <Navbar3 theme={themecolor} currentPage="Home"/></div>
                         <div className="home_column home_column_center">
                             <p className="home_hi">Hi Bryan!</p>
                             <div className="home_center_top">
