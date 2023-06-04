@@ -170,6 +170,7 @@ export default function Schedule() {
                                     backgroundOption === "change_bg_option_5" && (`linear-gradient(120deg, ${color1} 0%, ${color2} 100%)`),
                     animation: "gradient 5s ease infinite !important",
                     WebkitAnimation: "gradient 5s ease infinite !important",
+                    padding: 0
                 }}>
 
 <div className="row">

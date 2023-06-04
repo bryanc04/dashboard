@@ -127,7 +127,7 @@ export default function Calendar() {
                         <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
                         <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
                     </div>
-                    <div className="container-fluid blur" style={{
+                    <div className="" style={{
                         backgroundColor: "rgb(254, 254, 254)",
                         backgroundImage: backgroundOption === "change_bg_option_1" ? "none" :
                             backgroundOption === "change_bg_option_2" ? "linear-gradient(62deg, #8ec5fc, #e0c3fc, #86a8e7, #eaafc8)" :
@@ -138,16 +138,16 @@ export default function Calendar() {
                         WebkitAnimation: "gradient 5s ease infinite !important",
                     }}></div>
                     <div className="row">
-                        Hi
-                        <div className="home_column home_column_left">
-                            <Navbar3 theme={themecolor} currentPage="Calendar"/></div>
+                        <div className=" home_column_left">
+                            <Navbar3 theme={themecolor} currentPage="Calendar"/>
+                            </div>
                             <div className="calendar_page_container">
                             <Bigcalendar
 localizer={localizer}
 
 startAccessor="start"
 endAccessor="end"
-style={{ height: 700, marginTop: 100, width: 1000}}
+style={{ height: '90%', marginTop: 100, width: '100%'}}
 events={events && events}
 /></div>
                     </div>

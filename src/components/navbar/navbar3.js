@@ -159,46 +159,31 @@ export function Navbar3(props) {
         </div>
       </div>
       <div className="navbar3_content">
-        <ul className="nav" style={{ flex: 1, flexDirection: 'column' }}>
-          <li>
-            <NavLink to="/Home" className='navbar_item_container ' >
-              <span className="navbar_item">
-                <i className="bi bi-house navbar_item" style={{ fontSize: '19px'}}></i>
-                {"Home" == props.currentPage ? <span style={{fontWeight: "bold"}}>Home</span> : "Home"}
-              </span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/Calendar" className='navbar_item_container' onClick={() => update("calendar")}>
-              <span className="navbar_item">
-                <i className="bi bi-calendar navbar_item" ></i>
-                {"Calendar" == props.currentPage ? <span style={{fontWeight: "bold"}}>Calendar</span> : "Calendar"}
-              </span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/Menu" className='navbar_item_container' onClick={() => update("menu")}>
-              <span className="navbar_item">
-                <i className="bi bi-table navbar_item" ></i>
-                {"Menu" == props.currentPage ? <span style={{fontWeight: "bold"}}>Menu</span> : "Menu"}
-              </span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/Schedule" className='navbar_item_container' onClick={() => update("schedule")}>
-              <span className="navbar_item">
-                <i className="bi bi-dribbble navbar_item" ></i>
-                {"Schedule" == props.currentPage ? <span style={{fontWeight: "bold"}}>Schedule</span> : "Schedule"}
-
-              </span>
-            </NavLink>
-          </li>
-          <li>
-
-          </li>
-        </ul>
-      </div>
+    <NavLink to="/Home" className='navbar_item_container'>
+        <div className="grid-item">
+            <i className="bi bi-house navbar_item" style={{ fontSize: '19px'}}></i>
+            {"Home" == props.currentPage ? <div style={{fontWeight: "bold"}}>Home</div> : <div>Home</div>}
+        </div>
+    </NavLink>
+    <NavLink to="/Calendar" className='navbar_item_container' onClick={() => update("calendar")}>
+        <div className="grid-item">
+            <i className="bi bi-calendar navbar_item"></i>
+            {"Calendar" == props.currentPage ? <div style={{fontWeight: "bold"}}>Calendar</div> : <div>Calendar</div>}
+        </div>
+    </NavLink>
+    <NavLink to="/Menu" className='navbar_item_container' onClick={() => update("menu")}>
+        <div className="grid-item">
+            <i className="bi bi-table navbar_item"></i>
+            {"Menu" == props.currentPage ? <div style={{fontWeight: "bold"}}>Menu</div> : <div>Menu</div>}
+        </div>
+    </NavLink>
+    <NavLink to="/Schedule" className='navbar_item_container' onClick={() => update("schedule")}>
+        <div className="grid-item">
+            <i className="bi bi-dribbble navbar_item"></i>
+            {"Schedule" == props.currentPage ? <div style={{fontWeight: "bold"}}>Schedule</div> : <div>Schedule</div>}
+        </div>
+    </NavLink>
+</div>
 
     </div>
 

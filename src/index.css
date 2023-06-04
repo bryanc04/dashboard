@@ -1,11 +1,13 @@
+
 :root{
   --main:  #8b000da8;
   --boxShadow:   rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
 }
 
-body {
-  margin: 0;
+body, html {
+  margin: 0 !important;
+  padding: 0 !important;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -109,7 +111,7 @@ hr{
 }
 
 .navbar_item_container {
-  margin: 35px 50px;
+  /* margin: 35px 50px; */
   cursor: pointer;
   display: block;
 }
@@ -827,15 +829,30 @@ hr{
 
 .navbar_style{
   height: 100vh;
-  background-color: white;
-  width: 250px;
+  background-color: rgb(241,240,245) !important;
+  width: 100%;
   color: black;
+  display: grid;
   /* background: linear-gradient(rgba(255,255,255,.2), rgba(255,255,255,.2)); */
   justify-content: center;
-  margin-left:0;
+  grid-template-rows: 30% 70%;
+  align-items: center;
+
 }
 .navbar3_content {
-  margin-top: 200px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 25% 25% 25% 25%;
+  /* justify-content: center;
+  align-items: center; */
+  height: 80%;
+}
+
+.grid-item {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  height: 10%;
+  color: black;
 }
 .lc_logo{
   margin: 0 !important;
@@ -858,7 +875,8 @@ hr{
 }
 
 .calendar_page_container{
-  width: 80%;
+  width: 85%;
+  background-color: white;
 }
 
 
@@ -938,13 +956,13 @@ td{
 
 
 .menu_inner_container{
-  display: flex;
-  flex-direction: row;
-  margin: 10px;
-  width: 70%;
+  width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  float: left;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .athletics_table {
@@ -1128,25 +1146,27 @@ td{
 .home_column {
   float: left;
   height: 100vh;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .home_column_left {
-  width: 250px;
+  width: 15%;
   padding-left:0;
   padding-right:0;
 }
 
 .home_column_center {
-  width: 58%;
+  width: 60%;
   background-color: #dde5ee;
-    margin-left: auto;
-  margin-right: auto;
+
 }
 
 .home_column_right {
   width: 25%;
+
 }
 
 .home_hi {
@@ -1184,13 +1204,15 @@ td{
 .home_right_top {
   background-color: white;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    width:100%;
+    width:90%;
   height: 30%;
   margin-top: 40px;
   border-radius: 20px;
   font-family: 'Varela Round', sans-serif;
   font-size:20px;
   padding:20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .home_right_bottom {
@@ -1199,4 +1221,5 @@ td{
   overflow: scroll !important;
   margin-top: 30px;
   width: 100%;
+  margin-left: 0;
 }
