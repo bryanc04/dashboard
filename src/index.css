@@ -977,6 +977,7 @@ td{
   right: 5%;
   top: 17%;
   position: absolute;
+  z-index: 10000;
 }
 
 .menu_icon{
@@ -1007,6 +1008,7 @@ td{
   width: 33%;
   box-shadow: var(--boxShadow);
   margin-right: 20px;
+  padding: 20px;
 }
 
 /* .menu_carousel_container{
@@ -1038,13 +1040,10 @@ td{
   padding-bottom: 10px;
   height: 40px;
   width: fit-content;
-  margin-left: auto;
   font-weight: 600;
-  margin-right: auto;
 }
 
 .meal_content{
-  margin-left: 10px;
   text-align: left;
   font-weight: bold;
   color: black;
