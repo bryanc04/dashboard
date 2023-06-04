@@ -5,7 +5,7 @@ import Navbar from "../components/navbar/navbar";
 import { v4 as uuidv4 } from "uuid";
 import MenuCardCarousel from "../components/MenuCarouselCards";
 import MenuCarousel from "../components/MenuCarousel"
-
+import { Button, Modal, Form } from 'react-bootstrap';
 import Pop from "../components/popup";
 import Logout from "../components/logout";
 import { bgimage } from "../components/popup";
@@ -90,6 +90,15 @@ export default function Home() {
     const [checkflag, setCheckFlag] = useState(false);
     const [checked, setChecked] = useState([]);
 
+    const [blocks, setBlocks] = useState({
+        B1: '',
+        B2: '',
+        B3: '',
+        B4: '',
+        B5: '',
+        B6: '',
+        B7: '',
+    });
     const [block, setBlock] = useState();
     const [blockSubject, setBlockSubject] = useState();
     const [nextBlock, setNextBlock] = useState("");
@@ -128,6 +137,10 @@ export default function Home() {
             selector: row => row.Time,
         }
     ];
+    const [showModal, setShowModal] = useState(false);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+
 
     const location = useLocation();
 
@@ -399,7 +412,9 @@ export default function Home() {
     }
 
 
-
+    const handleChange = (event) => {
+        setBlocks({ ...blocks, [event.target.name]: event.target.value });
+    }
 
 
 
@@ -500,11 +515,46 @@ export default function Home() {
                             </div>
                             <div className="home_center_bottom">
                                 <div className="content_title">
-                                    Current Block
+                                    Current block
+                                    <Button variant="primary" onClick={handleShow} style={{float: "right"}}>
+                <i className="bi bi-input-cursor-text"></i>
+            </Button>
+
+            <Modal show={showModal} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Enter Your Blocks</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <Form>
+                        {Object.keys(blocks).map((block) => (
+                            <Form.Group key={block}>
+                                <Form.Label>{block}</Form.Label>
+                                <Form.Control 
+                                    type="text" 
+                                    placeholder="Enter subject..." 
+                                    name={block} 
+                                    value={blocks[block]} 
+                                    onChange={handleChange}
+                                />
+                            </Form.Group>
+                        ))}
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+                                    
                                 </div>
+                                
                                 <div className="big_container">
                                     <div className="big_block_container">
-                                        {block}
+                                        {blocks[0]}
                                     </div>
                                     <div className="current_block_name">{blockSubject}</div>
                                 </div>
