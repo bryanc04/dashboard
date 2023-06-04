@@ -340,7 +340,7 @@ export default function Menu() {
                                                         Object.keys(breakfastMenu).length > 0 ?
                                                             Object.keys(breakfastMenu).sort().map((el, index) =>
                                                                 <div key={index}>
-                                                                    <div className="meal_content">
+                                                                    <div className="meal_content_home">
                                                                         {el}:
                                                                     </div>
                                                                     <div className="meal_content_details">
@@ -382,7 +382,7 @@ export default function Menu() {
                                                             Object.keys(lunchMenu).length > 0 ?
                                                                 Object.keys(lunchMenu).sort().map((el, index) =>
                                                                     <div key={index}>
-                                                                        <div className="meal_content">
+                                                                        <div className="meal_content_home">
                                                                             {el}:
                                                                         </div>
                                                                         <div className="meal_content_details">
@@ -424,7 +424,7 @@ export default function Menu() {
                                                             Object.keys(dinnerMenu).length > 0 ?
                                                                 Object.keys(dinnerMenu).sort().map((el, index) =>
                                                                     <div key={index}>
-                                                                        <div className="meal_content">
+                                                                        <div className="meal_content_home">
                                                                             {el}:
                                                                         </div>
                                                                         <div className="meal_content_details">
