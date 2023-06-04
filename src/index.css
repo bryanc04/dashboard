@@ -1047,9 +1047,25 @@ td{
   color: black;
 }
 
+.meal_content_home {
+  text-align: left;
+  font-weight: bold;
+  color: black;
+  background-color: aliceblue;
+  padding: 10px;
+  border-radius: 10px;
+}
+
 .meal_content_details{
   margin-left: 20px;
   font-family: 'DM Sans', sans-serif;
+}
+
+.meal_content_details_home{
+  margin-left: 10px;
+  font-family: 'DM Sans', sans-serif;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 .grade_page_grade_class{
@@ -1209,10 +1225,11 @@ td{
   margin-top: 40px;
   border-radius: 20px;
   font-family: 'Varela Round', sans-serif;
-  font-size:20px;
+  font-size: 14px;
   padding:20px;
   margin-left: auto;
   margin-right: auto;
+  overflow:  auto;
 }
 
 .home_right_bottom {
@@ -1222,4 +1239,9 @@ td{
   margin-top: 30px;
   width: 100%;
   margin-left: 0;
+}
+
+.home_menu_title {
+  font-size: 20px;
+  font-weight: bold;
 }

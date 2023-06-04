@@ -148,23 +148,14 @@ export default function Home() {
     useEffect(() => {
 
 
-        var loggedIn = encryptstorage.getItem("status");
-
-        var userInfo = encryptstorage.getItem("userInfo")
-        console.log(userInfo)
-
-        if (loggedIn == "logged in") {
-            setIsLoggedIn(true)
-        }
-
         const checkupdated = async () => {
             var date = new Date();
             console.log(date.toString().substring(0, 10))
-            const docRef = doc(db, "last_updated", userInfo[0]);
+            const docRef = doc(db, "last_updated", user.email);
             const docSnap = await getDoc(docRef);
             var data = docSnap.data();
             if (!docSnap.exists()) {
-                await setDoc(doc(db, "last_updated", userInfo[0]), {
+                await setDoc(doc(db, "last_updated", user.email), {
                     last_updated: date
                 });
                 console.log("fakjsdhfjkdsahkj")
@@ -177,18 +168,18 @@ export default function Home() {
                     console.log("date mismatch")
                     //run update grades
                     axios.post('https://loomis.herokuapp.com/updateGrades', {
-                        username: userInfo[0],
+                        username: user.email,
                         password: userInfo[1]
                     })
                         .then(function (response) {
                             message.success("Grades were succesfully updated")
                             axios.post('https://loomis.herokuapp.com/updateAssignments', {
-                                username: userInfo[0],
+                                username: user.email,
                                 password: userInfo[1]
                             })
                                 .then(async function (response) {
                                     message.success("Assignments were succesfully updated")
-                                    await setDoc(doc(db, "last_updated", userInfo[0]), {
+                                    await setDoc(doc(db, "last_updated", user.email), {
                                         last_updated: date
                                     });
 
@@ -209,7 +200,7 @@ export default function Home() {
 
         const checkOverallUpdated = async () => {
             axios.post("https://loomis.herokuapp.com/getRecommendation", {
-                username: userInfo[0],
+                username: user.email,
                 password: userInfo[1]
             })
                 .then(function (response) {
@@ -309,120 +300,7 @@ export default function Home() {
                 tempDinner = data.dinner;
                 console.log("Menu Gotten")
             });
-
-            setCards([
-                {
-                    key: uuidv4(),
-                    content: <MenuCardCarousel mealtype="Breakfast" style={{ color: "black" }} alt="1" content={
-                        tempBreakfast ? Object.keys(tempBreakfast).length > 0 ? Object.keys(tempBreakfast).sort().map((el, index) =>
-                            <div key={index}>
-                                <div className="meal_content">
-                                    {el}:
-                                </div>
-                                <div className="meal_content_details">
-                                    {
-                                        tempBreakfast[el].map((el2, index2) =>
-                                            <div key={index2}>
-                                                {el2}
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                            </div>
-                        )
-                            :
-                            <div>
-                                No Breakfast Menu
-                            </div>
-                            :
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    height: '100%'
-                                }}
-                            >
-                                <GridLoader />
-                            </div>
-
-                    } />
-                },
-                {
-                    key: uuidv4(),
-                    content: <MenuCardCarousel mealtype="Lunch" alt="2" content={
-                        tempLunch ? Object.keys(tempLunch).length > 0 ? Object.keys(tempLunch).sort().map((el, index) =>
-                            <div key={index}>
-                                <div className="meal_content" style={{ fontFamily: "DM Sans", color: "ffffff !important" }}>
-                                    {el}:
-                                </div>
-                                <div className="meal_content_details">
-                                    {
-                                        tempLunch[el].map((el2, index2) =>
-                                            <div key={index2} >
-                                                {el2}
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                            </div>
-                        )
-                            :
-                            <div>
-                                No Lunch Menu
-                            </div>
-                            :
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    height: '100%'
-                                }}
-                            >
-                                <GridLoader />
-                            </div>
-
-                    } />
-                },
-                {
-                    key: uuidv4(),
-                    content: <MenuCardCarousel mealtype="Dinner" alt="3" content={
-                        tempDinner ? Object.keys(tempDinner).length > 0 ? Object.keys(tempDinner).sort().map((el, index) =>
-                            <div key={index}>
-                                <div className="meal_content">
-                                    {el}:
-                                </div>
-                                <div className="meal_content_details">
-                                    {
-                                        tempDinner[el].map((el2, index2) =>
-                                            <div href='#' key={index2} id="onclick">
-                                                {el2}
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                            </div>
-                        )
-                            :
-                            <div>
-                                No Dinner Menu
-                            </div>
-                            :
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    height: '100%'
-                                }}
-                            >
-                                <GridLoader />
-                            </div>
-                    } />
-                },
-            ])
-
+            console.log(data.dinner)
         }
 
         setIsLoading(false);
@@ -444,16 +322,11 @@ export default function Home() {
                 setSchedule(data);
             })
         }
-
-
-        getSchedule();
-
-
-
         const getBlocks = async () => {
-            const docRef = doc(db, "Block", userInfo[0]);
+            const docRef = doc(db, "Block", user.email);
             const docSnap = await getDoc(docRef);
             var data = docSnap.data();
+            console.log(data)
             setRotation(data['rotationDay']);
             delete data['rotationDay'];
             for (var i = 0; i < Object.keys(data).length; i++) {
@@ -504,14 +377,18 @@ export default function Home() {
 
         }
 
-        getDailyBulletin();
-        getBlocks();
-        checkupdated();
-        checkOverallUpdated();
-        getMenu();
-        getCalendar();
+        if(user)
+        {
+            getSchedule();
+            getDailyBulletin();
+            getBlocks();
+            checkupdated();
+            checkOverallUpdated();
+            getMenu();
+            getCalendar();
+        }
 
-    }, []);
+    }, [user]);
 
 
     const MenuOnclick = () => {
@@ -606,20 +483,20 @@ export default function Home() {
                         WebkitAnimation: "gradient 5s ease infinite !important",
                     }}></div>
                     <div className="row">
-            
+
                         <div className="home_column home_column_left">
-                            <Navbar3 theme={themecolor} currentPage="Home"/></div>
+                            <Navbar3 theme={themecolor} currentPage="Home" /></div>
                         <div className="home_column home_column_center">
                             <p className="home_hi">Hi Bryan!</p>
                             <div className="home_center_top">
-                            <Bigcalendar
-                                                localizer={localizer}
+                                <Bigcalendar
+                                    localizer={localizer}
 
-                                                startAccessor="start"
-                                                endAccessor="end"
-                                                style={{ height: '100%' }}
-                                                events={events && events}
-                                            />
+                                    startAccessor="start"
+                                    endAccessor="end"
+                                    style={{ height: '100%' }}
+                                    events={events && events}
+                                />
                             </div>
                             <div className="home_center_bottom">
                                 <div className="content_title">
@@ -639,23 +516,120 @@ export default function Home() {
                         </div>
                         <div className="home_column home_column_right">
                             <div className="home_right_top">
-                                    Breakfast Menu:
+                                {
+                                    (new Date().getHours() >= 0 && new Date().getHours() < 11) ?
+                                    (
+                                        <div>
+                                            <div class="home_menu_title">
+                                                Breakfast Menu
+                                            </div>
+                                            {
+                                                breakfastMenu &&
+                                                Object.keys(breakfastMenu).length > 0 ?
+                                                    Object.keys(breakfastMenu).sort().map((el, index) =>
+                                                        <div key={index}>
+                                                            <div className="meal_content_home">
+                                                                {el}:
+                                                            </div>
+                                                            <div className="meal_content_details_home">
+                                                                {
+                                                                    breakfastMenu[el].map((el2, index2) =>
+                                                                        <div key={index2}>
+                                                                            {el2}
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    ) :
+                                                    <div>
+                                                        No breakfast menu
+                                                    </div>
+                                            }
+                                        </div>
+                                        )
+                                        :
+                                            (new Date().getHours() >= 11 && new Date().getHours() <= 15) ?
+                                            (
+                                            <div>
+                                                <div class="home_menu_title">
+                                                    Lunch Menu
+                                                </div>
+                                                {
+                                                    lunchMenu &&
+                                                    Object.keys(lunchMenu).length > 0 ?
+                                                        Object.keys(lunchMenu).sort().map((el, index) =>
+                                                            <div key={index}>
+                                                                <div className="meal_content_home">
+                                                                    {el}:
+                                                                </div>
+                                                                <div className="meal_content_details_home">
+                                                                    {
+                                                                        lunchMenu[el].map((el2, index2) =>
+                                                                            <div key={index2}>
+                                                                                {el2}
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                        :
+                                                        <div>
+                                                            No Lunch Menu
+                                                        </div>
+                                                }
+                                            </div>
+                                            )
+                                            :
+                                            (
+                                            <div>
+                                                <div class="home_menu_title">
+                                                    Dinner Menu
+                                                </div>
+                                                {
+                                                    dinnerMenu &&
+                                                    Object.keys(dinnerMenu).length > 0 ?
+                                                        Object.keys(dinnerMenu).sort().map((el, index) =>
+                                                            <div key={index}>
+                                                                <div className="meal_content_home">
+                                                                    {el}:
+                                                                </div>
+                                                                <div className="meal_content_details_home">
+                                                                    {
+                                                                        dinnerMenu[el].map((el2, index2) =>
+                                                                            <div key={index2}>
+                                                                                {el2}
+                                                                            </div>
+                                                                        )
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                        :
+                                                        <div>
+                                                            No Dinner Menu
+                                                        </div>
+                                                }
+                                            </div>
+                                            )
+                                }
 
                             </div>
                             <div className="home_right_bottom">
-                                    {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news">
+                                {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news">
 
-                                        <p className="news_heading">
-                                            <Highlighter
+                                    <p className="news_heading">
+                                        <Highlighter
 
-                                                searchWords={["NEW", "Important"]}
-                                                autoEscape={true}
-                                                textToHighlight={el.Title}
-                                                highlightStyle={{ color: "black", backgroundColor: "white" }} />
-                                        </p>
-                                        <p className="news_content">{shortenText(el.Content, 100)}</p>
-                                    </div>
-                                    )}
+                                            searchWords={["NEW", "Important"]}
+                                            autoEscape={true}
+                                            textToHighlight={el.Title}
+                                            highlightStyle={{ color: "black", backgroundColor: "white" }} />
+                                    </p>
+                                    <p className="news_content">{shortenText(el.Content, 100)}</p>
+                                </div>
+                                )}
                             </div>
 
 
