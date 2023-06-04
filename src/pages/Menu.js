@@ -314,7 +314,7 @@ export default function Menu() {
                             <Navbar3 theme={themecolor} currentPage="Menu"/>
                             
     </div>
-    <div style={{width: '85%'}}>
+    <div style={{width: '85%', height: '100vh'}}>
 
                                 <div className="pickers_grid">
                                     <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
@@ -329,7 +329,7 @@ export default function Menu() {
 
                                     {!cardview
                                         ?
-                                        <><div className="menu_top menu_content">
+                                        <div style={{width: '70%', height: '50%', display: 'flex'}}><div className="menu_top menu_content">
                                             <div className="meal_title">
                                                 Breakfast
                                             </div>
@@ -456,7 +456,7 @@ export default function Menu() {
                                                             </div>
                                                     }
                                                 </div>
-                                            </div></>
+                                            </div></div>
 
 
                                         :
@@ -464,7 +464,7 @@ export default function Menu() {
                                             <MenuCarousel
                                                 cards={cards}
                                                 height="1000px"
-                                                width="20%"
+                                                width="100%"
                                                 margin="0 auto"
                                                 offset={2}
                                                 showArrows={false}

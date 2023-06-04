@@ -973,7 +973,7 @@ td{
   display: inline-block;
   grid-template-columns: 20px 20px;
   font-size: 20px;
-  left: 12%;
+  right: 5%;
   top: 17%;
   position: absolute;
 }
@@ -1035,9 +1035,11 @@ td{
   margin-top: 15px;
   font-size: 20px;
   padding-bottom: 10px;
-  border-bottom: 3px solid black;
   height: 40px;
-  width: auto;
+  width: fit-content;
+  margin-left: auto;
+  font-weight: 600;
+  margin-right: auto;
 }
 
 .meal_content{
