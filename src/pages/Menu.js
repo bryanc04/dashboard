@@ -321,15 +321,15 @@ export default function Menu() {
                                     <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
                                 </div>
 
+                                
+                                <div className="menu_inner_container">
                                 <span className="menu_view_grid">
                                     <button onClick={() => changeView()} className="menu_icon menu_icon_hover_1"><i className="bi bi-border-all "></i></button>
                                     <button onClick={() => changeView()} className="menu_icon menu_icon_hover_2"><i className="bi bi-view-list menu_icon"></i></button>
                                 </span>
-                                <div className="menu_inner_container">
-
                                     {!cardview
                                         ?
-                                        <div style={{width: '70%', height: '50%', display: 'flex'}}><div className="menu_top menu_content">
+                                        <div style={{width: '90%', height: '60%', display: 'flex', marginLeft: 'auto', marginRight: 'auto'}}><div className="menu_top menu_content">
                                             <div className="meal_title">
                                                 Breakfast
                                             </div>
@@ -463,7 +463,7 @@ export default function Menu() {
                                         cards.length > 0 ?
                                             <MenuCarousel
                                                 cards={cards}
-                                                height="1000px"
+                                                height="470px"
                                                 width="100%"
                                                 margin="0 auto"
                                                 offset={2}
