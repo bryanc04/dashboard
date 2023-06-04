@@ -147,7 +147,7 @@ localizer={localizer}
 
 startAccessor="start"
 endAccessor="end"
-style={{ height: '90%', marginTop: 100, width: '100%'}}
+style={{ height: '90%', marginTop: 50, width: '100%'}}
 events={events && events}
 /></div>
                     </div>
