@@ -140,6 +140,18 @@ export default function Home() {
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
+    const saveBlocks = async() => {
+        var emptyBlock = Object.values(blocks).filter(x => x ===  '');
+        if(emptyBlock.length != 0)
+        {
+            alert("Please fill in all blocks");
+            return;
+        }
+        else
+        {
+            await setDoc(doc(db, "Block", user.email), blocks);
+        }
+    }
 
 
     const location = useLocation();
@@ -390,8 +402,7 @@ export default function Home() {
 
         }
 
-        if(user)
-        {
+        if (user) {
             getSchedule();
             getDailyBulletin();
             getBlocks();
@@ -516,42 +527,42 @@ export default function Home() {
                             <div className="home_center_bottom">
                                 <div className="content_title">
                                     Current block
-                                    <Button variant="primary" onClick={handleShow} style={{float: "right"}}>
-                <i className="bi bi-input-cursor-text"></i>
-            </Button>
+                                    <Button variant="primary" onClick={handleShow} style={{ float: "right" }}>
+                                        <i className="bi bi-input-cursor-text"></i>
+                                    </Button>
 
-            <Modal show={showModal} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Enter Your Blocks</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                <Form>
-                        {Object.keys(blocks).map((block) => (
-                            <Form.Group key={block}>
-                                <Form.Label>{block}</Form.Label>
-                                <Form.Control 
-                                    type="text" 
-                                    placeholder="Enter subject..." 
-                                    name={block} 
-                                    value={blocks[block]} 
-                                    onChange={handleChange}
-                                />
-                            </Form.Group>
-                        ))}
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-                                    
+                                    <Modal show={showModal} onHide={handleClose}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Enter Your Blocks</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            <Form>
+                                                {Object.keys(blocks).map((block) => (
+                                                    <Form.Group key={block}>
+                                                        <Form.Label>{block}</Form.Label>
+                                                        <Form.Control
+                                                            type="text"
+                                                            placeholder="Enter subject..."
+                                                            name={block}
+                                                            value={blocks[block]}
+                                                            onChange={handleChange}
+                                                        />
+                                                    </Form.Group>
+                                                ))}
+                                            </Form>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={handleClose}>
+                                                Close
+                                            </Button>
+                                            <Button variant="primary" onClick={saveBlocks}>
+                                                Save Changes
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
+
                                 </div>
-                                
+
                                 <div className="big_container">
                                     <div className="big_block_container">
                                         {blocks[0]}
@@ -568,54 +579,22 @@ export default function Home() {
                             <div className="home_right_top">
                                 {
                                     (new Date().getHours() >= 0 && new Date().getHours() < 11) ?
-                                    (
-                                        <div>
-                                            <div class="home_menu_title">
-                                                Breakfast Menu
-                                            </div>
-                                            {
-                                                breakfastMenu &&
-                                                Object.keys(breakfastMenu).length > 0 ?
-                                                    Object.keys(breakfastMenu).sort().map((el, index) =>
-                                                        <div key={index}>
-                                                            <div className="meal_content_home">
-                                                                {el}:
-                                                            </div>
-                                                            <div className="meal_content_details_home">
-                                                                {
-                                                                    breakfastMenu[el].map((el2, index2) =>
-                                                                        <div key={index2}>
-                                                                            {el2}
-                                                                        </div>
-                                                                    )
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                    ) :
-                                                    <div>
-                                                        No breakfast menu
-                                                    </div>
-                                            }
-                                        </div>
-                                        )
-                                        :
-                                            (new Date().getHours() >= 11 && new Date().getHours() <= 15) ?
-                                            (
+                                        (
                                             <div>
                                                 <div class="home_menu_title">
-                                                    Lunch Menu
+                                                    Breakfast Menu
                                                 </div>
                                                 {
-                                                    lunchMenu &&
-                                                    Object.keys(lunchMenu).length > 0 ?
-                                                        Object.keys(lunchMenu).sort().map((el, index) =>
+                                                    breakfastMenu &&
+                                                        Object.keys(breakfastMenu).length > 0 ?
+                                                        Object.keys(breakfastMenu).sort().map((el, index) =>
                                                             <div key={index}>
                                                                 <div className="meal_content_home">
                                                                     {el}:
                                                                 </div>
                                                                 <div className="meal_content_details_home">
                                                                     {
-                                                                        lunchMenu[el].map((el2, index2) =>
+                                                                        breakfastMenu[el].map((el2, index2) =>
                                                                             <div key={index2}>
                                                                                 {el2}
                                                                             </div>
@@ -623,45 +602,77 @@ export default function Home() {
                                                                     }
                                                                 </div>
                                                             </div>
-                                                        )
-                                                        :
+                                                        ) :
                                                         <div>
-                                                            No Lunch Menu
+                                                            No breakfast menu
                                                         </div>
                                                 }
                                             </div>
+                                        )
+                                        :
+                                        (new Date().getHours() >= 11 && new Date().getHours() <= 15) ?
+                                            (
+                                                <div>
+                                                    <div class="home_menu_title">
+                                                        Lunch Menu
+                                                    </div>
+                                                    {
+                                                        lunchMenu &&
+                                                            Object.keys(lunchMenu).length > 0 ?
+                                                            Object.keys(lunchMenu).sort().map((el, index) =>
+                                                                <div key={index}>
+                                                                    <div className="meal_content_home">
+                                                                        {el}:
+                                                                    </div>
+                                                                    <div className="meal_content_details_home">
+                                                                        {
+                                                                            lunchMenu[el].map((el2, index2) =>
+                                                                                <div key={index2}>
+                                                                                    {el2}
+                                                                                </div>
+                                                                            )
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                            :
+                                                            <div>
+                                                                No Lunch Menu
+                                                            </div>
+                                                    }
+                                                </div>
                                             )
                                             :
                                             (
-                                            <div>
-                                                <div class="home_menu_title">
-                                                    Dinner Menu
-                                                </div>
-                                                {
-                                                    dinnerMenu &&
-                                                    Object.keys(dinnerMenu).length > 0 ?
-                                                        Object.keys(dinnerMenu).sort().map((el, index) =>
-                                                            <div key={index}>
-                                                                <div className="meal_content_home">
-                                                                    {el}:
+                                                <div>
+                                                    <div class="home_menu_title">
+                                                        Dinner Menu
+                                                    </div>
+                                                    {
+                                                        dinnerMenu &&
+                                                            Object.keys(dinnerMenu).length > 0 ?
+                                                            Object.keys(dinnerMenu).sort().map((el, index) =>
+                                                                <div key={index}>
+                                                                    <div className="meal_content_home">
+                                                                        {el}:
+                                                                    </div>
+                                                                    <div className="meal_content_details_home">
+                                                                        {
+                                                                            dinnerMenu[el].map((el2, index2) =>
+                                                                                <div key={index2}>
+                                                                                    {el2}
+                                                                                </div>
+                                                                            )
+                                                                        }
+                                                                    </div>
                                                                 </div>
-                                                                <div className="meal_content_details_home">
-                                                                    {
-                                                                        dinnerMenu[el].map((el2, index2) =>
-                                                                            <div key={index2}>
-                                                                                {el2}
-                                                                            </div>
-                                                                        )
-                                                                    }
-                                                                </div>
+                                                            )
+                                                            :
+                                                            <div>
+                                                                No Dinner Menu
                                                             </div>
-                                                        )
-                                                        :
-                                                        <div>
-                                                            No Dinner Menu
-                                                        </div>
-                                                }
-                                            </div>
+                                                    }
+                                                </div>
                                             )
                                 }
 
