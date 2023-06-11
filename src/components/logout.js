@@ -38,15 +38,8 @@ export default function Logout(props) {
 
   let navigate = useNavigate();
   return (
-    <div 
-      style={{ 
-        cursor: 'pointer',
-        border: '1px solid black',
-        padding: '5px 10px',
-        borderRadius: 10
-      }} 
-      onClick={() => { logout(); }}
-    >
+    <div className="grid-item" style={{cursor: 'pointer'}} onClick={() => {logout();}}>
+      <i className="bi bi-box-arrow-left navbar_item"></i>
       Logout
     </div>
   )

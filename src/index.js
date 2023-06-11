@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Calendar from './pages/Calendar';
 import Menu from './pages/Menu';
-
+import Start from './pages/Start';
 import Schedule from './pages/Schedule';
 import Login from './pages/Login';
 import { Provider } from 'react-redux';
@@ -23,7 +23,7 @@ root.render(
   // </React.StrictMode>
   <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/Login" />} />
+        <Route path="/" element={<Start />} />
         <Route path="/Home" element={<Home />}/>
         <Route path="/Login" element={<Login />}/>
         <Route path="/Calendar" element={<Calendar />}/>
