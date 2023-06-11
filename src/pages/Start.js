@@ -1,192 +1,152 @@
 import React, { useEffect } from "react";
-// import "../css/styles.css";
+import "../css/styles.css";
 
 export default function Start() {
 
-    useEffect(() => {
-        const script = document.createElement("script");
-        script.src = "../js/scripts.js";
-        script.asyc = true;
-        document.body.appendChild(script);
-    }, [])
-
     return (
         <div>
-            {/* Navigation*/}
-            <a className="menu-toggle rounded" href="#"><i className="fas fa-bars" /></a>
-            <nav id="sidebar-wrapper">
-                <ul className="sidebar-nav">
-                    <li className="sidebar-brand"><a href="#page-top">Start Bootstrap</a></li>
-                    <li className="sidebar-nav-item"><a href="#page-top">Home</a></li>
-                    <li className="sidebar-nav-item"><a href="#about">About</a></li>
-                    <li className="sidebar-nav-item"><a href="#services">Services</a></li>
-                    <li className="sidebar-nav-item"><a href="#portfolio">Portfolio</a></li>
-                    <li className="sidebar-nav-item"><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            {/* Header*/}
-            <header className="masthead d-flex align-items-center">
-                <div className="masthead_inner">
-                    <div className="container px-4 px-lg-5 text-center">
-                        <h1 className="mb-1 text-white">Loomis Dashboard</h1>
-                        <h3 className="mb-5 text-white"><em>Organize your school life using LC Dashboard</em></h3>
-                        <a className="btn btn-primary btn-xl" href="#about">Find Out More</a>
-                    </div>
-                </div>
-            </header>
-            {/* About*/}
-            <section className="content-section bg-light" id="about">
-                <div className="container px-4 px-lg-5 text-center">
-                    <div className="row gx-4 gx-lg-5 justify-content-center">
-                        <div className="col-lg-10">
-                            <h2>Stylish Portfolio is the perfect theme for your next project!</h2>
-                            <p className="lead mb-5">
-                                This theme features a flexible, UX friendly sidebar menu and stock photos from our friends at
-                                <a href="https://unsplash.com/">Unsplash</a>
-                                !
-                            </p>
-                            <a className="btn btn-dark btn-xl" href="#services">What We Offer</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* Services*/}
-            <section className="content-section bg-primary text-white text-center" id="services">
-                <div className="container px-4 px-lg-5">
-                    <div className="content-section-heading">
-                        <h3 className="text-secondary mb-0">Services</h3>
-                        <h2 className="mb-5">What We Offer</h2>
-                    </div>
-                    <div className="row gx-4 gx-lg-5">
-                        <div className="col-lg-3 col-md-6 mb-5 mb-lg-0">
-                            <span className="service-icon rounded-circle mx-auto mb-3"><i className="icon-screen-smartphone" /></span>
-                            <h4><strong>Responsive</strong></h4>
-                            <p className="text-faded mb-0">Looks great on any screen size!</p>
-                        </div>
-                        <div className="col-lg-3 col-md-6 mb-5 mb-lg-0">
-                            <span className="service-icon rounded-circle mx-auto mb-3"><i className="icon-pencil" /></span>
-                            <h4><strong>Redesigned</strong></h4>
-                            <p className="text-faded mb-0">Freshly redesigned for Bootstrap 5.</p>
-                        </div>
-                        <div className="col-lg-3 col-md-6 mb-5 mb-md-0">
-                            <span className="service-icon rounded-circle mx-auto mb-3"><i className="icon-like" /></span>
-                            <h4><strong>Favorited</strong></h4>
-                            <p className="text-faded mb-0">
-                                Millions of users
-                                <i className="fas fa-heart" />
-                                Start Bootstrap!
-                            </p>
-                        </div>
-                        <div className="col-lg-3 col-md-6">
-                            <span className="service-icon rounded-circle mx-auto mb-3"><i className="icon-mustache" /></span>
-                            <h4><strong>Question</strong></h4>
-                            <p className="text-faded mb-0">I mustache you a question...</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* Callout*/}
-            <section className="callout">
-                <div className="container px-4 px-lg-5 text-center">
-                    <h2 className="mx-auto mb-5">
-                        Welcome to
-                        <em>your</em>
-                        next website!
-                    </h2>
-                    <a className="btn btn-primary btn-xl" href="https://startbootstrap.com/theme/stylish-portfolio/">Download Now!</a>
-                </div>
-            </section>
-            {/* Portfolio*/}
-            <section className="content-section" id="portfolio">
-                <div className="container px-4 px-lg-5">
-                    <div className="content-section-heading text-center">
-                        <h3 className="text-secondary mb-0">Portfolio</h3>
-                        <h2 className="mb-5">Recent Projects</h2>
-                    </div>
-                    <div className="row gx-0">
-                        <div className="col-lg-6">
-                            <a className="portfolio-item" href="#!">
-                                <div className="caption">
-                                    <div className="caption-content">
-                                        <div className="h2">Stationary</div>
-                                        <p className="mb-0">A yellow pencil with envelopes on a clean, blue backdrop!</p>
-                                    </div>
-                                </div>
-                                <img className="img-fluid" src="assets/img/portfolio-1.jpg" alt="..." />
-                            </a>
-                        </div>
-                        <div className="col-lg-6">
-                            <a className="portfolio-item" href="#!">
-                                <div className="caption">
-                                    <div className="caption-content">
-                                        <div className="h2">Ice Cream</div>
-                                        <p className="mb-0">A dark blue background with a colored pencil, a clip, and a tiny ice cream cone!</p>
-                                    </div>
-                                </div>
-                                <img className="img-fluid" src="assets/img/portfolio-2.jpg" alt="..." />
-                            </a>
-                        </div>
-                        <div className="col-lg-6">
-                            <a className="portfolio-item" href="#!">
-                                <div className="caption">
-                                    <div className="caption-content">
-                                        <div className="h2">Strawberries</div>
-                                        <p className="mb-0">Strawberries are such a tasty snack, especially with a little sugar on top!</p>
-                                    </div>
-                                </div>
-                                <img className="img-fluid" src="assets/img/portfolio-3.jpg" alt="..." />
-                            </a>
-                        </div>
-                        <div className="col-lg-6">
-                            <a className="portfolio-item" href="#!">
-                                <div className="caption">
-                                    <div className="caption-content">
-                                        <div className="h2">Workspace</div>
-                                        <p className="mb-0">A yellow workspace with some scissors, pencils, and other objects.</p>
-                                    </div>
-                                </div>
-                                <img className="img-fluid" src="assets/img/portfolio-4.jpg" alt="..." />
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* Call to Action*/}
-            <section className="content-section bg-primary text-white">
-                <div className="container px-4 px-lg-5 text-center">
-                    <h2 className="mb-4">The buttons below are impossible to resist...</h2>
-                    <a className="btn btn-xl btn-light me-4" href="#!">Click Me!</a>
-                    <a className="btn btn-xl btn-dark" href="#!">Look at Me!</a>
-                </div>
-            </section>
-            {/* Map*/}
-            <div className="map" id="contact">
-                <iframe src="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&aq=0&oq=twitter&sll=28.659344,-81.187888&sspn=0.128789,0.264187&ie=UTF8&hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&t=m&z=15&iwloc=A&output=embed" />
-                <br />
-                <small><a href="https://maps.google.com/maps?f=q&source=embed&hl=en&geocode=&q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&aq=0&oq=twitter&sll=28.659344,-81.187888&sspn=0.128789,0.264187&ie=UTF8&hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&t=m&z=15&iwloc=A" /></small>
+        {/* Navigation*/}
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+          <div className="container px-4 px-lg-5">
+            <a className="navbar-brand" href="#page-top">LC Dashboard</a>
+            <button className="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon" /></button>
+            <div className="collapse navbar-collapse" id="navbarResponsive">
+              <ul className="navbar-nav ms-auto my-2 my-lg-0">
+                <li className="nav-item"><a className="nav-link" href="/Login">Get Started</a></li>
+                <li className="nav-item"><a className="nav-link" href="#services">Services</a></li>
+                <li className="nav-item"><a className="nav-link" href="#contact">Contact Us</a></li>
+              </ul>
             </div>
-            {/* Footer*/}
-            <footer className="footer text-center">
-                <div className="container px-4 px-lg-5">
-                    <ul className="list-inline mb-5">
-                        <li className="list-inline-item">
-                            <a className="social-link rounded-circle text-white mr-3" href="#!"><i className="icon-social-facebook" /></a>
-                        </li>
-                        <li className="list-inline-item">
-                            <a className="social-link rounded-circle text-white mr-3" href="#!"><i className="icon-social-twitter" /></a>
-                        </li>
-                        <li className="list-inline-item">
-                            <a className="social-link rounded-circle text-white" href="#!"><i className="icon-social-github" /></a>
-                        </li>
-                    </ul>
-                    <p className="text-muted small mb-0">Copyright © Your Website 2023</p>
+          </div>
+        </nav>
+        {/* Masthead*/}
+        <header className="masthead">
+          <div className="container px-4 px-lg-5 h-100">
+            <div className="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+              <div className="col-lg-8 align-self-end">
+                <h1 className="text-white font-weight-bold">Welcome to LC Dashboard</h1>
+                <hr className="divider" />
+              </div>
+              <div className="col-lg-8 align-self-baseline">
+                <p className="text-white-75 mb-5">Use this dashboard to get the latest Loomis Chaffee news and organize your blocks and class schedules!</p>
+                <a className="btn btn-primary btn-xl" href="/Login">Get Started</a>
+              </div>
+            </div>
+          </div>
+        </header>
+        {/* Services*/}
+        <section className="page-section bg-primary" id="services">
+          <div className="container px-4 px-lg-5">
+            <h2 className="text-center mt-0 text-white">What We Provide</h2>
+            <hr className="divider divider-light" />
+            <div className="row gx-4 gx-lg-5">
+              <div className="col-lg-3 col-md-6 text-center">
+                <div className="mt-5">
+                  <div className="mb-2"><i className="bi-journal-text fs-1 text-white" /></div>
+                  <h3 className="h4 mb-2 text-white">Daily Bulletin</h3>
+                  <p className="text-white mb-0">View the daily bulletin in one view.</p>
                 </div>
-            </footer>
-            {/* Scroll to Top Button*/}
-            <a className="scroll-to-top rounded" href="#page-top"><i className="fas fa-angle-up" /></a>
-            {/* Bootstrap core JS*/}
-            {/* Core theme JS*/}
-        </div>
+              </div>
+              <div className="col-lg-3 col-md-6 text-center">
+                <div className="mt-5">
+                  <div className="mb-2"><i className="bi-calendar fs-1 text-white" /></div>
+                  <h3 className="h4 mb-2 text-white">Calendar</h3>
+                  <p className="text-white mb-0">Keep up to date on the school's calendar schedule.</p>
+                </div>
+              </div>
+              <div className="col-lg-3 col-md-6 text-center">
+                <div className="mt-5">
+                  <div className="mb-2"><i className="bi-card-checklist fs-1 text-white" /></div>
+                  <h3 className="h4 mb-2 text-white">Blocks</h3>
+                  <p className="text-white mb-0">Keep track and view your blocks before your next class.</p>
+                </div>
+              </div>
+              <div className="col-lg-3 col-md-6 text-center">
+                <div className="mt-5">
+                  <div className="mb-2"><i className="bi-shop fs-1 text-white" /></div>
+                  <h3 className="h4 mb-2 text-white">Menu</h3>
+                  <p className="text-white mb-0">Know what's next on the menu.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* Contact*/}
+        <section className="page-section" id="contact">
+          <div className="container px-4 px-lg-5">
+            <div className="row gx-4 gx-lg-5 justify-content-center">
+              <div className="col-lg-8 col-xl-6 text-center">
+                <h2 className="mt-0">Let's Get In Touch!</h2>
+                <hr className="divider" />
+                <p className="text-muted mb-5">Have any questions? Send us a messages and we will get back to you as soon as possible!</p>
+              </div>
+            </div>
+            <div className="row gx-4 gx-lg-5 justify-content-center mb-5">
+              <div className="col-lg-6">
+                {/* * * * * * * * * * * * * * * **/}
+                {/* * * SB Forms Contact Form * **/}
+                {/* * * * * * * * * * * * * * * **/}
+                {/* This form is pre-integrated with SB Forms.*/}
+                {/* To make this form functional, sign up at*/}
+                {/* https://startbootstrap.com/solution/contact-forms*/}
+                {/* to get an API token!*/}
+                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                  {/* Name input*/}
+                  <div className="form-floating mb-3">
+                    <input className="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                    <label htmlFor="name">Full name</label>
+                    <div className="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                  </div>
+                  {/* Email address input*/}
+                  <div className="form-floating mb-3">
+                    <input className="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                    <label htmlFor="email">Email address</label>
+                    <div className="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                    <div className="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                  </div>
+                  {/* Phone number input*/}
+                  <div className="form-floating mb-3">
+                    <input className="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                    <label htmlFor="phone">Phone number</label>
+                    <div className="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                  </div>
+                  {/* Message input*/}
+                  <div className="form-floating mb-3">
+                    <textarea className="form-control" id="message" type="text" placeholder="Enter your message here..." style={{height: '10rem'}} data-sb-validations="required" defaultValue={""} />
+                    <label htmlFor="message">Message</label>
+                    <div className="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                  </div>
+                  {/* Submit success message*/}
+                  {/**/}
+                  {/* This is what your users will see when the form*/}
+                  {/* has successfully submitted*/}
+                  <div className="d-none" id="submitSuccessMessage">
+                    <div className="text-center mb-3">
+                      <div className="fw-bolder">Form submission successful!</div>
+                      To activate this form, sign up at
+                      <br />
+                      <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                    </div>
+                  </div>
+                  {/* Submit error message*/}
+                  {/**/}
+                  {/* This is what your users will see when there is*/}
+                  {/* an error submitting the form*/}
+                  <div className="d-none" id="submitErrorMessage"><div className="text-center text-danger mb-3">Error sending message!</div></div>
+                  {/* Submit Button*/}
+                  <div className="d-grid"><button className="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Submit</button></div>
+                </form>
+              </div>
+            </div>
+            <div className="row gx-4 gx-lg-5 justify-content-center">
+              <div className="col-lg-4 text-center mb-5 mb-lg-0">
+                <i className="bi-phone fs-2 mb-3 text-muted" />
+                <div>+1 (555) 123-4567</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
 
     )
 }

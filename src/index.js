@@ -23,7 +23,7 @@ root.render(
   // </React.StrictMode>
   <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/Login" />} />
+        <Route path="/" element={<Start />} />
         <Route path="/Home" element={<Home />}/>
         <Route path="/Login" element={<Login />}/>
         <Route path="/Calendar" element={<Calendar />}/>
