@@ -138,6 +138,7 @@ export default function Home() {
         }
     ];
     const [showModal, setShowModal] = useState(false);
+    const [blockChanged, setBlockChanged] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
     const saveBlocks = async() => {
@@ -150,6 +151,7 @@ export default function Home() {
         else
         {
             await setDoc(doc(db, "Block", user.email), blocks);
+            setBlockChanged(!blockChanged)
         }
     }
 
@@ -347,65 +349,10 @@ export default function Home() {
                 setSchedule(data);
             })
         }
-        const getBlocks = async () => {
-            const docRef = doc(db, "Block", user.email);
-            const docSnap = await getDoc(docRef);
-            var data = docSnap.data();
-            console.log(data)
-            setRotation(data['rotationDay']);
-            delete data['rotationDay'];
-            for (var i = 0; i < Object.keys(data).length; i++) {
-                if (i < Object.keys(data).length - 1) {
-                    var nowClassTime = moment(data[i]['time'], 'hh:mmA');
-                    var nextClassTime = moment(data[i + 1]['time'], 'hh:mmA');
-                    var nowTime = moment();
-
-                    if (nowTime.isBetween(nowClassTime, nextClassTime)) {
-                        if (data[i]['subtitle'].includes("•")) {
-                            let gIndex = data[i]['subtitle'].indexOf("•");
-                            let blockString = data[i]['subtitle'].substring(gIndex + 1, gIndex + 3)
-                            setBlock(blockString);
-                        }
-                        else {
-                            setBlock(data[i]['subtitle'])
-                        }
-
-                        if (data[i + 1]['subtitle'].includes("•")) {
-                            let gIndex = data[i + 1]['subtitle'].indexOf("•");
-                            let blockString = data[i + 1]['subtitle'].substring(gIndex + 1, gIndex + 3)
-                            setNextBlock(blockString);
-                        }
-                        else {
-                            setNextBlock(data[i + 1]['subtitle'])
-                        }
-                        setBlockSubject(data[i]['description'].slice(0, -3));
-                        break;
-                    }
-                }
-                else {
-                    if (data[i]['subtitle'].includes("•")) {
-                        let gIndex = data[i]['subtitle'].indexOf("•");
-                        let blockString = data[i]['subtitle'].substring(gIndex + 1, gIndex + 3)
-                        setBlock(blockString);
-                    }
-                    else {
-                        setBlock(data[i]['subtitle'])
-                    }
-
-                    setNextBlock("")
-                    setBlockSubject(data[i]['description'].slice(0, -3));
-
-                }
-
-            }
-
-
-        }
 
         if (user) {
             getSchedule();
             getDailyBulletin();
-            getBlocks();
             checkupdated();
             checkOverallUpdated();
             getMenu();
@@ -413,6 +360,29 @@ export default function Home() {
         }
 
     }, [user]);
+
+    useEffect(() => {
+        const getBlocks = async() => {
+            const docRef = doc(db, "Block", user.email);
+            const docSnap = await getDocs(docRef);
+
+            if(docSnap.exists())
+            {
+                var data = docSnap.data()
+                setBlocks({
+                    B1: data['B1'],
+                    B2: data['B2'],
+                    B3: data['B3'],
+                    B4: data['B4'],
+                    B5: data['B5'],
+                    B6: data['B6'],
+                    B7: data['B7'],
+                })
+            }
+        }
+
+        getBlocks();
+    }, [blockChanged])
 
 
     const MenuOnclick = () => {

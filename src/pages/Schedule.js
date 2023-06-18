@@ -173,46 +173,60 @@ export default function Schedule() {
                     padding: 0
                 }}>
 
-<div className="row">
+                    <div className="row">
 
 
-<div className="home_column_left">
-                            <Navbar3 theme={themecolor} currentPage="Schedule"/></div>
+                        <div className="home_column_left">
+                            <Navbar3 theme={themecolor} currentPage="Schedule" /></div>
 
 
 
 
-                                <div className="pickers_grid">
-                                    <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
-                                    <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
-                                </div>
-                            
-                                <div className="viewport_message athletics_table">
-                                    {/* {isLoggedin
+                        <div className="pickers_grid">
+                            <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
+                            <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
+                        </div>
+
+                        <div className="viewport_message athletics_table">
+                            {/* {isLoggedin
                                         ? */}
 
-                                        <DataTable
+                            <DataTable
 
-                                            columns={columns}
-                                            data={data}
-                                            pagination
-                                            fixedHeader
-                                            fixedHeaderScrollHeight="90%"
-                                        />
-                                        {/* :
+                                columns={columns}
+                                data={data}
+                                pagination
+                                fixedHeader
+                                fixedHeaderScrollHeight="90%"
+                                title="Schedule"
+                                customStyles={{
+                                    headCells: {
+                                        style: {
+                                            fontWeight: 'bold'
+                                        }
+                                    },
+                                    header: {
+                                        style: {
+                                            fontSize: 40,
+                                            fontWeight: '800'
+                                        }
+                                    }
+                                }}
+                            />
+                            {/* :
                                         <ChromeDinoGame />
                                     } */}
-                                </div><div className="fullscreen_msg">Please Switch to Fullscreen</div>
+                        </div><div className="fullscreen_msg">Please Switch to Fullscreen</div>
 
 
 
-                        
+
                     </div>
                 </div>
             </div>
 
 
-</div>
+        </div>
 
 
 
