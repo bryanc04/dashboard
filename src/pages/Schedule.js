@@ -20,7 +20,7 @@ import ThemePop from "../components/popup2";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-
+import { DataGrid } from '@mui/x-data-grid';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -69,33 +69,64 @@ export default function Schedule() {
         }
     }, [user, loading])
 
+    // const columns = [
+    //     {
+    //         name: 'Team',
+    //         selector: row => row.Team,
+    //     },
+    //     {
+    //         name: 'Opponent',
+    //         selector: row => row.Opponent,
+    //     },
+    //     {
+    //         name: 'Date',
+    //         selector: row => row.Date,
+    //     },
+    //     {
+    //         name: 'Time',
+    //         selector: row => row.Time,
+    //     },
+    //     {
+    //         name: 'Location',
+    //         selector: row => row.Location,
+    //     },
+    //     {
+    //         name: 'Advantage',
+    //         selector: row => row.Advantage,
+    //     },
+    // ];
     const columns = [
         {
-            name: 'Team',
-            selector: row => row.Team,
+            field: 'Team',
+            headerName: 'Team',
+            flex: 1
         },
         {
-            name: 'Opponent',
-            selector: row => row.Opponent,
+            field: 'Opponent',
+            headerName: 'Opponent',
+            flex: 1
         },
         {
-            name: 'Date',
-            selector: row => row.Date,
+            field: 'Date',
+            headerName: 'Date',
+            flex: 1
         },
         {
-            name: 'Time',
-            selector: row => row.Time,
+            field: 'Time',
+            headerName: 'Time',
+            flex: 1
         },
         {
-            name: 'Location',
-            selector: row => row.Location,
+            field: 'Location',
+            headerName: 'Location',
+            flex: 1
         },
         {
-            name: 'Advantage',
-            selector: row => row.Advantage,
+            field: 'Advantage',
+            headerName: 'Advantage',
+            flex: 1
         },
     ];
-
 
 
 
@@ -133,6 +164,7 @@ export default function Schedule() {
                 var data = doc.data();
                 var tempArray = []
                 Object.values(data).map((element, index) => {
+                    element['id'] = index
                     tempArray.push(element);
                 })
                 setData(tempArray);
@@ -186,32 +218,26 @@ export default function Schedule() {
                             <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
                             <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
                         </div>
+                        <div className="viewport_message athletics_table" style={{height: '90%'}}>
 
-                        <div className="viewport_message athletics_table">
-                            {/* {isLoggedin
-                                        ? */}
-
-                            <DataTable
-
+                        <div
+                            style={{
+                                fontSize: 30,
+                                fontWeight: 'bold',
+                                marginBottom: 10
+                            }}
+                        >
+                            Athletics Schedule
+                        </div>
+                            <DataGrid
+                                rows={data}
                                 columns={columns}
-                                data={data}
-                                pagination
-                                fixedHeader
-                                fixedHeaderScrollHeight="90%"
-                                title="Schedule"
-                                customStyles={{
-                                    headCells: {
-                                        style: {
-                                            fontWeight: 'bold'
-                                        }
+                                initialState={{
+                                    pagination: {
+                                        paginationModel: { page: 0, pageSize: 10 },
                                     },
-                                    header: {
-                                        style: {
-                                            fontSize: 40,
-                                            fontWeight: '800'
-                                        }
-                                    }
                                 }}
+                                pageSizeOptions={[5, 10]}
                             />
                             {/* :
                                         <ChromeDinoGame />
