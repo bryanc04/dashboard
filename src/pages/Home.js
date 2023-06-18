@@ -121,7 +121,7 @@ export default function Home() {
 
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
-
+    const [isBlocksLoading, setIsBlocksLoading] = useState(false);
     const [schedule, setSchedule] = useState();
     const columns = [
         {
@@ -371,7 +371,9 @@ export default function Home() {
     }, [user]);
 
     useEffect(() => {
+        setIsBlocksLoading(true);
         const getBlocks = async() => {
+            
             if(user){
             console.log("called")
             console.log(user)
@@ -525,6 +527,7 @@ export default function Home() {
     }
 
         getBlocks();
+        setIsBlocksLoading(false);
     }, [blockChanged, user])
 
 
@@ -688,24 +691,27 @@ export default function Home() {
 
                                 </div>
                                 {
-                                displayClass == "Weekend" ? 
-                                <div style={{marginLeft: "auto", marginRight: "auto", width: "fit-content", alignItems: "center", height: "80%", display: "flex"}}>{console.log("week")}View weekend activities</div>
-                                :
-                                <>
-                                <div className="big_container">
-                                    <div className="big_block_container">
-                                        {displayClass}
-                                    </div>
-                                    <div className="current_block_name">
-                                        {blockSubject}
-                                    </div>
-                                </div>
-                                <div className="block_wrapper">
-                                    <div className="content_box a">Today is: <span>{rotation}</span></div>
-                                    <div className="content_box b">Next up:  <span>{nextBlock}</span></div>
-                                </div>
-                                </>
-                                }
+  isBlocksLoading ? (
+    <PulseLoader>{console.log("fdsaffdsa")}</PulseLoader>
+  ) : displayClass === "Weekend" ? (
+    <div style={{ marginLeft: "auto", marginRight: "auto", width: "fit-content", alignItems: "center", height: "80%", display: "flex" }}>
+      {console.log("week")}
+      View weekend activities
+    </div>
+  ) : (
+    <>
+      <div className="big_container">
+        <div className="big_block_container">{displayClass}</div>
+        <div className="current_block_name">{blockSubject}</div>
+      </div>
+      <div className="block_wrapper">
+        <div className="content_box a">Today is: <span>{rotation}</span></div>
+        <div className="content_box b">Next up: <span>{nextBlock}</span></div>
+      </div>
+    </>
+  )
+}
+
                             </div>
                         </div>
                         <div className="home_column home_column_right">
