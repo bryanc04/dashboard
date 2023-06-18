@@ -8,14 +8,13 @@
 body, html {
   margin: 0 !important;
   padding: 0 !important;
-  font-family: 'Varela Round', sans-serif;
+  font-family: 'Varela Round', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h4, .h4{
   color: var(--main) !important;
-  font-family: 'DM Sans', sans-serif !important;
 }
 
 
@@ -114,7 +113,6 @@ hr{
 }
 
 .menu_main_title {
-  font-family: 'DM Sans', sans-serif;
   display: inline;
   position: absolute;
   top: 123px;
@@ -126,7 +124,6 @@ hr{
   /* font-weight: 300;
   font-family: "Arial Black";
   font-size: 30px; */
-  font-family: 'DM Sans', sans-serif;
   display: inline;
   position: absolute;
   top: 100px;
@@ -284,7 +281,6 @@ hr{
     display: block !important;
     transform: translate(50%, 50%);
     height: 100%;
-    font-family: "DM Sans", sans-serif;
   }
 }
 
@@ -341,7 +337,6 @@ hr{
   border-radius: 20px;
   padding: 20px;
   z-index: 3;
-  font-family: "DM Sans", sans-serif;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   /* box-shadow: 10px 5px 5px grey; */
  }
@@ -351,7 +346,6 @@ hr{
  }
 
 .content_title{
-  font-family: "DM Sans", sans-serif;
   font-weight: bold;
   font-size: 20px;
   color: black;
@@ -599,7 +593,6 @@ hr{
 }
 
 .box {
-  font-family: "DM Sans";
   border-radius: 5px;
   padding: 20px;
   font-size: 150%;
@@ -609,7 +602,6 @@ hr{
 
 .current_block{
   font-weight: 500 !important;
-  font-family: "DM Sans";
   
 }
 
@@ -618,7 +610,6 @@ hr{
   text-align: center;
   font-size: 20px;
   font-weight: 900;
-  font-family: 'DM Sans', sans-serif;
   margin-top: 20px;
   margin-bottom: 0px;
 }
@@ -641,7 +632,6 @@ hr{
 }
 
 .content_box {
-  font-family: "DM Sans";
   border-radius: 5px;
   font-size: 13px;
   text-align: center;
@@ -879,7 +869,6 @@ hr{
 
 
 .grade_page_title{
-  font-family: 'DM Sans', sans-serif;
   display: inline;
   position: absolute;
   top: 123px;
@@ -1056,12 +1045,10 @@ td{
 
 .meal_content_details{
   margin-left: 20px;
-  font-family: 'DM Sans', sans-serif;
 }
 
 .meal_content_details_home{
   margin-left: 10px;
-  font-family: 'DM Sans', sans-serif;
   margin-top: 5px;
   margin-bottom: 10px;
 }
