@@ -147,20 +147,18 @@ export default function Home() {
     const [blockChanged, setBlockChanged] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
-    const saveBlocks = async() => {
+    const saveBlocks = async () => {
         setModalLoading(true);
-        var emptyBlock = Object.values(blocks).filter(x => x ===  '');
-        if(emptyBlock.length != 0)
-        {
+        var emptyBlock = Object.values(blocks).filter(x => x === '');
+        if (emptyBlock.length != 0) {
             alert("Please fill in all blocks");
             return;
         }
-        else
-        {
+        else {
             await setDoc(doc(db, "Block", user.email), blocks);
             setBlockChanged(!blockChanged)
         }
-        setModalLoading(false); 
+        setModalLoading(false);
         handleClose();
     }
 
@@ -371,163 +369,161 @@ export default function Home() {
     }, [user]);
 
     useEffect(() => {
-        setIsBlocksLoading(true);
-        const getBlocks = async() => {
-            
-            if(user){
-            console.log("called")
-            console.log(user)
-            const docRef1 = doc(db, "Block", "RotationDay");
-            const docSnap1 = await getDoc(docRef1);
+        const getBlocks = async () => {
+            setIsBlocksLoading(true);
+            if (user) {
+                console.log("called")
+                console.log(user)
+                const docRef1 = doc(db, "Block", "RotationDay");
+                const docSnap1 = await getDoc(docRef1);
 
-            var RotationDay = docSnap1.data();
-            var d = RotationDay.num;
-            setRotation("D"+d);
-            var last_updated = DateTime.fromISO(RotationDay.last_updated).setZone('America/New_York');
-            var now = DateTime.local().setZone('America/New_York');
-            var differenceInDays = now.diff(last_updated, 'days').toObject().days;
-            const docRef = doc(db, "Block", user.email);
-            const docSnap = await getDoc(docRef);
-            console.log("222222")
+                var RotationDay = docSnap1.data();
+                var d = RotationDay.num;
+                setRotation("D" + d);
+                var last_updated = DateTime.fromISO(RotationDay.last_updated).setZone('America/New_York');
+                var now = DateTime.local().setZone('America/New_York');
+                var differenceInDays = now.diff(last_updated, 'days').toObject().days;
+                const docRef = doc(db, "Block", user.email);
+                const docSnap = await getDoc(docRef);
+                console.log("222222")
 
-            if(docSnap.exists())
-            {
-                setBlockExists(true);
-                console.log(now.weekday)
-                var data = docSnap.data()
-                setBlocks({
-                    B1: data['B1'],
-                    B2: data['B2'],
-                    B3: data['B3'],
-                    B4: data['B4'],
-                    B5: data['B5'],
-                    B6: data['B6'],
-                    B7: data['B7'],
-                });
-                if (differenceInDays >= 1) {
-                    d += 4;
-                    d %= 7;
+                if (docSnap.exists()) {
+                    setBlockExists(true);
+                    console.log(now.weekday)
+                    var data = docSnap.data()
+                    setBlocks({
+                        B1: data['B1'],
+                        B2: data['B2'],
+                        B3: data['B3'],
+                        B4: data['B4'],
+                        B5: data['B5'],
+                        B6: data['B6'],
+                        B7: data['B7'],
+                    });
+                    if (differenceInDays >= 1) {
+                        d += 4;
+                        d %= 7;
+                    }
+                    var tmp = "";
+                    if (now.weekday === 3) {
+                        if (now.hour <= 8 && now.minute < 30) {
+                            tmp = "Before Class";
+                        }
+                        else if ((now.hour == 8 && now.minute >= 30) || (now.hour == 9 && now.minute <= 20)) {
+                            var curblock = "B" + d;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 9 && now.minute >= 30) || (now.hour == 10 && now.minute <= 20)) {
+                            var curblock = "B" + d + 1;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 10 && now.minute >= 30) || (now.hour == 11 && now.minute <= 20)) {
+                            var curblock = "B" + d + 2;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 11 && now.minute >= 30) || (now.hour == 12 && now.minute <= 20)) {
+                            var curblock = "B" + d + 3;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 1 && now.minute >= 30) || (now.hour == 3 && now.minute <= 59)) {
+                            tmp = "Athletics";
+                        }
+                        else if (now.hour >= 4) {
+                            tmp = "After School"
+                        }
+                        else {
+                            tmp = "Passing"
+                        }
+                    }
+                    else if (now.weekday === 4) {
+                        if (now.hour <= 8 && now.minute <= 59) {
+                            tmp = "Before Class";
+                        }
+                        else if ((now.hour == 9 && now.minute >= 0) || (now.hour == 10 && now.minute <= 15)) {
+                            var curblock = "B" + d;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 10 && now.minute >= 15) || (now.hour == 10 && now.minute <= 45)) {
+                            tmp = "Community Free";
+                        }
+                        else if ((now.hour == 10 && now.minute >= 45) || (now.hour == 11 && now.minute <= 59)) {
+                            var curblock = "B" + d + 1;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 12 && now.minute >= 0) || (now.hour == 1 && now.minute <= 55)) {
+                            var curblock = "B" + d + 2;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 2 && now.minute >= 5) || (now.hour == 3 && now.minute <= 20)) {
+                            var curblock = "B" + d + 3;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 3 && now.minute >= 20) || (now.hour == 5 && now.minute <= 30)) {
+
+                            tmp = "Athletics";
+                        }
+                        else if (now.hour >= 5 && now.minute >= 30) {
+                            tmp = "After School"
+                        }
+                        else {
+                            tmp = "Passing"
+                        }
+                    }
+                    else if (now.weekday == 6 || now.weekday == 7) {
+                        tmp = "Weekend"
+                        console.log("weekend")
+                    }
+                    else {
+                        console.log("6666")
+                        if (now.hour <= 8 && now.minute <= 30) {
+                            tmp = "Before Class";
+                        }
+                        else if ((now.hour == 8 && now.minute >= 30) || (now.hour == 9 && now.minute <= 45)) {
+                            var curblock = "B" + d;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 9 && now.minute >= 45) || (now.hour == 10 && now.minute <= 45)) {
+                            tmp = "Community Free";
+                        }
+                        else if ((now.hour == 10 && now.minute >= 45) || (now.hour == 11 && now.minute <= 59)) {
+                            var curblock = "B" + d + 1;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 12 && now.minute >= 0) || (now.hour == 1 && now.minute <= 55)) {
+                            var curblock = "B" + d + 2;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 2 && now.minute >= 5) || (now.hour == 3 && now.minute <= 20)) {
+                            var curblock = "B" + d + 3;
+                            tmp = data[curblock];
+                        }
+                        else if ((now.hour == 3 && now.minute >= 20) || (now.hour == 5 && now.minute <= 30)) {
+
+                            tmp = "Athletics";
+                        }
+                        else if (now.hour >= 5 && now.minute >= 30) {
+                            tmp = "After School"
+                        }
+                        else {
+                            tmp = "Passing"
+                        }
+                    }
+                    console.log("fafdasfdsadsafasdfas")
+                    setDisplayBlock(curblock);
+                    setDisplayClass(tmp);
+                    console.log(tmp);
+
+                    console.log(data)
                 }
-                var tmp = "";
-                if (now.weekday === 3) {
-                    if(now.hour <= 8 && now.minute <30){
-                        tmp = "Before Class";
-                    }
-                    else if ((now.hour== 8 && now.minute >= 30) || (now.hour == 9 && now.minute <= 20) ){
-                        var curblock = "B"+d;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 9 && now.minute >= 30) || (now.hour == 10 && now.minute <= 20) ){
-                        var curblock = "B"+d+1;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 10 && now.minute >= 30) || (now.hour == 11 && now.minute <= 20) ){
-                        var curblock = "B"+d+2;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 11 && now.minute >= 30) || (now.hour == 12 && now.minute <= 20) ){
-                        var curblock = "B"+d+3;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 1 && now.minute >= 30) || (now.hour == 3 && now.minute <= 59) ){
-                        tmp = "Athletics";
-                    }
-                    else if (now.hour >= 4 ){
-                        tmp = "After School"
-                    }
-                    else{
-                        tmp = "Passing"
-                    }
+                else {
+                    setBlockExists(false);
                 }
-                else if (now.weekday === 4) {
-                    if(now.hour <= 8 && now.minute <= 59){
-                        tmp = "Before Class";
-                    }
-                    else if ((now.hour== 9 && now.minute >= 0) || (now.hour == 10 && now.minute <= 15) ){
-                        var curblock = "B"+d;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 10 && now.minute >= 15) || (now.hour == 10 && now.minute <= 45) ){
-                        tmp = "Community Free";
-                    }
-                    else if ((now.hour== 10 && now.minute >= 45) || (now.hour == 11 && now.minute <= 59) ){
-                        var curblock = "B"+d+1;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 12 && now.minute >= 0) || (now.hour == 1 && now.minute <= 55) ){
-                        var curblock = "B"+d+2;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 2 && now.minute >= 5) || (now.hour == 3 && now.minute <= 20) ){
-                        var curblock = "B"+d+3;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 3 && now.minute >= 20) || (now.hour == 5 && now.minute <= 30) ){
-    
-                        tmp = "Athletics";
-                    }
-                    else if (now.hour >= 5 && now.minute >= 30 ){
-                        tmp = "After School"
-                    }
-                    else{
-                        tmp = "Passing"
-                    }
-                }
-                else if(now.weekday == 6 || now.weekday == 7){
-                    tmp = "Weekend"
-                    console.log("weekend")
-                }
-                else{
-                    console.log("6666")
-                    if(now.hour <= 8 && now.minute <= 30){
-                        tmp = "Before Class";
-                    }
-                    else if ((now.hour== 8 && now.minute >= 30) || (now.hour == 9 && now.minute <= 45) ){
-                        var curblock = "B"+d;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 9 && now.minute >= 45) || (now.hour == 10 && now.minute <= 45) ){
-                        tmp = "Community Free";
-                    }
-                    else if ((now.hour== 10 && now.minute >= 45) || (now.hour == 11 && now.minute <= 59) ){
-                        var curblock = "B"+d+1;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 12 && now.minute >= 0) || (now.hour == 1 && now.minute <= 55) ){
-                        var curblock = "B"+d+2;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 2 && now.minute >= 5) || (now.hour == 3 && now.minute <= 20) ){
-                        var curblock = "B"+d+3;
-                        tmp = data[curblock];
-                    }
-                    else if ((now.hour== 3 && now.minute >= 20) || (now.hour == 5 && now.minute <= 30) ){
-    
-                        tmp = "Athletics";
-                    }
-                    else if (now.hour >= 5 && now.minute >= 30 ){
-                        tmp = "After School"
-                    }
-                    else{
-                        tmp = "Passing"
-                    }
-                }
-                console.log("fafdasfdsadsafasdfas")
-                setDisplayBlock(curblock);
-                setDisplayClass(tmp);
-                console.log(tmp);
-    
-                console.log(data)
             }
-            else
-            {
-                setBlockExists(false);
-            }
+
+            setIsBlocksLoading(false);
         }
-    }
 
         getBlocks();
-        setIsBlocksLoading(false);
     }, [blockChanged, user])
 
 
@@ -651,10 +647,10 @@ export default function Home() {
                                     <Modal show={showModal} onHide={handleClose}>
                                         <Modal.Header closeButton>
                                             <Modal.Title>{
-                                            blockExists ?
-                                                'Change Your Blocks'
-                                            :
-                                            'Enter Your Blocks'
+                                                blockExists ?
+                                                    'Change Your Blocks'
+                                                    :
+                                                    'Enter Your Blocks'
                                             }</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
@@ -678,12 +674,12 @@ export default function Home() {
                                                 Close
                                             </Button>
                                             <Button variant="primary" onClick={saveBlocks}>
-                                                {modalLoading ? 
-                                                <>
-                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden='true'/>
-                                                </>
-                                                :
-                                                "Save Changes"
+                                                {modalLoading ?
+                                                    <>
+                                                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden='true' />
+                                                    </>
+                                                    :
+                                                    "Save Changes"
                                                 }
                                             </Button>
                                         </Modal.Footer>
@@ -691,26 +687,26 @@ export default function Home() {
 
                                 </div>
                                 {
-  isBlocksLoading ? (
-    <PulseLoader>{console.log("fdsaffdsa")}</PulseLoader>
-  ) : displayClass === "Weekend" ? (
-    <div style={{ marginLeft: "auto", marginRight: "auto", width: "fit-content", alignItems: "center", height: "80%", display: "flex" }}>
-      {console.log("week")}
-      View weekend activities
-    </div>
-  ) : (
-    <>
-      <div className="big_container">
-        <div className="big_block_container">{displayClass}</div>
-        <div className="current_block_name">{blockSubject}</div>
-      </div>
-      <div className="block_wrapper">
-        <div className="content_box a">Today is: <span>{rotation}</span></div>
-        <div className="content_box b">Next up: <span>{nextBlock}</span></div>
-      </div>
-    </>
-  )
-}
+                                    isBlocksLoading ? (
+                                        <PulseLoader>{console.log("fdsaffdsa")}</PulseLoader>
+                                    ) : displayClass === "Weekend" ? (
+                                        <div style={{ marginLeft: "auto", marginRight: "auto", width: "fit-content", alignItems: "center", height: "80%", display: "flex" }}>
+                                            {console.log("week")}
+                                            View weekend activities
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className="big_container">
+                                                <div className="big_block_container">{displayClass}</div>
+                                                <div className="current_block_name">{blockSubject}</div>
+                                            </div>
+                                            <div className="block_wrapper">
+                                                <div className="content_box a">Today is: <span>{rotation}</span></div>
+                                                <div className="content_box b">Next up: <span>{nextBlock}</span></div>
+                                            </div>
+                                        </>
+                                    )
+                                }
 
                             </div>
                         </div>
@@ -817,20 +813,20 @@ export default function Home() {
 
                             </div>
                             <div
-                                    style={{
-                                        fontSize: 20,
-                                        fontWeight: 'bold',
-                                        width: '90%',
-                                        marginLeft: 'auto',
-                                        marginRight: 'auto',
-                                        paddingLeft: 20,
-                                        marginTop: 50
-                                    }}
-                                >
-                                    Daily Bulletin
-                                </div>
+                                style={{
+                                    fontSize: 20,
+                                    fontWeight: 'bold',
+                                    width: '90%',
+                                    marginLeft: 'auto',
+                                    marginRight: 'auto',
+                                    paddingLeft: 20,
+                                    marginTop: 50
+                                }}
+                            >
+                                Daily Bulletin
+                            </div>
                             <div className="home_right_bottom">
-                               
+
                                 {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news">
 
                                     <p className="news_heading">
