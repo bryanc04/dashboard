@@ -114,6 +114,7 @@ export default function Home() {
     const [Meal, setMeal] = useState();
 
     const [assignmentsDisplay, setAssignmentsDisplay] = useState();
+    const [displayClass, setDisplayClass] = useState('');
 
     const [data, setData] = useState([]);
 
@@ -370,18 +371,25 @@ export default function Home() {
 
     useEffect(() => {
         const getBlocks = async() => {
+            if(user){
+            console.log("called")
+            console.log(user)
+            const docRef1 = doc(db, "Block", "RotationDay");
+            const docSnap1 = await getDoc(docRef1);
+
             var RotationDay = docSnap1.data();
             var d = RotationDay.num;
+            setRotation("D"+d);
             var last_updated = DateTime.fromISO(RotationDay.last_updated).setZone('America/New_York');
             var now = DateTime.local().setZone('America/New_York');
-            
             var differenceInDays = now.diff(last_updated, 'days').toObject().days;
-            console.log(now)
             const docRef = doc(db, "Block", user.email);
-            const docSnap = await getDocs(docRef);
+            const docSnap = await getDoc(docRef);
+            console.log("222222")
 
             if(docSnap.exists())
             {
+                console.log(now.weekday)
                 var data = docSnap.data()
                 setBlocks({
                     B1: data['B1'],
@@ -403,19 +411,19 @@ export default function Home() {
                     }
                     else if ((now.hour== 8 && now.minute >= 30) || (now.hour == 9 && now.minute <= 20) ){
                         var curblock = "B"+d;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 9 && now.minute >= 30) || (now.hour == 10 && now.minute <= 20) ){
                         var curblock = "B"+d+1;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 10 && now.minute >= 30) || (now.hour == 11 && now.minute <= 20) ){
                         var curblock = "B"+d+2;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 11 && now.minute >= 30) || (now.hour == 12 && now.minute <= 20) ){
                         var curblock = "B"+d+3;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 1 && now.minute >= 30) || (now.hour == 3 && now.minute <= 59) ){
                         tmp = "Athletics";
@@ -433,22 +441,22 @@ export default function Home() {
                     }
                     else if ((now.hour== 9 && now.minute >= 0) || (now.hour == 10 && now.minute <= 15) ){
                         var curblock = "B"+d;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 10 && now.minute >= 15) || (now.hour == 10 && now.minute <= 45) ){
                         tmp = "Community Free";
                     }
                     else if ((now.hour== 10 && now.minute >= 45) || (now.hour == 11 && now.minute <= 59) ){
                         var curblock = "B"+d+1;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 12 && now.minute >= 0) || (now.hour == 1 && now.minute <= 55) ){
                         var curblock = "B"+d+2;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 2 && now.minute >= 5) || (now.hour == 3 && now.minute <= 20) ){
                         var curblock = "B"+d+3;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 3 && now.minute >= 20) || (now.hour == 5 && now.minute <= 30) ){
     
@@ -461,28 +469,33 @@ export default function Home() {
                         tmp = "Passing"
                     }
                 }
+                else if(now.weekday == 6 || now.weekday == 7){
+                    tmp = "Weekend"
+                    console.log("weekend")
+                }
                 else{
+                    console.log("6666")
                     if(now.hour <= 8 && now.minute <= 30){
                         tmp = "Before Class";
                     }
                     else if ((now.hour== 8 && now.minute >= 30) || (now.hour == 9 && now.minute <= 45) ){
                         var curblock = "B"+d;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 9 && now.minute >= 45) || (now.hour == 10 && now.minute <= 45) ){
                         tmp = "Community Free";
                     }
                     else if ((now.hour== 10 && now.minute >= 45) || (now.hour == 11 && now.minute <= 59) ){
                         var curblock = "B"+d+1;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 12 && now.minute >= 0) || (now.hour == 1 && now.minute <= 55) ){
                         var curblock = "B"+d+2;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 2 && now.minute >= 5) || (now.hour == 3 && now.minute <= 20) ){
                         var curblock = "B"+d+3;
-                        tmp = data.curblock;
+                        tmp = data[curblock];
                     }
                     else if ((now.hour== 3 && now.minute >= 20) || (now.hour == 5 && now.minute <= 30) ){
     
@@ -495,14 +508,19 @@ export default function Home() {
                         tmp = "Passing"
                     }
                 }
-                setDisplayBlock(tmp);
+                console.log("fafdasfdsadsafasdfas")
+                setDisplayBlock(curblock);
+                setDisplayClass(tmp);
+                console.log(tmp);
     
                 console.log(data)
             }
+
         }
+    }
 
         getBlocks();
-    }, [blockChanged])
+    }, [blockChanged, user])
 
 
     const MenuOnclick = () => {
@@ -575,6 +593,7 @@ export default function Home() {
 
         setIsLoading(false);
     };
+    console.log(blocks)
 
 
 
@@ -616,7 +635,7 @@ export default function Home() {
                             </div>
                             <div className="home_center_bottom">
                                 <div className="content_title">
-                                    Current block {displayBlock}
+                                    {displayClass}
                                     <Button variant="primary" onClick={handleShow} style={{ float: "right" }}>
                                         <i className="bi bi-input-cursor-text"></i>
                                     </Button>
@@ -658,17 +677,25 @@ export default function Home() {
                                     </Modal>
 
                                 </div>
-
+                                {
+                                displayClass == "Weekend" ? 
+                                <div style={{marginLeft: "auto", marginRight: "auto", width: "fit-content", alignItems: "center", height: "80%", display: "flex"}}>{console.log("week")}View weekend activities</div>
+                                :
+                                <>
                                 <div className="big_container">
                                     <div className="big_block_container">
-                                        {blocks[0]}
+                                        {displayClass}
                                     </div>
-                                    <div className="current_block_name">{blockSubject}</div>
+                                    <div className="current_block_name">
+                                        {blockSubject}
+                                    </div>
                                 </div>
                                 <div className="block_wrapper">
-                                    <div className="content_box a">Today is: <span style={{ color: themecolor }}>{rotation}</span></div>
-                                    <div className="content_box b">Next up:  <span style={{ color: themecolor }}>{nextBlock}</span></div>
+                                    <div className="content_box a">Today is: <span>{rotation}</span></div>
+                                    <div className="content_box b">Next up:  <span>{nextBlock}</span></div>
                                 </div>
+                                </>
+                                }
                             </div>
                         </div>
                         <div className="home_column home_column_right">
