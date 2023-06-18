@@ -89,6 +89,8 @@ export default function Home() {
     const [displayAssignments, setDisplayAssignments] = useState();
     const [checkflag, setCheckFlag] = useState(false);
     const [checked, setChecked] = useState([]);
+    const { DateTime } = require('luxon');
+    const [displayBlock, setDisplayBlock] = useState("");
 
     const [blocks, setBlocks] = useState({
         B1: '',
@@ -137,11 +139,14 @@ export default function Home() {
             selector: row => row.Time,
         }
     ];
+
+    const [modalLoading, setModalLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [blockChanged, setBlockChanged] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
     const saveBlocks = async() => {
+        setModalLoading(true);
         var emptyBlock = Object.values(blocks).filter(x => x ===  '');
         if(emptyBlock.length != 0)
         {
@@ -153,6 +158,8 @@ export default function Home() {
             await setDoc(doc(db, "Block", user.email), blocks);
             setBlockChanged(!blockChanged)
         }
+        setModalLoading(false); 
+        handleClose();
     }
 
 
@@ -363,6 +370,13 @@ export default function Home() {
 
     useEffect(() => {
         const getBlocks = async() => {
+            var RotationDay = docSnap1.data();
+            var d = RotationDay.num;
+            var last_updated = DateTime.fromISO(RotationDay.last_updated).setZone('America/New_York');
+            var now = DateTime.local().setZone('America/New_York');
+            
+            var differenceInDays = now.diff(last_updated, 'days').toObject().days;
+            console.log(now)
             const docRef = doc(db, "Block", user.email);
             const docSnap = await getDocs(docRef);
 
@@ -377,7 +391,113 @@ export default function Home() {
                     B5: data['B5'],
                     B6: data['B6'],
                     B7: data['B7'],
-                })
+                });
+                if (differenceInDays >= 1) {
+                    d += 4;
+                    d %= 7;
+                }
+                var tmp = "";
+                if (now.weekday === 3) {
+                    if(now.hour <= 8 && now.minute <30){
+                        tmp = "Before Class";
+                    }
+                    else if ((now.hour== 8 && now.minute >= 30) || (now.hour == 9 && now.minute <= 20) ){
+                        var curblock = "B"+d;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 9 && now.minute >= 30) || (now.hour == 10 && now.minute <= 20) ){
+                        var curblock = "B"+d+1;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 10 && now.minute >= 30) || (now.hour == 11 && now.minute <= 20) ){
+                        var curblock = "B"+d+2;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 11 && now.minute >= 30) || (now.hour == 12 && now.minute <= 20) ){
+                        var curblock = "B"+d+3;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 1 && now.minute >= 30) || (now.hour == 3 && now.minute <= 59) ){
+                        tmp = "Athletics";
+                    }
+                    else if (now.hour >= 4 ){
+                        tmp = "After School"
+                    }
+                    else{
+                        tmp = "Passing"
+                    }
+                }
+                else if (now.weekday === 4) {
+                    if(now.hour <= 8 && now.minute <= 59){
+                        tmp = "Before Class";
+                    }
+                    else if ((now.hour== 9 && now.minute >= 0) || (now.hour == 10 && now.minute <= 15) ){
+                        var curblock = "B"+d;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 10 && now.minute >= 15) || (now.hour == 10 && now.minute <= 45) ){
+                        tmp = "Community Free";
+                    }
+                    else if ((now.hour== 10 && now.minute >= 45) || (now.hour == 11 && now.minute <= 59) ){
+                        var curblock = "B"+d+1;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 12 && now.minute >= 0) || (now.hour == 1 && now.minute <= 55) ){
+                        var curblock = "B"+d+2;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 2 && now.minute >= 5) || (now.hour == 3 && now.minute <= 20) ){
+                        var curblock = "B"+d+3;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 3 && now.minute >= 20) || (now.hour == 5 && now.minute <= 30) ){
+    
+                        tmp = "Athletics";
+                    }
+                    else if (now.hour >= 5 && now.minute >= 30 ){
+                        tmp = "After School"
+                    }
+                    else{
+                        tmp = "Passing"
+                    }
+                }
+                else{
+                    if(now.hour <= 8 && now.minute <= 30){
+                        tmp = "Before Class";
+                    }
+                    else if ((now.hour== 8 && now.minute >= 30) || (now.hour == 9 && now.minute <= 45) ){
+                        var curblock = "B"+d;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 9 && now.minute >= 45) || (now.hour == 10 && now.minute <= 45) ){
+                        tmp = "Community Free";
+                    }
+                    else if ((now.hour== 10 && now.minute >= 45) || (now.hour == 11 && now.minute <= 59) ){
+                        var curblock = "B"+d+1;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 12 && now.minute >= 0) || (now.hour == 1 && now.minute <= 55) ){
+                        var curblock = "B"+d+2;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 2 && now.minute >= 5) || (now.hour == 3 && now.minute <= 20) ){
+                        var curblock = "B"+d+3;
+                        tmp = data.curblock;
+                    }
+                    else if ((now.hour== 3 && now.minute >= 20) || (now.hour == 5 && now.minute <= 30) ){
+    
+                        tmp = "Athletics";
+                    }
+                    else if (now.hour >= 5 && now.minute >= 30 ){
+                        tmp = "After School"
+                    }
+                    else{
+                        tmp = "Passing"
+                    }
+                }
+                setDisplayBlock(tmp);
+    
+                console.log(data)
             }
         }
 
@@ -496,7 +616,7 @@ export default function Home() {
                             </div>
                             <div className="home_center_bottom">
                                 <div className="content_title">
-                                    Current block
+                                    Current block {displayBlock}
                                     <Button variant="primary" onClick={handleShow} style={{ float: "right" }}>
                                         <i className="bi bi-input-cursor-text"></i>
                                     </Button>
@@ -526,7 +646,13 @@ export default function Home() {
                                                 Close
                                             </Button>
                                             <Button variant="primary" onClick={saveBlocks}>
-                                                Save Changes
+                                                {modalLoading ? 
+                                                <>
+                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden='true'/>
+                                                </>
+                                                :
+                                                "Save Changes"
+                                                }
                                             </Button>
                                         </Modal.Footer>
                                     </Modal>
