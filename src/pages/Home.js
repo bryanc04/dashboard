@@ -101,6 +101,7 @@ export default function Home() {
         B6: '',
         B7: '',
     });
+    const [blockExists, setBlockExists] = useState(false);
     const [block, setBlock] = useState();
     const [blockSubject, setBlockSubject] = useState();
     const [nextBlock, setNextBlock] = useState("");
@@ -361,8 +362,8 @@ export default function Home() {
         if (user) {
             getSchedule();
             getDailyBulletin();
-            checkupdated();
-            checkOverallUpdated();
+            // checkupdated();
+            // checkOverallUpdated();
             getMenu();
             getCalendar();
         }
@@ -389,6 +390,7 @@ export default function Home() {
 
             if(docSnap.exists())
             {
+                setBlockExists(true);
                 console.log(now.weekday)
                 var data = docSnap.data()
                 setBlocks({
@@ -515,7 +517,10 @@ export default function Home() {
     
                 console.log(data)
             }
-
+            else
+            {
+                setBlockExists(false);
+            }
         }
     }
 
@@ -642,7 +647,12 @@ export default function Home() {
 
                                     <Modal show={showModal} onHide={handleClose}>
                                         <Modal.Header closeButton>
-                                            <Modal.Title>Enter Your Blocks</Modal.Title>
+                                            <Modal.Title>{
+                                            blockExists ?
+                                                'Change Your Blocks'
+                                            :
+                                            'Enter Your Blocks'
+                                            }</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
                                             <Form>
@@ -704,7 +714,7 @@ export default function Home() {
                                     (new Date().getHours() >= 0 && new Date().getHours() < 11) ?
                                         (
                                             <div>
-                                                <div class="home_menu_title">
+                                                <div className="home_menu_title">
                                                     Breakfast Menu
                                                 </div>
                                                 {
@@ -736,7 +746,7 @@ export default function Home() {
                                         (new Date().getHours() >= 11 && new Date().getHours() <= 15) ?
                                             (
                                                 <div>
-                                                    <div class="home_menu_title">
+                                                    <div className="home_menu_title">
                                                         Lunch Menu
                                                     </div>
                                                     {
@@ -768,7 +778,7 @@ export default function Home() {
                                             :
                                             (
                                                 <div>
-                                                    <div class="home_menu_title">
+                                                    <div className="home_menu_title">
                                                         Dinner Menu
                                                     </div>
                                                     {
@@ -800,15 +810,28 @@ export default function Home() {
                                 }
 
                             </div>
+                            <div
+                                    style={{
+                                        fontSize: 20,
+                                        fontWeight: 'bold',
+                                        width: '90%',
+                                        marginLeft: 'auto',
+                                        marginRight: 'auto',
+                                        paddingLeft: 20,
+                                        marginTop: 50
+                                    }}
+                                >
+                                    Daily Bulletin
+                                </div>
                             <div className="home_right_bottom">
+                               
                                 {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news">
 
                                     <p className="news_heading">
                                         <Highlighter
-
                                             searchWords={["NEW", "Important"]}
                                             autoEscape={true}
-                                            textToHighlight={el.Title}
+                                            textToHighlight={el.Title ? el.Title : ''}
                                             highlightStyle={{ color: "black", backgroundColor: "white" }} />
                                     </p>
                                     <p className="news_content">{shortenText(el.Content, 100)}</p>

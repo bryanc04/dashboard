@@ -8,9 +8,7 @@
 body, html {
   margin: 0 !important;
   padding: 0 !important;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Varela Round', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -1233,10 +1231,8 @@ td{
 }
 
 .home_right_bottom {
-  padding-top: 30px;
-  height: 60%;
+  height: 50%;
   overflow: scroll !important;
-  margin-top: 30px;
   width: 100%;
   margin-left: 0;
 }
