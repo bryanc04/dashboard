@@ -323,13 +323,18 @@ export default function Menu() {
 
                                 
                                 <div className="menu_inner_container">
-                                <span className="menu_view_grid">
-                                    <button onClick={() => changeView()} className="menu_icon menu_icon_hover_1"><i className="bi bi-border-all "></i></button>
-                                    <button onClick={() => changeView()} className="menu_icon menu_icon_hover_2"><i className="bi bi-view-list menu_icon"></i></button>
-                                </span>
-                                    {!cardview
-                                        ?
-                                        <div style={{width: '90%', height: '60%', display: 'flex', marginLeft: 'auto', marginRight: 'auto'}}><div className="menu_top menu_content">
+                                        <div
+                                            style={{
+                                                fontSize: 30,
+                                                fontWeight: 'bold',
+                                                width: '90%',
+                                                marginLeft: 'auto',
+                                                marginRight: 'auto'
+                                            }}
+                                        >
+                                            School Menu
+                                        </div>
+                                        <div className="menu_flex_container"><div className="menu_top menu_content">
                                             <div className="meal_title">
                                                 Breakfast
                                             </div>
@@ -363,7 +368,7 @@ export default function Menu() {
                                                                 display: 'flex',
                                                                 justifyContent: 'center',
                                                                 alignItems: 'center',
-                                                                height: '1000%',
+                                                                height: '100%',
                                                             }}
                                                         >
                                                             <GridLoader />
@@ -457,22 +462,6 @@ export default function Menu() {
                                                     }
                                                 </div>
                                             </div></div>
-
-
-                                        :
-                                        cards.length > 0 ?
-                                            <MenuCarousel
-                                                cards={cards}
-                                                height="470px"
-                                                width="100%"
-                                                margin="0 auto"
-                                                offset={2}
-                                                showArrows={false}
-                                            />
-                                            :
-                                            <GridLoader style={{ marginLeft: 'auto', marginRight: 'auto' }} />
-
-                                    }
 
 
 
