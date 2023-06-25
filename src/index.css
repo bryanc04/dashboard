@@ -222,7 +222,6 @@ hr{
   justify-content: center;
   align-items: center;
   display: flex;
-
 }
 
 .home_container{
@@ -952,6 +951,14 @@ td{
   flex-direction: column;
 }
 
+.menu_flex_container {
+  width: 90%;
+  height: 60%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .athletics_table {
   width: 80%;
   margin-top: 100px;
@@ -1227,4 +1234,21 @@ td{
 .home_menu_title {
   font-size: 20px;
   font-weight: bold;
+}
+
+
+@media only screen and (max-width: 1000px) {
+  .menu_inner_container {
+    justify-content: flex-start;
+    margin-top: 50px;
+  }
+
+  .menu_flex_container {
+    flex-direction: column;
+  }
+
+  .menu_content {
+    width: 100%;
+    margin-bottom: 40px;
+}
 }

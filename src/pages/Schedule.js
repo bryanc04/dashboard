@@ -99,32 +99,32 @@ export default function Schedule() {
         {
             field: 'Team',
             headerName: 'Team',
-            flex: 1
+            width: 200
         },
         {
             field: 'Opponent',
             headerName: 'Opponent',
-            flex: 1
+            width: 200
         },
         {
             field: 'Date',
             headerName: 'Date',
-            flex: 1
+            width: 150
         },
         {
             field: 'Time',
             headerName: 'Time',
-            flex: 1
+            width: 100
         },
         {
             field: 'Location',
             headerName: 'Location',
-            flex: 1
+            width: 200
         },
         {
             field: 'Advantage',
             headerName: 'Advantage',
-            flex: 1
+            width: 100
         },
     ];
 
@@ -236,6 +236,9 @@ export default function Schedule() {
                                     pagination: {
                                         paginationModel: { page: 0, pageSize: 10 },
                                     },
+                                }}
+                                options={{
+                                    responsive: 'scroll'
                                 }}
                                 pageSizeOptions={[5, 10]}
                             />
