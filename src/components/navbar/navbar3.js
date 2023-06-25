@@ -29,7 +29,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export function Navbar3(props) {
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+
   const [isShown, setIsShown] = useState(false);
+
+  const screenWidth = window.innerWidth;
+
   const handleClick = event => {
     setIsShown(current => !current)
   };
@@ -42,106 +47,9 @@ export function Navbar3(props) {
 
 
 
-  const update = async (type) => {
-    var userInfo = encryptstorage.getItem('userInfo')
-    const ref = doc(db, 'recommendation', userInfo[0])
-    if (type == 'assignments') {
-      setDoc(ref, { assignments: increment(1) }, { merge: true })
-    }
-    if (type == 'calendar') {
-      setDoc(ref, { calendar: increment(1) }, { merge: true })
-    }
-    if (type == 'menu') {
-      setDoc(ref, { menu: increment(1) }, { merge: true })
-    }
-    if (type == 'schedule') {
-      setDoc(ref, { schedule: increment(1) }, { merge: true })
-    }
-    if (type == 'grades') {
-      setDoc(ref, { grades: increment(1) }, { merge: true })
-    }
-
-    const docSnap = await getDoc(ref);
-    var userGrade = docSnap.data()['grade']
-    if (userGrade == 9) {
-      const ref2 = doc(db, 'recommendation', 'totalClicksForFreshmen')
-      if (type == 'assignments') {
-        setDoc(ref2, { type: increment(1) }, { merge: true })
-      }
-      if (type == 'calendar') {
-        setDoc(ref2, { calendar: increment(1) }, { merge: true })
-      }
-      if (type == 'menu') {
-        setDoc(ref2, { menu: increment(1) }, { merge: true })
-      }
-      if (type == 'schedule') {
-        setDoc(ref2, { schedule: increment(1) }, { merge: true })
-      }
-      if (type == 'grades') {
-        setDoc(ref2, { grades: increment(1) }, { merge: true })
-      }
-    }
-    else if (userGrade == 10) {
-      const ref2 = doc(db, 'recommendation', 'totalClicksForSophomores')
-      if (type == 'assignments') {
-        setDoc(ref2, { type: increment(1) }, { merge: true })
-      }
-      if (type == 'calendar') {
-        setDoc(ref2, { calendar: increment(1) }, { merge: true })
-      }
-      if (type == 'menu') {
-        setDoc(ref2, { menu: increment(1) }, { merge: true })
-      }
-      if (type == 'schedule') {
-        setDoc(ref2, { schedule: increment(1) }, { merge: true })
-      }
-      if (type == 'grades') {
-        setDoc(ref2, { grades: increment(1) }, { merge: true })
-      }
-    }
-    else if (userGrade == 11) {
-      const ref2 = doc(db, 'recommendation', 'totalClicksForJuniors')
-      if (type == 'assignments') {
-        setDoc(ref2, { type: increment(1) }, { merge: true })
-      }
-      if (type == 'calendar') {
-        setDoc(ref2, { calendar: increment(1) }, { merge: true })
-      }
-      if (type == 'menu') {
-        setDoc(ref2, { menu: increment(1) }, { merge: true })
-      }
-      if (type == 'schedule') {
-        setDoc(ref2, { schedule: increment(1) }, { merge: true })
-      }
-      if (type == 'grades') {
-        setDoc(ref2, { grades: increment(1) }, { merge: true })
-      }
-    }
-    else if (userGrade == 12) {
-      const ref2 = doc(db, 'recommendation', 'totalClicksForSeniors')
-      if (type == 'assignments') {
-        setDoc(ref2, { type: increment(1) }, { merge: true })
-      }
-      if (type == 'calendar') {
-        setDoc(ref2, { calendar: increment(1) }, { merge: true })
-      }
-      if (type == 'menu') {
-        setDoc(ref2, { menu: increment(1) }, { merge: true })
-      }
-      if (type == 'schedule') {
-        setDoc(ref2, { schedule: increment(1) }, { merge: true })
-      }
-      if (type == 'grades') {
-        setDoc(ref2, { grades: increment(1) }, { merge: true })
-      }
-    }
-
-
-
-
-  }
-
   return (
+    <>
+    { screenWidth > 1000 ?
     <div className="navbar_style" id="navbar_bg" style={{ backgroundColor: props.theme }}>
       <div
         style={{
@@ -188,8 +96,56 @@ export function Navbar3(props) {
       <Logout />
       </div>
     </div>
-
-
+    : <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <div className="container-fluid">
+      <a className="navbar-brand" href="#">
+        LC DASHBOARD
+      </a>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div class={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarsExample09">
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <NavLink to="/Home" className="nav-link" onClick={() => update("home")}>
+              Home
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/Calendar" className="nav-link" onClick={() => update("calendar")}>
+              Calendar
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/Menu" className="nav-link" onClick={() => update("menu")}>
+              Menu
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/Schedule" className="nav-link" onClick={() => update("schedule")}>
+              Schedule
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <Logout />
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  
+  
+        }
+</>
 
 
   )

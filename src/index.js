@@ -15,6 +15,7 @@ import { createStore } from 'redux';
 import { UserContext} from './components/popup';
 import './index.less'
 import Signup from './pages/Signup';
+import AbcdHome from './pages/abcdHome';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -30,6 +31,7 @@ root.render(
         <Route path="/Menu" element={<Menu />}/>
         <Route path="/Schedule" element={<Schedule />}/>
         <Route path="/Signup" element={<Signup />}/>
+        <Route path="/AbcdHome" element={<AbcdHome />}/>
       </Routes>
   </Router>
 

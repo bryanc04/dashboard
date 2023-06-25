@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import '../index.scss'
 import styled, { css } from "styled-components";
 import { Calendar as Bigcalendar, momentLocalizer } from 'react-big-calendar';
 import Navbar from "../components/navbar/navbar";
@@ -59,7 +58,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-export default function Home() {
+export default function AbcdHome() {
 
     const [isLoggedin, setIsLoggedIn] = useState(false);
 
@@ -171,15 +170,15 @@ export default function Home() {
         navigate(destination)
     }
 
-    useEffect(() => {
-        if (loading) {
-            return;
-        }
-        if (!user) {
-            console.log('not user')
-            navigate("/Login");
-        }
-    }, [user, loading])
+    // useEffect(() => {
+    //     if (loading) {
+    //         return;
+    //     }
+    //     if (!user) {
+    //         console.log('not user')
+    //         navigate("/Login");
+    //     }
+    // }, [user, loading])
 
     useEffect(() => {
 
