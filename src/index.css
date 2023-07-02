@@ -849,12 +849,14 @@ hr {
   /* justify-content: center;
   align-items: center; */
   height: 50%;
+  margin-left: 10%;
 }
 
 .grid-item {
   display: grid;
   grid-template-columns: 30% 70%;
   color: black;
+
 }
 
 .lc_logo {
