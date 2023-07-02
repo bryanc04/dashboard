@@ -205,7 +205,7 @@ export default function Schedule() {
                     padding: 0
                 }}>
 
-                    <div className="row">
+                    <div className="g-0">
 
 
                         <div className="home_column_left">

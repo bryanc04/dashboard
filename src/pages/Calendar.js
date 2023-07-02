@@ -137,7 +137,7 @@ export default function Calendar() {
                         animation: "gradient 5s ease infinite !important",
                         WebkitAnimation: "gradient 5s ease infinite !important",
                     }}></div>
-                    <div className="row">
+                    <div className="g-0">
                         <div className=" home_column_left">
                             <Navbar3 theme={themecolor} currentPage="Calendar"/>
                             </div>
