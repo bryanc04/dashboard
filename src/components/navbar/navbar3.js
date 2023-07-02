@@ -8,6 +8,7 @@ import { getFirestore, collection, getDocs, query, orderBy, limit, getDoc, doc, 
 import { useAuthState } from "react-firebase-hooks/auth";
 import logo2 from "../../assets/logo2.png";
 import Logout from '../logout';
+import { useMediaQuery } from 'react-responsive'
 
 const encryptstorage = new EncryptStorage('asdffdsafdasfdasasdf', {
   prefix: '@instance',
@@ -32,6 +33,7 @@ export function Navbar3(props) {
   const [isShown, setIsShown] = useState(false);
 
   const screenWidth = window.innerWidth;
+  const IsMobile = useMediaQuery({ query: '(min-width: 1000px)' })
 
   const handleClick = event => {
     setIsShown(current => !current)
@@ -47,7 +49,7 @@ export function Navbar3(props) {
 
   return (
     <>
-    { screenWidth > 1000 ?
+    { IsMobile ?
     <div className="navbar_style" id="navbar_bg" style={{ backgroundColor: props.theme }}>
       <div
         style={{
@@ -91,10 +93,10 @@ export function Navbar3(props) {
           </div>
         </NavLink>
 
-      <Logout />
+        <Logout showEmoji = {true}/>
       </div>
     </div>
-    : <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    : <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{zIndex: 300000}}>
     <div className="container-fluid" style={{paddingLeft: "50px"}}>
       <a className="navbar-brand" href="#">
         LC DASHBOARD
