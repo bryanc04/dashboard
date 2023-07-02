@@ -1,7 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/styles.css";
 
 export default function Start() {
+  const [name, setName] = useState("");
+  const [nameError, setNameError] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageError, setMessageError] = useState(false);
+
+    function submitButton() {
+      if(name == "")
+      {
+        setNameError(true);
+      }
+      else if(email == "")
+      {
+        setEmailError(true);
+      }
+      else if(phone == "")
+      {
+        setPhoneError(true);
+      }
+      else if(message == "")
+      {
+        setMessageError(true);
+      }
+
+      alert("Thanks for submitting!");
+      window.location.reload(false);
+    }
 
     return (
         <div>
@@ -90,31 +120,38 @@ export default function Start() {
                 {/* To make this form functional, sign up at*/}
                 {/* https://startbootstrap.com/solution/contact-forms*/}
                 {/* to get an API token!*/}
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
                   {/* Name input*/}
                   <div className="form-floating mb-3">
-                    <input className="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                    <input className="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" onChange={(e) => {setName(e.nativeEvent.target.value); setNameError(false);}} />
                     <label htmlFor="name">Full name</label>
-                    <div className="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                    <div className="invalid-feedback" data-sb-feedback="name:required" style={{
+                      display: nameError ? 'block' : 'none'
+                    }}>A name is required.</div>
                   </div>
                   {/* Email address input*/}
                   <div className="form-floating mb-3">
-                    <input className="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                    <input className="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" onChange={(e) => {setEmail(e.nativeEvent.target.value); setEmailError(false);}}  />
                     <label htmlFor="email">Email address</label>
-                    <div className="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                    <div className="invalid-feedback" data-sb-feedback="email:required" style={{
+                      display: emailError ? 'block' : 'none'
+                    }}>An email is required.</div>
                     <div className="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                   </div>
                   {/* Phone number input*/}
                   <div className="form-floating mb-3">
-                    <input className="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                    <input className="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" onChange={(e) => {setPhone(e.nativeEvent.target.value); setPhoneError(false);}} />
                     <label htmlFor="phone">Phone number</label>
-                    <div className="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                    <div className="invalid-feedback" data-sb-feedback="phone:required" style={{
+                      display: phoneError ? 'block' : 'none'
+                    }}>A phone number is required.</div>
                   </div>
                   {/* Message input*/}
                   <div className="form-floating mb-3">
-                    <textarea className="form-control" id="message" type="text" placeholder="Enter your message here..." style={{height: '10rem'}} data-sb-validations="required" defaultValue={""} />
+                    <textarea className="form-control" id="message" type="text" placeholder="Enter your message here..." style={{height: '10rem'}} data-sb-validations="required" defaultValue={""}  onChange={(e) => {setMessage(e.nativeEvent.target.value); setMessageError(false)}}  />
                     <label htmlFor="message">Message</label>
-                    <div className="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                    <div className="invalid-feedback" data-sb-feedback="message:required" style={{
+                      display: messageError ? 'block' : 'none'
+                    }}>A message is required.</div>
                   </div>
                   {/* Submit success message*/}
                   {/**/}
@@ -134,14 +171,13 @@ export default function Start() {
                   {/* an error submitting the form*/}
                   <div className="d-none" id="submitErrorMessage"><div className="text-center text-danger mb-3">Error sending message!</div></div>
                   {/* Submit Button*/}
-                  <div className="d-grid"><button className="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Submit</button></div>
-                </form>
+                  <div className="d-grid"><button className="btn btn-primary btn-xl" onClick={() => {submitButton()}}>Submit</button></div>
               </div>
             </div>
             <div className="row gx-4 gx-lg-5 justify-content-center">
               <div className="col-lg-4 text-center mb-5 mb-lg-0">
-                <i className="bi-phone fs-2 mb-3 text-muted" />
-                <div>+1 (555) 123-4567</div>
+                <i className="bi-envelope fs-2 mb-3 text-muted" />
+                <div>bryan_chung@loomis.org</div>
               </div>
             </div>
           </div>
