@@ -614,7 +614,7 @@ export default function Home() {
                         animation: "gradient 5s ease infinite !important",
                         WebkitAnimation: "gradient 5s ease infinite !important",
                     }}></div>
-                    <div className="row gx-0">
+                    <div className=" g-0">
 
                         <div className="home_column home_column_left">
                             <Navbar3 theme={themecolor} currentPage="Home" /></div>

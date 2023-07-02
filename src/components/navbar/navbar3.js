@@ -71,7 +71,7 @@ export function Navbar3(props) {
         <NavLink to="/Home" className='navbar_item_container'>
           <div className="grid-item">
             <i className="bi bi-house navbar_item" style={{ fontSize: '19px' }}></i>
-            {"Home" == props.currentPage ? <div style={{ fontWeight: "bold" }}>Home</div> : <div>Home</div>}
+            {"Home" == props.currentPage ? <div style={{ fontWeight: "bold"}}>Home</div> : <div>Home</div>}
           </div>
         </NavLink>
         <NavLink to="/Calendar" className='navbar_item_container' onClick={() => update("calendar")}>
