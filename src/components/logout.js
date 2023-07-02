@@ -62,10 +62,15 @@ export default function Logout(props) {
   let navigate = useNavigate();
   return (
     <>
-      <div className="grid-item" style={{ cursor: 'pointer' }} onClick={handleOpen}>
+{    props.showEmoji ? <div className="grid-item" style={{ cursor: 'pointer' }} onClick={handleOpen}>
         <i className="bi bi-box-arrow-left navbar_item"></i>
         Logout
       </div>
+      :
+      <a className="nav-link"  onClick={handleOpen}>
+      Logout
+      </a>
+      }
       <Modal
         open={open}
         onClose={handleClose}

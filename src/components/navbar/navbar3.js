@@ -29,8 +29,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export function Navbar3(props) {
-  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-
   const [isShown, setIsShown] = useState(false);
 
   const screenWidth = window.innerWidth;
@@ -97,7 +95,7 @@ export function Navbar3(props) {
       </div>
     </div>
     : <nav className="navbar navbar-expand-lg navbar-light bg-light">
-    <div className="container-fluid">
+    <div className="container-fluid" style={{paddingLeft: "50px"}}>
       <a className="navbar-brand" href="#">
         LC DASHBOARD
       </a>
@@ -112,7 +110,7 @@ export function Navbar3(props) {
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div class={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarsExample09">
+      <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <NavLink to="/Home" className="nav-link" onClick={() => update("home")}>
@@ -135,7 +133,7 @@ export function Navbar3(props) {
             </NavLink>
           </li>
           <li className="nav-item">
-            <Logout />
+            <Logout showEmoji = {false}/>
           </li>
         </ul>
       </div>

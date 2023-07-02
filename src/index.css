@@ -1248,9 +1248,7 @@ td{
 
 @media screen and (max-width: 1000px) {
   .row{
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto auto;
+
   }
   /* .navbar_style{
     height: 200px;
