@@ -802,6 +802,19 @@ export default function Home() {
                                 }
 
                             </div>
+                            <div
+                                style={{
+                                    fontSize: 20,
+                                    fontWeight: 'bold',
+                                    width: '90%',
+                                    marginLeft: 'auto',
+                                    marginRight: 'auto',
+                                    paddingLeft: 20,
+                                    marginTop: 50
+                                }}
+                            >
+                                Daily Bulletin
+                            </div>
                             <div className="home_right_bottom">
                                 {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news">
 
