@@ -205,7 +205,7 @@ export default function Schedule() {
                     padding: 0
                 }}>
 
-                    <div className="g-0">
+                    <div className="row g-0">
 
 
                         <div className="home_column_left">
@@ -214,10 +214,10 @@ export default function Schedule() {
 
 
 
-                        <div className="pickers_grid">
+                        {/* <div className="pickers_grid">
                             <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
                             <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
-                        </div>
+                        </div> */}
                         <div className="viewport_message athletics_table" style={{height: '90%'}}>
 
                         <div
