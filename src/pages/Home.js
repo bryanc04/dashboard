@@ -834,9 +834,9 @@ export default function Home() {
                             >
                                 Daily Bulletin
                 
-                            </div><div onClick={() => onBulletin()} style={{display: "inline-block", float: 'right', margin: "50px auto 10px", marginRight: '35px', color: 'blue', cursor: 'pointer'}}>{showFullDailyBulletin ? "less" : "more"}</div>
+                            </div><div onClick={() => onBulletin()} style={{display: "inline-block", float: 'right', margin: "50px auto 10px", marginRight: '35px', color: 'blue', cursor: 'pointer'}}>{showFullDailyBulletin ? "Show Less" : "Show More"}</div>
                             <div className="home_right_bottom">
-                                <div style={{overflow: 'auto', height: '100%', overflowY: "scroll", width: '90%', marginLeft: 'auto', marginRight: 'auto'}}>
+                                <div style={{overflow: 'auto', height: '100%', overflowY: "scroll", width: '100%', marginLeft: 'auto', marginRight: 'auto'}}>
                                 {Object.values(dailyBulletin).slice(0, showFullDailyBulletin ? undefined : 3).map((el, index) => <div key={index} className="news">
 
                                     <p className="news_heading">

@@ -79,7 +79,7 @@ export default function Logout(props) {
       >
         <Box sx={{ ...style, width: 500 }}>
           <h2 id="parent-modal-title">Logout of LC Dashboard?</h2>
-          <p id="parent-modal-description">
+          <p id="parent-modal-description" style={{marginBottom: 20}}>
             You can always log back in at any time.
           </p>
           <div
