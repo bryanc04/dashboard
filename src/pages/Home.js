@@ -711,7 +711,7 @@ export default function Home() {
                                     marginLeft: 'auto',
                                     marginRight: 'auto',
                                     paddingLeft: 10,
-                                    marginTop: 10,
+                                    marginTop: 25,
                                     marginBottom: 10
                                 }}>
                                 {
@@ -830,19 +830,21 @@ export default function Home() {
                                 Daily Bulletin
                             </div>
                             <div className="home_right_bottom">
+                                <div style={{overflow: 'auto'}}>
                                 {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news">
 
                                     <p className="news_heading">
                                         <Highlighter
 
-                                            searchWords={["NEW", "Important"]}
+                                            searchWords={["NEW", "Important", "REMINDER"]}
                                             autoEscape={true}
                                             textToHighlight={el.Title}
-                                            highlightStyle={{ color: "black", backgroundColor: "white" }} />
+                                            highlightStyle={{ color: "red", backgroundColor: "white" }} />
                                     </p>
                                     <p className="news_content">{shortenText(el.Content, 100)}</p>
                                 </div>
                                 )}
+                                </div>
                             </div>
 
 
