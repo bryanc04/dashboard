@@ -690,7 +690,7 @@ export default function Home() {
                                             </div>
                                             <div className="block_wrapper">
                                                 <div className="content_box a">Today is: <span>{rotation}</span></div>
-                                                <div className="content_box b">Next up: <span>{nextBlock}</span></div>
+                                                <div className="content_box b">Next up: <span>{nextBlock == "" ? "No next block" : nextBlock}</span></div>
                                             </div>
                                         </>
                                     )

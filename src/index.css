@@ -342,7 +342,7 @@ hr {
   background-color: white;
   height: 100%;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 20px;
   z-index: 3;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -383,7 +383,7 @@ hr {
 .assignments_container {
   display: grid;
   background: white;
-  border-radius: 30px;
+  border-radius: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
   height: 70px !important;
   z-index: 3;
@@ -574,7 +574,7 @@ hr {
 }
 
 .modal-content {
-  border-radius: 30px;
+  border-radius: 10px;
   height: 3000%;
 }
 
@@ -749,7 +749,7 @@ hr {
 
 .home_menu_container {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-  border-radius: 20px;
+  border-radius: 10px;
   float: left;
   text-align: left;
   width: 100%;
@@ -794,7 +794,7 @@ hr {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 20px;
+  border-radius: 10px;
   margin-top: 20px;
 }
 
@@ -822,10 +822,8 @@ hr {
   margin-bottom: 0px;
   background-color: white;
   width: 60%;
-
-  margin-right: 50px;
-  margin-left: 50px;
-  border-radius: 30px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media screen and (min-width: 1000px) {
@@ -911,7 +909,7 @@ hr {
   background-color: white;
   height: 80%;
   width: 85%;
-  border-radius: 50px;
+  border-radius: 10px;
   padding: 20px;
   z-index: 3;
   font-family: "Varela Round", sans-serif;
@@ -1022,7 +1020,7 @@ td {}
 .menu_content {
   height: 100%;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 10px;
   width: 33%;
   box-shadow: var(--boxShadow);
   margin-right: 20px;
@@ -1042,7 +1040,7 @@ td {}
   height: 100%;
   background-color: white;
   box-shadow: var(--boxShadow);
-  border-radius: 20px;
+  border-radius: 10px;
 
 }
 
@@ -1220,7 +1218,7 @@ td {}
   background-color: white;
   width: 90%;
   height: 50%;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 20px;
   margin-left: auto;
   margin-right: auto;
@@ -1231,7 +1229,7 @@ td {}
   width: 90%;
   height: 30%;
   margin-top: 50px;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 20px;
   margin-left: auto;
   margin-right: auto;
@@ -1242,7 +1240,7 @@ td {}
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   width: 90%;
   height: 30%;
-  border-radius: 20px;
+  border-radius: 10px;
   font-family: 'Varela Round', sans-serif;
   font-size: 14px;
   padding: 10px;
