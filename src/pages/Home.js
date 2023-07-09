@@ -309,9 +309,14 @@ export default function Home() {
             const collectionRef = collection(db, "daily_bulletin");
             const q = query(collectionRef, orderBy("uupdate_date", "desc"), limit(1));
             const querySnapshot = await getDocs(q);
+            var tempArray = [];
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
                 delete data['uupdate_date'];
+                for (var key in data){
+                    console.log(data[key]['Title'])
+                    data[key]['Title'] = data[key]['Title'].replace(' ', '')
+                  }
                 setDailyBulletin(data);
             })
         };
@@ -361,8 +366,8 @@ export default function Home() {
         if (user) {
             getSchedule();
             getDailyBulletin();
-            checkupdated();
-            checkOverallUpdated();
+            // checkupdated();
+            // checkOverallUpdated();
             getMenu();
             getCalendar();
         }
@@ -624,7 +629,7 @@ export default function Home() {
                         <div className="home_column home_column_left">
                             <Navbar3 theme={themecolor} currentPage="Home" /></div>
                         <div className="home_column home_column_center">
-                            <p className="home_hi">Hi Bryan!</p>
+                            <p className="home_hi">Welcome Back!</p>
                             <div className="home_center_top">
                                 <Bigcalendar
                                     localizer={localizer}
@@ -835,7 +840,6 @@ export default function Home() {
 
                                     <p className="news_heading">
                                         <Highlighter
-
                                             searchWords={["NEW", "Important", "REMINDER"]}
                                             autoEscape={true}
                                             textToHighlight={el.Title}
