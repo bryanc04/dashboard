@@ -129,13 +129,13 @@ export default function Signup(props){
                     display: 'flex'
                 }}
             >
-                <img className="lc_logo" src={Logo2} style={{width: 20, height: 20, marginRight: 10}}/>
+                <img src={Logo2} style={{width: 20, height: 20, marginRight: 10}}/>
                 LC DASHBOARD
             </div>
             <div className={s.left_container} data-aos="fade-up" data-aos-duration="1000">
                 <div style={{padding: '0 20%', display: 'flex', justifyContent: 'center', flexDirection: 'column', height: '80%'}}>
                     <div style={{fontSize: '30px', fontWeight: 'bold'}}>
-                        Welcome!
+                        Join Us!
                     </div>
                     <div>
                         <div className="form-group" style={{marginTop: 20}}>
