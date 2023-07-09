@@ -379,6 +379,7 @@ export default function Home() {
 
                 var RotationDay = docSnap1.data();
                 var d = RotationDay.num;
+                console.log(d)
                 setRotation("D" + d);
                 var last_updated = DateTime.fromISO(RotationDay.last_updated).setZone('America/New_York');
                 var now = DateTime.local().setZone('America/New_York');
@@ -401,6 +402,7 @@ export default function Home() {
                     if (differenceInDays >= 1) {
                         d += 4;
                         d %= 7;
+                        d+=1;
                     }
                     var tmp = "";
                     if (now.weekday === 3) {
@@ -473,11 +475,13 @@ export default function Home() {
                     }
                     else {
                         console.log("6666")
+                        console.log(curblock)
                         if (now.hour <= 8 && now.minute <= 30) {
                             tmp = "Before Class";
                         }
                         else if ((now.hour == 8 && now.minute >= 30) || (now.hour == 9 && now.minute <= 45)) {
                             var curblock = "B" + d;
+                            console.log(d)
                             tmp = data[curblock];
                         }
                         else if ((now.hour == 9 && now.minute >= 45) || (now.hour == 10 && now.minute <= 45)) {
@@ -506,6 +510,7 @@ export default function Home() {
                             tmp = "Passing"
                         }
                     }
+                    console.log("tmp:" + tmp);
                     setDisplayBlock(curblock);
                     setDisplayClass(tmp);
                     setIsBlocksLoading(false);

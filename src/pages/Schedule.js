@@ -205,8 +205,7 @@ export default function Schedule() {
                     padding: 0
                 }}>
 
-                    <div className="row g-0">
-
+                    <div className="row g-0 ">
 
                         <div className="home_column_left">
                             <Navbar3 theme={themecolor} currentPage="Schedule" /></div>
@@ -229,6 +228,7 @@ export default function Schedule() {
                         >
                             Athletics Schedule
                         </div>
+                        <div style={{width:"100%"}}>
                             <DataGrid
                                 rows={data}
                                 columns={columns}
@@ -242,6 +242,7 @@ export default function Schedule() {
                                 }}
                                 pageSizeOptions={[5, 10]}
                             />
+                            </div>
                             {/* :
                                         <ChromeDinoGame />
                                     } */}
