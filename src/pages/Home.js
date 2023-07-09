@@ -81,7 +81,7 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false);
 
     const [dailyBulletin, setDailyBulletin] = useState([{}, {}, {}, {}, {}, {}, {}, {}]);
-
+    const [showFullDailyBulletin, setShowFullDailyBulletin] = useState(false);
     const [grade, setgrade] = useState({});
 
     const [isNews, setIsNews] = useState(true);
@@ -525,11 +525,8 @@ export default function Home() {
     }, [blockChanged, user])
 
 
-    const MenuOnclick = () => {
-        setIsNews(!isNews)
-        console.log(isNews)
-        // document.getElementById("name").style.color = "blue";
-        console.log("fdasfasd")
+    const onBulletin = () => {
+        setShowFullDailyBulletin(!showFullDailyBulletin);
     }
 
 
@@ -551,6 +548,7 @@ export default function Home() {
         text = text.substring(0, last);
         return text;
     }
+    console.log(dailyBulletin)
 
     const adjustTheme = (newTheme) => {
         setthemecolor(newTheme);
@@ -819,19 +817,22 @@ export default function Home() {
                                 style={{
                                     fontSize: 20,
                                     fontWeight: 'bold',
-                                    width: '90%',
+                                    width: 'fit-content',   
                                     marginLeft: 'auto',
                                     marginRight: 'auto',
-                                    paddingLeft: 10,
+                                    paddingLeft: 30,
                                     marginTop: 50,
-                                    marginBottom: 10
+                                    marginBottom: 10,
+                                    display: 'inline-block'
+
                                 }}
                             >
                                 Daily Bulletin
-                            </div>
+                
+                            </div><div onClick={() => onBulletin()} style={{display: "inline-block", float: 'right', margin: "50px auto 10px", marginRight: '35px', color: 'blue', cursor: 'pointer'}}>{showFullDailyBulletin ? "less" : "more"}</div>
                             <div className="home_right_bottom">
-                                <div style={{overflow: 'auto'}}>
-                                {Object.values(dailyBulletin).map((el, index) => <div key={index} className="news">
+                                <div style={{overflow: 'auto', height: '100%', overflowY: "scroll", width: '90%', marginLeft: 'auto', marginRight: 'auto'}}>
+                                {Object.values(dailyBulletin).slice(0, showFullDailyBulletin ? undefined : 3).map((el, index) => <div key={index} className="news">
 
                                     <p className="news_heading">
                                         <Highlighter
