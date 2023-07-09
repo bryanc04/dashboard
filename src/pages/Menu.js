@@ -329,7 +329,8 @@ export default function Menu() {
                                                 fontWeight: 'bold',
                                                 width: '90%',
                                                 marginLeft: 'auto',
-                                                marginRight: 'auto'
+                                                marginRight: 'auto',
+                                                marginBottom: 50
                                             }}
                                         >
                                             School Menu

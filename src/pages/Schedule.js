@@ -99,32 +99,38 @@ export default function Schedule() {
         {
             field: 'Team',
             headerName: 'Team',
-            width: 200
+            flex: 1,
+            headerClassName: 'datagrid_header'
         },
         {
             field: 'Opponent',
             headerName: 'Opponent',
-            width: 200
+            flex: 1,
+            headerClassName: 'datagrid_header'
         },
         {
             field: 'Date',
             headerName: 'Date',
-            width: 150
+            flex: 1,
+            headerClassName: 'datagrid_header'
         },
         {
             field: 'Time',
             headerName: 'Time',
-            width: 100
+            flex: 1,
+            headerClassName: 'datagrid_header'
         },
         {
             field: 'Location',
             headerName: 'Location',
-            width: 200
+            flex: 1,
+            headerClassName: 'datagrid_header'
         },
         {
             field: 'Advantage',
             headerName: 'Advantage',
-            width: 100
+            flex: 1,
+            headerClassName: 'datagrid_header'
         },
     ];
 
@@ -228,10 +234,11 @@ export default function Schedule() {
                         >
                             Athletics Schedule
                         </div>
-                        <div style={{width:"100%"}}>
+                        <div style={{width:"100%", height: '75vh'}}>
                             <DataGrid
                                 rows={data}
                                 columns={columns}
+                                disableRowSelectionOnClick={true}
                                 initialState={{
                                     pagination: {
                                         paginationModel: { page: 0, pageSize: 10 },

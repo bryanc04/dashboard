@@ -286,8 +286,9 @@ hr {
 
   .fullscreen_msg {
     display: block !important;
-    transform: translate(50%, 50%);
-    height: 100%;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 
@@ -1069,13 +1070,11 @@ td {}
   text-align: left;
   font-weight: bold;
   color: black;
-  background-color: aliceblue;
-  padding: 10px;
   border-radius: 10px;
 }
 
 .meal_content_details {
-  margin-left: 20px;
+  margin-bottom: 10px;
 }
 
 .meal_content_details_home {
@@ -1306,4 +1305,9 @@ td {}
   .home_column_right {
     width: 100%;
   }
+}
+
+.MuiDataGrid-columnHeaderTitle {
+  font-weight: bold !important;
+  font-size: 16px;
 }

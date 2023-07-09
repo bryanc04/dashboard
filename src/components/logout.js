@@ -77,8 +77,8 @@ export default function Logout(props) {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
-          <h2 id="parent-modal-title">Log out of LC Dashboard?</h2>
+        <Box sx={{ ...style, width: 500 }}>
+          <h2 id="parent-modal-title">Logout of LC Dashboard?</h2>
           <p id="parent-modal-description">
             You can always log back in at any time.
           </p>
