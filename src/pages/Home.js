@@ -605,10 +605,10 @@ export default function Home() {
 
             <div>
                 <div className="all">
-                    <div className="pickers_grid">
+                    {/* <div className="pickers_grid">
                         <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
                         <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
-                    </div>
+                    </div> */}
                     <div className="container-fluid blur" style={{
                         backgroundColor: "rgb(254, 254, 254)",
                         backgroundImage: backgroundOption === "change_bg_option_1" ? "none" :

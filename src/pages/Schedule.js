@@ -207,7 +207,6 @@ export default function Schedule() {
 
                     <div className="row g-0 ">
 
-
                         <div className="home_column_left">
                             <Navbar3 theme={themecolor} currentPage="Schedule" /></div>
 

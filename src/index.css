@@ -280,10 +280,6 @@ hr {
   .assignments_container {
     overflow-y: hidden !important;
   }
-
-  .block_wrapper {
-    transform: translateY(30px) !important;
-  }
 }
 
 @media only screen and (max-width: 800px) {
@@ -640,9 +636,18 @@ hr {
   transform: translateY(70px);
 }
 
+@media only screen and (max-width: 600px) {
+  .block_wrapper {
+    grid-template-columns: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    grid-template-rows: none;
+  }
+}
+
 .content_box {
   border-radius: 5px;
-  font-size: 13px;
+  font-size: 22px;
   text-align: center;
   justify-content: center;
   bottom: 0;
@@ -980,6 +985,8 @@ td {}
 .athletics_table {
   width: 80%;
   margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .menu_view_grid {
@@ -1202,7 +1209,7 @@ td {}
 .home_hi {
   font-family: 'Varela Round', sans-serif;
   font-size: 30px;
-  top: 45px;
+  margin-top: 25px;
   width: 90%;
   margin-left: auto;
   margin-right: auto;
@@ -1213,7 +1220,6 @@ td {}
   background-color: white;
   width: 90%;
   height: 50%;
-  margin-top: 60px;
   border-radius: 20px;
   padding: 20px;
   margin-left: auto;

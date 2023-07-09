@@ -316,10 +316,10 @@ export default function Menu() {
     </div>
     <div style={{width: '85%', height: '100vh'}}>
 
-                                <div className="pickers_grid">
+                                {/* <div className="pickers_grid">
                                     <Pop changeBackground={setBackgroundOption} color1={color1} setColor1={setColor1} color2={color2} setColor2={setColor2} />
                                     <ThemePop changeTheme={adjustTheme} color1={themecolor} setthemecolor={setthemecolor} />
-                                </div>
+                                </div> */}
 
                                 
                                 <div className="menu_inner_container">
